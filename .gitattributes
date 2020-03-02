@@ -1,1 +1,15 @@
-*.php linguist-detectable=true
+* text eol=lf
+
+*.png binary
+*.jpg binary
+*.otf binary
+*.eot binary
+*.svg binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+*.css linguist-vendored
+*.scss linguist-vendored
+*.js linguist-vendored
+CHANGELOG.md export-ignore
