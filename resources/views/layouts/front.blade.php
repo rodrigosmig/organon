@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="{{ asset('css/fontawesome-free/css/all.css' )}}">
         <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css' )}}">
 
-        @yield('profile-css')
+        @yield('link-css')
     </head>
 
     <body id="page-top">
@@ -52,6 +52,6 @@
 
         <script src="{{ asset('js/app.js' )}}" type="text/javascript"></script>
         <script src="{{ asset('js/sb-admin-2.min.js' )}}" type="text/javascript"></script>
-        @yield('profile-js')
+        @yield('script-js')
     </body>
 </html>

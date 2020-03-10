@@ -41,6 +41,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function projects()
+    {
+        return $this->belongsToMany('App\Project', 'project_members');
+    }
 
     public static function getFailMessages(Array $messages) :string
     {

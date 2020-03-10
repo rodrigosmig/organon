@@ -1,10 +1,10 @@
 @extends('layouts.front')
 
-@section('profile-css')
+@section('link-css')
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
-@section('profile-js')
+@section('script-js')
     <script src="{{ asset('js/profile.js' )}}" type="text/javascript"></script>
 @endsection
 

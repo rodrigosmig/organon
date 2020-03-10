@@ -27,3 +27,8 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 	Route::post('/edit-info', 'UserController@editInfo')->name('edit-info');
 	Route::post('/change-password', 'UserController@changePassword')->name('change-password');
 });
+
+Route::group(['prefix' => 'projects', 'as' => 'projects.'], function () {
+	Route::get('/', 'ProjectController@index')->name('index');
+	
+});
