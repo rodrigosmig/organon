@@ -55,5 +55,35 @@ class UsersSeeder extends Seeder
             'password'  => Hash::make('12345678'),
             'photo'     => 'user.png'
         ]);
+        User::create([
+            'name'      => 'Rogério Martins',
+            'email'     => 'rogerio@gmail.com',
+            'password'  => Hash::make('12345678'),
+            'photo'     => 'user.png'
+        ]);
+        User::create([
+            'name'      => 'Thiago Santos',
+            'email'     => 'thiago@gmail.com',
+            'password'  => Hash::make('12345678'),
+            'photo'     => 'user.png'
+        ]);
+        User::create([
+            'name'      => 'Felipe Figueireiro',
+            'email'     => 'felipe@gmail.com',
+            'password'  => Hash::make('12345678'),
+            'photo'     => 'user.png'
+        ]);
+        User::create([
+            'name'      => 'Raíssa Fernandes',
+            'email'     => 'raissa@gmail.com',
+            'password'  => Hash::make('12345678'),
+            'photo'     => 'user.png'
+        ]);
+        User::create([
+            'name'      => 'Letícia Rocha',
+            'email'     => 'leticia@gmail.com',
+            'password'  => Hash::make('12345678'),
+            'photo'     => 'user.png'
+        ]);
     }
 }

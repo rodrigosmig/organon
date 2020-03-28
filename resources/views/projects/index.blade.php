@@ -1,11 +1,50 @@
 @extends('layouts.front')
 
+@section('title')
+	<h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
+@endsection
+
+@section('button-header')
+	<a href="{{ route('projects.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("New Project")}}</a>
+@endsection
+
 @section('link-css')
-    <link rel="stylesheet" href="{{ asset('css/projects.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/projects.css') }}">
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('script-js')
-    <script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
+	<script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+@endsection
+
+@section('modal')
+	<div class="modal fade" id="modal-add_user" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-add_userLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">{{ __("Add Member") }}</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="form-add-member" action="{{ route('projects.add-member') }}" method="post">
+					@csrf
+					<input id="project_id" type="hidden" name="project_id">
+					<div class="modal-body">
+						<div class="input-group mb-3">
+							<label for="add-member">Search for a user</label>
+							<select id="add-member" name="user" class="select-user-ajax" style="width: 100%" required></select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">{{ __('Add Members') }}</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 @endsection
 
 @section('content')
@@ -31,14 +70,14 @@
 						</thead>
 						<tbody>
 							@foreach ($projects as $key => $project)
-								<tr class="teste">
+								<tr>
 									<td>
-										<button class="btn btn-outline-primary btn-sm expand" data-toggle="collapse" data-target="#demo{{ $key }}" class="accordion-toggle">
-											<i  class="fas fa-plus"></i>
-										</button>
+										<a href="{{ route('projects.show', ['id' => $project->id]) }}">
+											<i class="fas fa-eye"></i>
+										</a>
 									</td>
 									<td>{{ $project->name }}</td>
-									<td>{{ Carbon\Carbon::parse($project->deadline)->format('d/m/Y') }}</td>
+									<td>{{ $project->deadline }}</td>
 									<td><i class="fas fa-users"></i> {{ $project->users->count() + 1 }}</td>
 									<td>
 										<div class="dropdown">
@@ -46,24 +85,12 @@
 												<i class="fas fa-ellipsis-h"></i>
 											</a>
 											<div class="dropdown-menu" aria-labelledby="projectActions">
-												<a class="dropdown-item" href="#">Edit</a>
-												<a class="dropdown-item" href="#">Delete</a>
-												<a class="dropdown-item" href="#">Something else here</a>
+												<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> {{ __('Edit Project') }}</a>
+												<a class="dropdown-item" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> {{ __('Delete Project') }}</a>
+												<a class="dropdown-item add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user"><i class="fas fa-user-plus"></i> {{ __('Add Member') }}</a>
 											</div>
 										</div>
 									</td>
-								</tr>
-								<tr class="p">
-									<td colspan="6" class="hiddenRow">
-										<div class="accordian-body collapse" id="demo{{ $key }}">
-											<p>No : <span>1</span></p>
-											<p>Date : <span>66666 Jan 2018</span> </p>
-											<p>Description : <span>Good</span> </p>
-											<p>Credit : <span>$150.00</span> </p>
-											<p>Debit : <span></span></p>
-											<p>Balance : <span>$150.00</span></p>
-										</div> 
-									</td> 
 								</tr>
 							@endforeach
 									
@@ -72,31 +99,6 @@
 				</div>
 				<div class="tab-pane fade" id="nav-finished" role="tabpanel" aria-labelledby="nav-finished-tab">...</div>
 			</div>
-
-            {{-- <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Creation Date</th>
-                    <th>Name</th>
-                    <th>Team</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach ($projects as $project)
-                        <tr>
-                            <td>
-                                {{ Carbon\Carbon::parse($project->created_at)->format('d/m/Y') }}
-                            </td>
-                            <td>
-                                {{ $project->name }}
-                            </td>
-                            <td>
-                                <i class="fas fa-users"></i> 1
-                            </td>
-                        </tr>    
-                    @endforeach
-                </tbody>
-            </table> --}}
         </div>
     </div>
 

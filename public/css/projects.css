@@ -17,3 +17,13 @@
     text-decoration: none !important;
     color: inherit;
 }
+
+.media .media-body {
+    margin-top: 5px;
+}
+
+.media .img-profile {
+    margin-left: 10px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
