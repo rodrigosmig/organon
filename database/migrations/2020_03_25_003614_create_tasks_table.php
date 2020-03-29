@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
             $table->bigIncrements('id');
             $table->string('description');
             $table->date('deadline');
+            $table->enum('status', ['open', 'finished'])->default('open');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->bigInteger('project_id')->unsigned();

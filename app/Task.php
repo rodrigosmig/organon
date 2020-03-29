@@ -15,4 +15,23 @@ class Task extends Model
     {
         return $this->belongsTo('App\Project');
     }
+
+    /**
+     * Fetch task times.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function times() {
+        return $this->hasMany("App\TaskTime");
+    }
+
+    /**
+     * Get the task user.
+     * 
+     * @return App\User
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }
