@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Project;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OwnerMiddleware
 {
@@ -23,6 +24,7 @@ class OwnerMiddleware
                 if($request->user()->checkUser($project->owner)) {
                     return $next($request);
                 }
+                Alert::error("Invalid Request", "You are not project owner.");
             }
         }
         return redirect()->route('projects.index');
