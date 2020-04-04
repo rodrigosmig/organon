@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Requests\EditPhotoFormRequest;
+use App\Http\Requests\EditInfoUserFormRequest;
+use App\Http\Requests\ChangePasswordFormRequest;
 
 class UserController extends Controller
 {
@@ -24,12 +23,8 @@ class UserController extends Controller
         return view('profile', ['title' => $this->title]);
     }
 
-    public function editPhoto(Request $request)
-    {
-        if (!User::validatePhoto($request->all())) {
-            return redirect()->route('user.profile');
-        }
-               
+    public function editPhoto(EditPhotoFormRequest $request)
+    {              
         $user_id    = $request->input('user_id') ;
         $user       = User::find($user_id);
 
@@ -48,12 +43,8 @@ class UserController extends Controller
         return redirect()->route('user.profile');
     }
 
-    public function editInfo(Request $request)
+    public function editInfo(EditInfoUserFormRequest $request)
     {
-        if (!User::validateInfo($request->all(), $request->user())) {
-            return redirect()->route('user.profile');
-        }
-        
         $user_id    = $request->input('user_id') ;
         $user       = User::find($user_id);
 
@@ -70,12 +61,8 @@ class UserController extends Controller
         return redirect()->route('user.profile');
     }
 
-    public function changePassword(Request $request) 
+    public function changePassword(ChangePasswordFormRequest $request) 
     {
-        if (!User::validatePassword($request->all(), $request->user())) {
-            return redirect()->route('user.profile');
-        }
-
         $user_id    = $request->input('user_id') ;
         $user       = User::find($user_id);
 
@@ -94,5 +81,16 @@ class UserController extends Controller
 
         Alert::Success('Success', __("password changed successfully"));
         return redirect()->route('user.profile');
+    }
+
+    public function getUsersJson(Request $request)
+    {
+        if ($request->input('query')) {
+            $expression = $request->input('query');
+            
+            return User::where('name', 'like', "%{$expression}%")->get();
+        }        
+
+        return json_encode([]);
     }
 }
