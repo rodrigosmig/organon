@@ -30,6 +30,8 @@
                             @yield('title')
                             @yield('button-header')
                         </div>
+
+                        @include('sweetalert::alert')
                         
                         @yield('content')
                         

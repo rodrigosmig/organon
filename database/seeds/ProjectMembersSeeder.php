@@ -21,6 +21,10 @@ class ProjectMembersSeeder extends Seeder
             'user_id'       => 4
         ]);
         DB::table('project_members')->insert([
+            'project_id'    => 1,
+            'user_id'       => 6
+        ]);
+        DB::table('project_members')->insert([
             'project_id'    => 2,
             'user_id'       => 6
         ]);

@@ -6,8 +6,8 @@
 @endsection
 
 @section('script-js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
 
@@ -16,16 +16,9 @@
 @endsection
 
 @section('button-header')
-    <div class="dropdown">
-        <a href="javascript:void(0)" class="menuMembers d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Members">
-            <i class="fas fa-cog"></i>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="projectActions">
-            <a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> {{ __('Edit Project') }}</a>
-            <a class="dropdown-item add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user"><i class="fas fa-user-plus"></i> {{ __('Add Member') }}</a>
-        </div>
-    </div>
-    
+<a href="{{ route('projects.edit', ['id' => $project->id]) }}" class="menuMembers d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="Edit Project">
+    <i class="fas fa-edit"></i>
+  </a>
 @endsection
 
 @section('modal')
@@ -33,7 +26,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">{{ __("Add Member") }}</h5>
+					<h5 class="modal-title">Add Member</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -49,12 +42,81 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">{{ __('Add Members') }}</button>
+						<button type="submit" class="btn btn-primary">Add Member</button>
 					</div>
 				</form>
 			</div>
 		</div>
-	</div>
+  </div>
+  
+  <div class="modal fade" id="modal-assign_user" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-assign_userLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Assign User</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="form-assign-task-member" action="{{ route('projects.tasks.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
+          @csrf
+          <input type="hidden" name="project_id" value="{{ $project->id }}">
+					<input id="task_id" type="hidden" name="task_id">
+					<div class="modal-body">
+						<div class="form-group mb-3">
+							<label for="add-member">Select a user</label>
+							<select class="form-control" name="user_id" required>
+                <option value="">None</option>
+                @foreach ($members as $member)
+                  <option value="{{ $member->id }}">{{ $member->name }}</option>
+                @endforeach
+              </select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Add Member</button>
+					</div>
+				</form>
+			</div>
+		</div>
+  </div>
+
+  <div class="modal fade" id="modal-add_task" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-add_taskLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Add Task</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form id="form-add-task" action="{{ route('projects.tasks.store', ['project_id' => $project->id]) }}" method="post">
+					@csrf
+					<input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
+					<div class="modal-body">
+						<div class="form-group row">
+              <label for="task-description" class="col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-12">
+                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Task description" value="{{ old('description') }}" >
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="task-deadline" class="col-sm-2 col-form-label">Deadline</label>
+              <div class="col-sm-12">
+                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
+              </div>
+            </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Add Task</button>
+					</div>
+				</form>
+			</div>
+		</div>
+  </div>
+  
 @endsection
 
 @section('content')
@@ -66,8 +128,8 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Deadline</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $project->deadline }}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -82,11 +144,11 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Time Worked</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ secondsToTime($total_worked) }}</div>
                   </div>
                   <div class="col-auto">
-                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    <i class="fas fa-clock fa-2x text-gray-300"></i>
                   </div>
                 </div>
               </div>
@@ -129,29 +191,64 @@
     <div class="card shadow mb-4">
         <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
             @csrf
+            <div class="card-header">
+              <h4>
+                <i class="fas fa-tasks"></i>
+                Tasks
+                <a class="btn btn-success btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#modal-add_task"><i class="fas fa-plus"></i> Add Task</a>
+              </h4>
+            </div>
             <div class="card-body">
-                <h5>Tasks</h5>
                 <table class="table">
                     <thead>
                         <th>User</th>
                         <th>Description</th>
                         <th>Time Worked</th>
                         <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </thead>
                     <tbody>
                         @foreach ($project->tasks as $task)
                             <tr>
                                 <td>
-                                   photo
+                                  @if ($task->user)
+                                    @if ($task->user->photo != 'user.png')
+                                      <img class="img-profile rounded-circle" src="/storage/{{ $task->user->photo }}" width="30px" height="30px" title={{ $task->user->name }}>                                        
+                                    @else
+                                      <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title={{ $task->user->name }}>
+                                    @endif    
+                                  @else
+                                    <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="No user">
+                                  @endif
                                 </td>
                                 <td>
-                                    {{ $task->description }}
+                                  {{ $task->description }}
                                 </td>
                                 <td>
-                                    Time Worked
+                                  {{ secondsToTime($task->getTotalWorked()) }}
                                 </td>
                                 <td>
-                                    {{ $task->deadline }}
+                                  {{ $task->deadline }}
+                                </td>
+                                <td>
+                                  {{ App\Task::STATUS[$task->status] }}
+                                </td>
+                                <td>
+                                  <div class="dropdown">
+                                    <a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="fas fa-ellipsis-h"></i>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="projectActions">
+                                      <a class="dropdown-item" href="{{ route('projects.tasks.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit Task</a>
+                                      <a class="dropdown-item" href="{{ route('projects.tasks.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> Delete Task</a>
+                                      @if ($task->user)
+                                        <a class="dropdown-item" href="{{ route('projects.tasks.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> Remove the user</a>
+                                      @else
+                                      <a class="dropdown-item assign_task_member" href="javascript:void(0)" data-task="{{ $task->id }}" data-toggle="modal" data-target="#modal-assign_user"><i class="fas fa-user-plus"></i> Assign a user</a>
+                                      @endif
+                                    </div>
+                                  </div>
                                 </td>
                             </tr>
                             
@@ -165,35 +262,24 @@
     <div class="card shadow mb-4">
         <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
             @csrf
+            <div class="card-header">
+              <h4>
+                <i class="fas fa-users"></i>
+                Team Members
+                <button class="btn btn-success btn-sm add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user"><i class="fas fa-plus"></i> Add Member</button>
+              </h4>
+            </div>
             <div class="card-body">
-                <h5>Team Members</h5>
-                <table class="table">
+                
+                <table class="table table-hover">
                     <thead>
                         <th>Avatar</th>
                         <th>Name</th>
-                        <th>Time Worked</th>
+                        <th>Total Worked</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                @if ($owner->photo != "user.png")
-                                    <img class="img-profile rounded-circle" src="/storage/{{$owner->photo}}" width="30px" height="30px">                                        
-                                @else
-                                    <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px">
-                                @endif
-                            </td>
-                            <td>
-                                {{ $owner->name }}
-                            </td>
-                            <td>
-                                1000
-                            </td>
-                            <td>
-                                <a href="#" data-toggle="tooltip" data-placement="right" title="Remove Member"><i class="fas fa-user-minus"></i></a>
-                            </td>
-                        </tr>
-                        @foreach ($project->users as $user)
+                        @foreach ($members as $user)
                             <tr>
                                 <td>
                                     @if ($user->photo != "user.png")
@@ -206,10 +292,10 @@
                                     {{ $user->name }}
                                 </td>
                                 <td>
-                                    1000
+                                    {{ secondsToTime($user->total_worked) }}
                                 </td>
                                 <td>
-                                    <a href="#" data-toggle="tooltip" data-placement="right" title="Remove Member"><i class="fas fa-user-minus"></i></a>
+                                    <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" data-project="{{ $project->id }}" data-toggle="tooltip" data-placement="right" title="Remove Member"><i class="fas fa-user-minus"></i></a>
                                 </td>
                             </tr>
                             

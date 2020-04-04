@@ -60,8 +60,64 @@ $(function() {
       $('.select-user-ajax').val("").trigger('change')
     })
 
-    $(".add_member").on('click', function() {
+    $(".add_member").on('click', function(event) {
+      event.preventDefault()
       var id = $(this).attr('data-project')
       $("#project_id").val(id)
     })
+
+    $(".assign_task_member").on('click', function(event) {
+      event.preventDefault()
+      var id = $(this).attr('data-task')
+      $("#task_id").val(id)
+    })
+
+    $(".remove-member").on('click', function() {
+      var user_id     = $(this).attr('data-user')
+      var project_id  = $(this).attr('data-project')
+
+      swal({
+        title: 'Are you sure?',
+        text: 'The user will be removed from the project',
+        icon: 'warning',
+        buttons: ["Cancel", "Confirm"],
+    }).then(function(confirm) {
+        if (confirm) {          
+          $.ajax({
+            type: 'POST',
+            url: '/projects/del-member/',
+            datatype: 'json',
+            data: {
+              'user_id': user_id,
+              'project_id': project_id
+            },
+            success: function(response) {
+              console.log(response)
+              swal({
+                title: 'User removed',
+                text: response,
+                icon: 'success',
+              }).then(function() {
+                location.reload();
+              })
+            },
+            error: function(response) {
+              swal({
+                title: 'Oops...',
+                text: response.responseText,
+                icon: 'error',
+              }).then(function() {
+                location.reload();
+              })
+            },
+          });	
+        }
+    });
+  })
+
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+    }
+  });
 })

@@ -17,30 +17,42 @@ class TasksTimeSeeder extends Seeder
             'task_id'   => 1,
             'start'     => Carbon::createFromFormat('d/m/Y', '15/03/2020')->timestamp,
             'end'       => Carbon::createFromFormat('d/m/Y', '15/03/2020')->addDay()->timestamp,
+            'user_id'   => 2
         ]);
 
         TaskTime::create([
             'task_id'   => 1,
             'start'     => Carbon::createFromFormat('d/m/Y', '17/03/2020')->timestamp,
             'end'       => Carbon::createFromFormat('d/m/Y', '17/03/2020')->addDay()->timestamp,
+            'user_id'   => 2
         ]);
 
         TaskTime::create([
             'task_id'   => 1,
             'start'     => Carbon::createFromFormat('d/m/Y', '18/03/2020')->timestamp,
             'end'       => Carbon::createFromFormat('d/m/Y', '18/03/2020')->addDay()->timestamp,
+            'user_id'   => 2
         ]);
 
         TaskTime::create([
             'task_id'   => 2,
             'start'     => Carbon::create('now')->subDays(3)->timestamp,
-            'end'       => Carbon::create('now')->subDays(2)->timestamp
+            'end'       => Carbon::create('now')->subDays(2)->timestamp,
+            'user_id'   => 4
         ]);
 
         TaskTime::create([
             'task_id'   => 2,
             'start'     => Carbon::create('now')->subDays(2)->timestamp,
-            'end'       => Carbon::create('now')->subDays(1)->timestamp
+            'end'       => Carbon::create('now')->subDays(1)->timestamp,
+            'user_id'   => 4
+        ]);
+
+        TaskTime::create([
+            'task_id'   => 3,
+            'start'     => Carbon::create('now')->subDays(2)->timestamp,
+            'end'       => Carbon::create('now')->subDays(1)->timestamp,
+            'user_id'   => 2
         ]);
     }
 }
