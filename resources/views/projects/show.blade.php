@@ -31,7 +31,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form-add-member" action="{{ route('projects.add-member') }}" method="post">
+				<form id="form-add-member" action="{{ route('projects.add-member', ['project_id' => $project->id]) }}" method="post">
 					@csrf
 					<input id="project_id" type="hidden" name="project_id">
 					<div class="modal-body">
@@ -283,9 +283,9 @@
                             <tr>
                                 <td>
                                     @if ($user->photo != "user.png")
-                                        <img class="img-profile rounded-circle" src="/storage/{{$user->photo}}" width="30px" height="30px">                                        
+                                        <img class="img-profile rounded-circle" src="/storage/{{$user->photo}}" width="30px" height="30px" title="{{$user->name}}">                                        
                                     @else
-                                        <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px">
+                                        <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="{{$user->name}}">
                                     @endif
                                 </td>
                                 <td>

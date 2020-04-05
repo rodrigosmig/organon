@@ -31,7 +31,11 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 	Route::get('/get-users', 'UserController@getUsersJson')->name('get-users');
 });
 
-Route::group(['prefix' => 'projects', 'as' => 'projects.'], function () {
+Route::group([
+	'prefix' => 'projects', 
+	'as' => 'projects.',
+	'middleware' => ['owner']
+], function () {
 	Route::get('/', 'ProjectController@index')->name('index');
 	Route::get('/new', 'ProjectController@create')->name('new');
 	Route::post('/store', 'ProjectController@store')->name('store');
@@ -39,10 +43,14 @@ Route::group(['prefix' => 'projects', 'as' => 'projects.'], function () {
 	Route::get('/edit/{id}', 'ProjectController@edit')->name('edit');
 	Route::post('/update/{id}', 'ProjectController@update')->name('update');
 	Route::get('/show/{id}', 'ProjectController@show')->name('show')->middleware(['owner']);;
-	Route::post('add-member', 'ProjectController@addMember')->name('add-member');
-	Route::post('del-member', 'ProjectController@ajaxRemoveMember')->name('del-member');
+	Route::post('/{project_id}/add-member', 'ProjectController@addMember')->name('add-member');
+	Route::post('/del-member', 'ProjectController@ajaxRemoveMember')->name('del-member');
 
-	Route::group(['prefix' => '{project_id}', 'as' => 'tasks.'], function () {
+	Route::group([
+		'prefix' => '{project_id}', 
+		'as' => 'tasks.',
+		'middleware' => ['owner']
+	], function () {
 		Route::post('/store', 'TaskController@store')->name('store');
 		Route::get('/edit/{id}', 'TaskController@edit')->name('edit');
 		Route::get('/delete/{id}', 'TaskController@destroy')->name('delete');

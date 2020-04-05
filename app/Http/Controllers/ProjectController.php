@@ -107,11 +107,6 @@ class ProjectController extends Controller
             return redirect()->route('projects.index');
         }
         
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
-            return redirect()->route('projects.index');
-        }
-        
         $data = [
             'title'     => $this->title,
             'project'  => $project
@@ -133,11 +128,6 @@ class ProjectController extends Controller
 
         if (!$project) {
             Alert::error(__("Invalid Project"), (__("Project not found.")));
-            return redirect()->route('projects.index');
-        }
-        
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
             return redirect()->route('projects.index');
         }
 
@@ -164,11 +154,6 @@ class ProjectController extends Controller
 
         if (!$project) {
             Alert::error(__("Invalid Project"), (__("Project not found.")));
-            return redirect()->route('projects.index');
-        }
-        
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
             return redirect()->route('projects.index');
         }
 

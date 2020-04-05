@@ -54,11 +54,6 @@ class TaskController extends Controller
             return redirect()->route('projects.index');
         }
 
-        if (!$request->user()->checkUser($project->owner)) {
-            Alert::error("Invalid Request", "You are not project owner.");
-            return redirect()->route('projects.index');
-        }
-
         $task = Task::create([
             'description'   => $validated['description'],
             'deadline'      => $validated['deadline'],
@@ -107,11 +102,6 @@ class TaskController extends Controller
             return redirect()->route('projects.index');
         }
 
-        if (!$request->user()->checkUser($task->project->owner)) {
-            Alert::warning('Invalid Request', 'You are not project owner!');
-            return redirect()->route('projects.index');
-        }
-
         $data = [
             'title'     => $this->title,
             'task'      => $task,
@@ -145,11 +135,6 @@ class TaskController extends Controller
 
         if (!$task->checkByProjectId($project->id)) {
             Alert::warning('Invalid Request', 'The task does not belong to the project.');
-            return redirect()->route('projects.index');
-        }
-
-        if (!$request->user()->checkUser($task->project->owner)) {
-            Alert::warning('Invalid Request', 'You are not project owner!');
             return redirect()->route('projects.index');
         }
 
@@ -190,11 +175,6 @@ class TaskController extends Controller
             return redirect()->route('projects.index');
         }
 
-        if (!$request->user()->checkUser($task->project->owner)) {
-            Alert::warning('Invalid Request', 'You are not project owner!');
-            return redirect()->route('projects.index');
-        }
-
         if ($task->user) {
             Alert::warning('Ops...', 'Task with an assigned user. Remove the user from the task.');
             return redirect()->route('projects.show', ['id' => $project->id]);
@@ -213,7 +193,6 @@ class TaskController extends Controller
         $task       = Task::find($request->input('task_id'));
         $project    = Project::find($request->input('project_id'));
 
-        //dd($request->input(), $user, $task, $project);
         if (!$task) {
             Alert::error('Invalid Task.', 'Task not found.');
             return redirect()->route('projects.index');
@@ -236,11 +215,6 @@ class TaskController extends Controller
 
         if (!$user) {
             Alert::error('Invalid User.', 'User not found.');
-            return redirect()->route('projects.show', ['id' => $task->project->id]);
-        }
-
-        if (!$request->user()->checkUser($task->project->owner)) {
-            Alert::error('Invalid User.', 'User is not project owner.');
             return redirect()->route('projects.show', ['id' => $task->project->id]);
         }
 
