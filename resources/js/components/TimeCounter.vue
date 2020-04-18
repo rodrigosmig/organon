@@ -14,7 +14,7 @@
 
     export default {
         name: 'time-counter',
-        props: ['totalWorked', 'user_id', 'task_id', 'project_id'],
+        props: ['totalWorked', 'task_id', 'project_id'],
         data() {
             return {
                 time_running: false,
@@ -85,15 +85,14 @@
             sendTaskTime: function(type) {                
                 let data = {
                     'type': type,
-                    'user_id': this.user_id,
                     'task_id': this.task_id,
                     'project_id': this.project_id
                 }
 
                 axios.post("/tasks/ajax-update-task-time", data).then(response => {
                     this.alert(response.data.msg, response.data.status)
-                }).catch($response => {
-                    this.alert('Invalid request.', 'error')
+                }).catch(error => {
+                    this.alert(error.response.data.message, 'error')
                 }) 
             },
             alert: function(title, icon) {

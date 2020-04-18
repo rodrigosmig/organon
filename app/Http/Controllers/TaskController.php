@@ -265,37 +265,11 @@ class TaskController extends Controller
         return redirect()->route('projects.show', ['id' => $task->project->id]);
     }
 
-    public function ajaxUpdateTaskTime(Request $request)
+    public function ajaxUpdateTaskTime(TaskValidationRequest $request)
     {
         $type       = $request->input('type');
-        $user       = User::find($request->input('user_id'));
         $task       = Task::find($request->input('task_id'));
-        $project    = Project::find($request->input('project_id'));
 
-        if (!$user) {
-            return response(json_encode(['status'=>'error', 'msg'=>"User not found."]), Response::HTTP_NOT_FOUND);
-        }
-        
-        if(!$project->isMember($user)) {
-            return response(json_encode(['status'=>'error', 'msg'=>"User is not a member of the project."]), Response::HTTP_FORBIDDEN);
-        }
-        
-        if (!$task) {
-            return response(json_encode(['status'=>'error', 'msg'=>"Task not found."]), Response::HTTP_NOT_FOUND);
-        }
-        
-        if (!$project) {
-            return response(json_encode(['status'=>'error', 'msg'=>"Project not found."]), Response::HTTP_NOT_FOUND);
-        }
-        
-        if ($task->project->id !== $project->id) {
-            return response(json_encode(['status'=>'error', 'msg'=>"Invalid Task."]), Response::HTTP_FORBIDDEN);
-        }
-        
-        if (!$user->checkUser($task->user)) {
-            return response(json_encode(['status'=>'error', 'msg'=>"Request not allowed."]), Response::HTTP_FORBIDDEN);
-        }
-        
         if (!in_array($type, ['start', 'pause', 'reset'])) {
             return response(json_encode(['status'=>'error', 'msg'=>"Request not allowed."]), Response::HTTP_FORBIDDEN);
         }
@@ -311,41 +285,9 @@ class TaskController extends Controller
 
     public function finishTask(TaskValidationRequest $request)
     {
-        $user       = User::find($request->input('user_id'));
         $task       = Task::find($request->input('task_id'));
-        $project    = Project::find($request->input('project_id'));
 
-        if (!$user) {
-            Alert::error('Not Found.', 'User not found.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if(!$project->isMember($user)) {
-            Alert::error('Invalid Request.', 'User is not a member of the project.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if (!$task) {
-            Alert::error('Not Found.', 'Task not found.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if (!$project) {
-            Alert::error('Not Found.', 'Project not found.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if ($task->project->id !== $project->id) {
-            Alert::error('Invalid Request.', 'Invalid Task.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if (!$user->checkUser($task->user)) {
-            Alert::error('Invalid Request.', 'Request not allowed.');
-            return redirect()->route('tasks.my-tasks');
-        }
-
-        if ($task->getTotalWorkedByUser($user->id) <= 0) {
+        if ($task->getTotalWorkedByUser() <= 0) {
             Alert::error('Invalid Request.', 'Unable to finish task. Time worked not started.');
             return redirect()->route('tasks.my-tasks');
         }

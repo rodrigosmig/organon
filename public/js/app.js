@@ -1957,7 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'time-counter',
-  props: ['totalWorked', 'user_id', 'task_id', 'project_id'],
+  props: ['totalWorked', 'task_id', 'project_id'],
   data: function data() {
     return {
       time_running: false,
@@ -2027,14 +2027,13 @@ __webpack_require__.r(__webpack_exports__);
 
       var data = {
         'type': type,
-        'user_id': this.user_id,
         'task_id': this.task_id,
         'project_id': this.project_id
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/tasks/ajax-update-task-time", data).then(function (response) {
         _this2.alert(response.data.msg, response.data.status);
-      })["catch"](function ($response) {
-        _this2.alert('Invalid request.', 'error');
+      })["catch"](function (error) {
+        _this2.alert(error.response.data.message, 'error');
       });
     },
     alert: function alert(title, icon) {
