@@ -65,23 +65,35 @@ class Project extends Model
     /**
      * Returns all project members
      *
-     * @return array
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function getAllProjectMembers()
     {
-        $all_members = [$this->owner];
+        $all_members = collect([$this->owner]);
 
         foreach ($this->members as $member) {
-            $all_members[] = $member;
+            $all_members->push($member);
         }
 
         return $all_members;
     }
 
     /**
+     * Checks if the user is a member of the project
+     *
+     * @param User  $user
+     * @return bool
+     */
+    public function isMember($user)
+    {
+        return $this->getAllProjectMembers()->contains(function($member) use ($user) {
+            return $member->id === $user->id;
+        });
+    }
+
+    /**
      * Returns the total worked on the project
      *
-     * @var id  $user_id
      * @return int
      */
     public function getTotalWorkedOnProject()
@@ -99,7 +111,7 @@ class Project extends Model
     /**
      * Returns the total worked on the project for a given user
      *
-     * @var id  $user_id
+     * @param int  $user_id
      * @return int
      */
     public function getTotalWorkedOnProjectByUserId($user_id)

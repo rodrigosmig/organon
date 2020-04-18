@@ -50,6 +50,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Fetch user tasks.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function tasks() {
+        return $this->hasMany("App\Task")
+                    ->orderBy('deadline', 'asc');
+    }
+
+    /**
      * Returns true if users are the same
      *
      * @var User

@@ -58,7 +58,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form-assign-task-member" action="{{ route('projects.tasks.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
+				<form id="form-assign-task-member" action="{{ route('projects.task.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
           @csrf
           <input type="hidden" name="project_id" value="{{ $project->id }}">
 					<input id="task_id" type="hidden" name="task_id">
@@ -91,7 +91,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form-add-task" action="{{ route('projects.tasks.store', ['project_id' => $project->id]) }}" method="post">
+				<form id="form-add-task" action="{{ route('projects.task.store', ['project_id' => $project->id]) }}" method="post">
 					@csrf
 					<input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
 					<div class="modal-body">
@@ -240,10 +240,10 @@
                                       <i class="fas fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="projectActions">
-                                      <a class="dropdown-item" href="{{ route('projects.tasks.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit Task</a>
-                                      <a class="dropdown-item" href="{{ route('projects.tasks.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> Delete Task</a>
+                                      <a class="dropdown-item" href="{{ route('projects.task.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit Task</a>
+                                      <a class="dropdown-item" href="{{ route('projects.task.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> Delete Task</a>
                                       @if ($task->user)
-                                        <a class="dropdown-item" href="{{ route('projects.tasks.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> Remove the user</a>
+                                        <a class="dropdown-item" href="{{ route('projects.task.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> Remove the user</a>
                                       @else
                                       <a class="dropdown-item assign_task_member" href="javascript:void(0)" data-task="{{ $task->id }}" data-toggle="modal" data-target="#modal-assign_user"><i class="fas fa-user-plus"></i> Assign a user</a>
                                       @endif

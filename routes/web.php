@@ -48,15 +48,23 @@ Route::group([
 
 	Route::group([
 		'prefix' => '{project_id}', 
-		'as' => 'tasks.',
+		'as' => 'task.',
 		'middleware' => ['owner']
 	], function () {
-		Route::post('/store', 'TaskController@store')->name('store');
-		Route::get('/edit/{id}', 'TaskController@edit')->name('edit');
-		Route::get('/delete/{id}', 'TaskController@destroy')->name('delete');
-		Route::post('/update/{id}', 'TaskController@update')->name('update');
+		Route::post('/task-store', 'TaskController@store')->name('store');
+		Route::get('/task-edit/{id}', 'TaskController@edit')->name('edit');
+		Route::get('/task-delete/{id}', 'TaskController@destroy')->name('delete');
+		Route::post('/task-update/{id}', 'TaskController@update')->name('update');
 		Route::post('assign-task-member', 'TaskController@assignTaskMember')->name('assign-task-member');
 		Route::get('/remove-task-member/{id}', 'TaskController@removeTaskMember')->name('remove-task-member');
 	});
-	
+});
+
+Route::group([
+	'prefix' => 'tasks', 
+	'as' => 'tasks.',
+], function () {
+	Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
+	Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
+	Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
 });

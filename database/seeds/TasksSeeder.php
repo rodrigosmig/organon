@@ -16,7 +16,7 @@ class TasksSeeder extends Seeder
         Task::create([
             'description'   => 'Layout',
             'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '25/03/2020'),
-            'user_id'       => 2,
+            'user_id'       => 1,
             'project_id'    => 1,
             'status'        => 'finished'
         ]);

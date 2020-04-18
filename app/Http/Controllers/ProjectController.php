@@ -157,6 +157,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.index');
         }
 
+        $project->tasks()->delete();
         $project->delete();
 
         Alert::success(__("Success"), (__("The project was successfully deleted")));
@@ -189,7 +190,7 @@ class ProjectController extends Controller
                 return redirect()->route('projects.show', ['id' => $project->id]);
             }
 
-            if($project->members->contains($user_id)) {
+            if($project->isMember($user)) {
                 Alert::error('Invalid User.', 'User already belongs to the project.');
                 return redirect()->route('projects.show', ['id' => $project->id]);
             }
@@ -226,7 +227,7 @@ class ProjectController extends Controller
                 return response("You are not the project owner.", 403);
             }
 
-            if(!$project->members->contains($user->id)) {
+            if(!$project->isMember($user)) {
                 return response($user->name . " is not a project member.", 403);
             }
 
