@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\User;
 use App\Project;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TaskTimeRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreTaskFormRequest;
-use App\Http\Requests\TaskValidationRequest;
+use App\Http\Requests\AssignTaskMemberRequest;
 
 class TaskController extends Controller
 {
@@ -90,7 +89,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $project_id, $id)
+    public function edit($project_id, $id)
     {
         $task       = Task::find($id);
         $project    = Project::find($project_id);
@@ -163,7 +162,7 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, $project_id, $id)
+    public function destroy($project_id, $id)
     {
         $task       = Task::find($id);
         $project    = Project::find($project_id);
@@ -195,34 +194,13 @@ class TaskController extends Controller
         return redirect()->route('projects.show', ['id' => $project->id]);
     }
 
-    public function assignTaskMember(Request $request)
+    public function assignTaskMember(AssignTaskMemberRequest $request)
     {
         $user       = User::find($request->input('user_id'));
         $task       = Task::find($request->input('task_id'));
-        $project    = Project::find($request->input('project_id'));
-
-        if (!$task) {
-            Alert::error('Invalid Task.', 'Task not found.');
-            return redirect()->route('projects.index');
-        }
-
-        if (!$project) {
-            Alert::error('Invalid Project.', 'Project not found.');
-            return redirect()->route('projects.index');
-        }
-
-        if (!$task->checkByProjectId($project->id)) {
-            Alert::error('Invalid Task.', 'The task does not belong to the project.');
-            return redirect()->route('projects.index');
-        }
 
         if ($task->user) {
             Alert::error('Invalid Task.', 'Task already has a user assigned.');
-            return redirect()->route('projects.show', ['id' => $task->project->id]);
-        }
-
-        if (!$user) {
-            Alert::error('Invalid User.', 'User not found.');
             return redirect()->route('projects.show', ['id' => $task->project->id]);
         }
 
@@ -233,7 +211,7 @@ class TaskController extends Controller
         return redirect()->route('projects.show', ['id' => $task->project->id]);
     }
 
-    public function removeTaskMember(Request $request, $project_id, $id)
+    public function removeTaskMember($project_id, $id)
     {
         $task       = Task::find($id);
         $project    = Project::find($project_id);
@@ -265,7 +243,7 @@ class TaskController extends Controller
         return redirect()->route('projects.show', ['id' => $task->project->id]);
     }
 
-    public function ajaxUpdateTaskTime(TaskValidationRequest $request)
+    public function ajaxUpdateTaskTime(TaskTimeRequest $request)
     {
         $type       = $request->input('type');
         $task       = Task::find($request->input('task_id'));
@@ -283,9 +261,9 @@ class TaskController extends Controller
         return response(json_encode($response), Response::HTTP_BAD_REQUEST);
     }
 
-    public function finishTask(TaskValidationRequest $request)
+    public function finishTask(TaskTimeRequest $request)
     {
-        $task       = Task::find($request->input('task_id'));
+        $task = Task::find($request->input('task_id'));
 
         if ($task->getTotalWorkedByUser() <= 0) {
             Alert::error('Invalid Request.', 'Unable to finish task. Time worked not started.');

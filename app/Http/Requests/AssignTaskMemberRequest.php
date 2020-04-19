@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TaskValidationRequest extends FormRequest
+class AssignTaskMemberRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -18,19 +18,16 @@ class TaskValidationRequest extends FormRequest
      */
     public function authorize()
     {
+        $user       = User::find($this->user_id);
         $task       = Task::find($this->task_id);
         $project    = Project::find($this->project_id);
-        //dd($this->project_id, $this->task_id);
-        if($task && $project) {
-            if(!$project->isMember(Auth::user())) {dd(1);
+
+        if($user && $task && $project) {
+            if(!$project->isMember($user)) {
                 return false;
             }
     
-            if (!$task->checkByProjectId($project->id)) {dd(2);
-                return false;
-            }
-    
-            if (!Auth::user()->checkUser($task->user)) {dd(3);
+            if (!$task->checkByProjectId($project->id)) {
                 return false;
             }
         }
@@ -45,6 +42,12 @@ class TaskValidationRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id' => [
+                'required',
+                Rule::exists(User::class, 'id')->where(function($query) {
+                    $query->where('id', $this->user_id);
+                })
+            ],
             'task_id' => [
                 'required',
                 Rule::exists(Task::class, 'id')->where(function($query) {
@@ -58,6 +61,5 @@ class TaskValidationRequest extends FormRequest
                 })
             ]
         ];
-
     }
 }

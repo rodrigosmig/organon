@@ -93,7 +93,7 @@
 				</div>
 				<form id="form-add-task" action="{{ route('projects.task.store', ['project_id' => $project->id]) }}" method="post">
 					@csrf
-					<input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
+					<input type="hidden" name="project_id" value="{{ $project->id }}">
 					<div class="modal-body">
 						<div class="form-group row">
               <label for="task-description" class="col-sm-2 col-form-label">Description</label>
