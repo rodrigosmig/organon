@@ -85,4 +85,24 @@ class User extends Authenticatable
         Storage::disk('public')->delete($photo);
         $this->photo = "user.png";
     }
+
+    /**
+     * Returns the number of user tasks
+     *
+     * @return int
+     */
+    public function countTasks()
+    {
+        return Task::where('user_id', $this->id)->count();
+    }
+
+    /**
+     * Returns the number of user projects
+     *
+     * @return int
+     */
+    public function countProjects()
+    {
+        return Project::where('owner_id', $this->id)->count();
+    }
 }
