@@ -32,14 +32,17 @@ $(function() {
         return repo.text;
       }
 
-      var url = "";
+      img_url =""
       if(repo.photo == 'user.png') {
-        url += '/img/user.png'
+        img_url += '/img/user.png'
+      }
+      else {
+        img_url += '/storage/' + repo.photo
       }
       
       var $container = $(
         "<li class='media'>" +
-          "<img class='img-profile rounded-circle' src='" + url + "' width='50px'/></div>" +
+          "<img class='img-profile rounded-circle' src='" + img_url + "' width='50px' height='50px'/></div>" +
           "<div class='media-body'>" +
             "<strong class='user-name'>" + repo.name + "</strong>" +
             "<p>" +
