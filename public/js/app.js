@@ -1960,9 +1960,10 @@ __webpack_require__.r(__webpack_exports__);
   props: ['totalWorked', 'task_id', 'project_id'],
   data: function data() {
     return {
-      time_running: false,
+      time_running: localStorage.getItem(this.task_id + '_timer_running') == "true" ? true : false,
       total_worked: parseInt(this.totalWorked),
       time_elapsed: 0,
+      total_time: localStorage.getItem(this.task_id + '_total_time') ? parseInt(localStorage.getItem(this.task_id + '_total_time')) : 0,
       text_time: "",
       timer: null
     };
@@ -1971,7 +1972,28 @@ __webpack_require__.r(__webpack_exports__);
     if (this.total_worked == 0) {
       this.text_time = "00:00:00";
     } else {
-      this.updateDisplay(this.total_worked);
+      if (this.total_time > 0) {
+        this.total_worked = this.total_time;
+      }
+
+      if (this.time_running) {
+        this.timer = setInterval(this.clockTick.bind(null, this.total_time), 1000);
+      } else {
+        this.updateDisplay(this.total_worked);
+      }
+    }
+  },
+  computed: {
+    running: function running() {
+      if (this.time_running) {
+        localStorage.setItem(this.task_id + '_timer_running', "true");
+        localStorage.setItem(this.task_id + '_total_time', this.total_time);
+        return true;
+      } else {
+        localStorage.setItem(this.task_id + '_timer_running', "false");
+        localStorage.setItem(this.task_id + '_total_time', this.total_time);
+        return false;
+      }
     }
   },
   methods: {
@@ -1986,8 +2008,8 @@ __webpack_require__.r(__webpack_exports__);
       this.time_running = false;
     },
     clockTick: function clockTick() {
-      var total = ++this.time_elapsed + this.total_worked;
-      this.updateDisplay(total);
+      this.total_time = ++this.time_elapsed + this.total_worked;
+      this.updateDisplay(this.total_time);
     },
     updateDisplay: function updateDisplay(total_seconds) {
       var hours = Math.floor(total_seconds / 3600);
@@ -2019,6 +2041,11 @@ __webpack_require__.r(__webpack_exports__);
           _this.time_elapsed = 0;
           _this.text_time = "00:00:00";
           _this.time_running = false;
+          _this.total_time = 0;
+          _this.time_elapsed = 0;
+          _this.total_worked = 0;
+          localStorage.removeItem(_this.task_id + '_timer_running');
+          localStorage.removeItem(_this.task_id + '_total_time');
         }
       });
     },
@@ -40602,7 +40629,7 @@ var render = function() {
     }),
     _vm._v(" "),
     _c("div", { staticClass: "input-group-append" }, [
-      !_vm.time_running
+      !_vm.running
         ? _c(
             "button",
             { staticClass: "btn btn-success", on: { click: _vm.startTimer } },
@@ -40610,7 +40637,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.time_running
+      _vm.running
         ? _c(
             "button",
             { staticClass: "btn btn-danger", on: { click: _vm.pauseTimer } },
