@@ -244,11 +244,20 @@ class Task extends Model
     /**
      * Checks if the task is in progress.
      *
-     * @param int $user_id
      * @return bool
      */
     public function taskInProgress()
     {
         return !empty($this->getTimeStarted());
+    }
+
+    /**
+     * Checks if the task is finished.
+     *
+     * @return bool
+     */
+    public function isFinished()
+    {
+        return $this->status === $this::FINISHED;
     }
 }

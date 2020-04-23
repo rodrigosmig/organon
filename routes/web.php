@@ -67,4 +67,5 @@ Route::group([
 	Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
 	Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
 	Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
+	Route::get('/open-task', 'TaskController@openTask')->name('open-task');
 });

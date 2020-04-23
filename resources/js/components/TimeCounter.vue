@@ -26,7 +26,7 @@
             }
         },
         mounted() {
-            if(this.total_worked == 0) {
+            if(this.total_worked + this.total_time <= 0) {
                 this.text_time = "00:00:00"
             }
             else {
@@ -38,8 +38,7 @@
                 } else {
                     this.updateDisplay(this.total_worked)
                 }
-                
-            }            
+            }
         },
         computed: {
             running: function() {

@@ -18,8 +18,6 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="open" role="tabpanel" aria-labelledby="open-tab">
                     @if (isset($projects[App\Task::OPEN]))
-                        <h4 class="header" style="margin: 10px; margin-top: 20px">Projects:</h4 class="header">
-
                         @foreach ($projects[App\Task::OPEN] as $key => $task)
                             <div class="accordion" id="project_tasks">
                                 <div class="card">
@@ -48,14 +46,14 @@
                                                                 <td>{{ $item->deadline }}</td>
                                                                 <td>
                                                                     <time-counter 
-                                                                        total-worked="{{ $item->getTotalWorkedByUser($item->user->id) }}"
+                                                                        total-worked="{{ $item->getTotalWorkedByUser() }}"
                                                                         project_id="{{ $item->project->id }}"
                                                                         user_id="{{ $item->user->id }}"
                                                                         task_id="{{ $item->id }}"
                                                                     ></time-counter>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ route('tasks.finish-task', ['user_id'=>$item->user->id, 'task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="End task"><i class="fas fa-check"></i></a href="#">
+                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="End task"><i class="fas fa-check"></i></a href="#">
                                                                 </td>
                                                             </tr>
                                                         @endif                                                    
@@ -76,8 +74,6 @@
                 <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
 
                     @if (isset($projects[App\Task::FINISHED]))
-                        <h4 class="header" style="margin: 10px; margin-top: 20px">Projects:</h4 class="header">
-
                         @foreach ($projects[App\Task::FINISHED] as $key => $task)
                             <div class="accordion" id="project_tasks">
                                 <div class="card">
@@ -94,7 +90,8 @@
                                                 <thead>
                                                     <th>Description</th>
                                                     <th>Deadline</th>
-                                                    <th>Work Timer</th>
+                                                    <th>Total Worked</th>
+                                                    <th>Reopen Task</th>
                                                 </thead>
 
                                                 <tbody>
@@ -103,14 +100,8 @@
                                                             <tr>
                                                                 <td>{{ $item->description }}</td>
                                                                 <td>{{ $item->deadline }}</td>
-                                                                <td>
-                                                                    <time-counter 
-                                                                        total-worked="{{ $item->getTotalWorkedByUser($item->user->id) }}"
-                                                                        project_id="{{ $item->project->id }}"
-                                                                        user_id="{{ $item->user->id }}"
-                                                                        task_id="{{ $item->id }}"
-                                                                    ></time-counter>
-                                                                </td>
+                                                                <td>{{secondsToTime( $item->getTotalWorkedByUser()) }}</td>
+                                                                <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
                                                             </tr>
                                                         @endif
                                                         

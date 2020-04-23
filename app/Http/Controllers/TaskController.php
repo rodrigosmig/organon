@@ -265,13 +265,13 @@ class TaskController extends Controller
     {
         $task = Task::find($request->input('task_id'));
 
-        if ($task->getTotalWorkedByUser() <= 0) {
-            Alert::error('Invalid Request.', 'Unable to finish task. Time worked not started.');
+        if ($task->taskInProgress()) {
+            Alert::error('Invalid Request.', 'Unable to finish task. Task with time in progress.');
             return redirect()->route('tasks.my-tasks');
         }
 
-        if ($task->taskInProgress()) {
-            Alert::error('Invalid Request.', 'Unable to finish task. Task with time in progress.');
+        if ($task->getTotalWorkedByUser() <= 0) {
+            Alert::error('Invalid Request.', 'Unable to finish task. Time worked not started.');
             return redirect()->route('tasks.my-tasks');
         }
 
@@ -279,6 +279,22 @@ class TaskController extends Controller
         $task->save();
 
         Alert::success('Success.', 'Task successfully completed.');
+        return redirect()->route('tasks.my-tasks');
+    }
+
+    public function openTask(TaskTimeRequest $request)
+    {
+        $task = Task::find($request->input('task_id'));
+
+        if (!$task->isFinished()) {
+            Alert::error('Invalid Request.', 'Task is not finished.');
+            return redirect()->route('tasks.my-tasks');
+        }
+
+        $task->status = Task::OPEN;
+        $task->save();
+
+        Alert::success('Success.', 'Task successfully opened.');
         return redirect()->route('tasks.my-tasks');
     }
 }

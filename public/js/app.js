@@ -1969,7 +1969,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    if (this.total_worked == 0) {
+    if (this.total_worked + this.total_time <= 0) {
       this.text_time = "00:00:00";
     } else {
       if (this.total_time > 0) {
