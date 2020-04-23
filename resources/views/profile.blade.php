@@ -1,11 +1,15 @@
 @extends('layouts.front')
 
-@section('profile-css')
+@section('link-css')
     <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
-@section('profile-js')
+@section('script-js')
     <script src="{{ asset('js/profile.js' )}}" type="text/javascript"></script>
+@endsection
+
+@section('title')
+	<h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
 @endsection
 
 @section('content')
@@ -37,8 +41,8 @@
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->name }}</a></h2>
                                 <h4 class="d-block" style="font-size: 0.8rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->email }}</a></h4>
-                                <h6 class="d-block"><a href="javascript:void(0)">1,500</a> {{ __('Projects') }}</h6>
-                                <h6 class="d-block"><a href="javascript:void(0)">300</a> {{ __('Tasks') }}</h6>
+                                <h6 class="d-block">{{ auth()->user()->countProjects() }} Projects</h6>
+                                <h6 class="d-block">{{ auth()->user()->countTasks() }} Tasks</h6>
                             </div>
                             <div class="ml-auto">
                                 <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="{{ __('Discard Changes') }}" />
