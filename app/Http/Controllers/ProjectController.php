@@ -107,11 +107,6 @@ class ProjectController extends Controller
             return redirect()->route('projects.index');
         }
         
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
-            return redirect()->route('projects.index');
-        }
-        
         $data = [
             'title'     => $this->title,
             'project'  => $project
@@ -133,11 +128,6 @@ class ProjectController extends Controller
 
         if (!$project) {
             Alert::error(__("Invalid Project"), (__("Project not found.")));
-            return redirect()->route('projects.index');
-        }
-        
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
             return redirect()->route('projects.index');
         }
 
@@ -166,12 +156,8 @@ class ProjectController extends Controller
             Alert::error(__("Invalid Project"), (__("Project not found.")));
             return redirect()->route('projects.index');
         }
-        
-        if ($project->owner_id !== $request->user()->id) {
-            Alert::error(__("Invalid Request"), (__("You are not project owner.")));
-            return redirect()->route('projects.index');
-        }
 
+        $project->tasks()->delete();
         $project->delete();
 
         Alert::success(__("Success"), (__("The project was successfully deleted")));
@@ -204,7 +190,7 @@ class ProjectController extends Controller
                 return redirect()->route('projects.show', ['id' => $project->id]);
             }
 
-            if($project->members->contains($user_id)) {
+            if($project->isMember($user)) {
                 Alert::error('Invalid User.', 'User already belongs to the project.');
                 return redirect()->route('projects.show', ['id' => $project->id]);
             }
@@ -241,7 +227,7 @@ class ProjectController extends Controller
                 return response("You are not the project owner.", 403);
             }
 
-            if(!$project->members->contains($user->id)) {
+            if(!$project->isMember($user)) {
                 return response($user->name . " is not a project member.", 403);
             }
 

@@ -16,30 +16,32 @@
     </head>
 
     <body id="page-top">
-        <div id="wrapper">
+        <div id="app">
+            <div id="wrapper">
 
-            @include('layouts.sidebar')
-
-
-            <div id="content-wrapper" class="d-flex flex-column">
-                <div id="content">
-                    @include('layouts.header')
-                    <div class="container-fluid">
-
-                        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            @yield('title')
-                            @yield('button-header')
+                @include('layouts.sidebar')
+    
+    
+                <div id="content-wrapper" class="d-flex flex-column">
+                    <div id="content">
+                        @include('layouts.header')
+                        <div class="container-fluid">
+    
+                            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                @yield('title')
+                                @yield('button-header')
+                            </div>
+    
+                            @include('sweetalert::alert')
+                            
+                            @yield('content')
+                            
                         </div>
-
-                        @include('sweetalert::alert')
-                        
-                        @yield('content')
-                        
                     </div>
+    
+                    @include('layouts.footer')
+    
                 </div>
-
-                @include('layouts.footer')
-
             </div>
         </div>
         

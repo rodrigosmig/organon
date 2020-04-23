@@ -31,7 +31,11 @@ Route::group(['prefix' => 'user', 'as' => 'user.'], function () {
 	Route::get('/get-users', 'UserController@getUsersJson')->name('get-users');
 });
 
-Route::group(['prefix' => 'projects', 'as' => 'projects.'], function () {
+Route::group([
+	'prefix' => 'projects', 
+	'as' => 'projects.',
+	'middleware' => ['owner']
+], function () {
 	Route::get('/', 'ProjectController@index')->name('index');
 	Route::get('/new', 'ProjectController@create')->name('new');
 	Route::post('/store', 'ProjectController@store')->name('store');
@@ -39,16 +43,29 @@ Route::group(['prefix' => 'projects', 'as' => 'projects.'], function () {
 	Route::get('/edit/{id}', 'ProjectController@edit')->name('edit');
 	Route::post('/update/{id}', 'ProjectController@update')->name('update');
 	Route::get('/show/{id}', 'ProjectController@show')->name('show')->middleware(['owner']);;
-	Route::post('add-member', 'ProjectController@addMember')->name('add-member');
-	Route::post('del-member', 'ProjectController@ajaxRemoveMember')->name('del-member');
+	Route::post('/{project_id}/add-member', 'ProjectController@addMember')->name('add-member');
+	Route::post('/del-member', 'ProjectController@ajaxRemoveMember')->name('del-member');
 
-	Route::group(['prefix' => '{project_id}', 'as' => 'tasks.'], function () {
-		Route::post('/store', 'TaskController@store')->name('store');
-		Route::get('/edit/{id}', 'TaskController@edit')->name('edit');
-		Route::get('/delete/{id}', 'TaskController@destroy')->name('delete');
-		Route::post('/update/{id}', 'TaskController@update')->name('update');
+	Route::group([
+		'prefix' => '{project_id}', 
+		'as' => 'task.',
+		'middleware' => ['owner']
+	], function () {
+		Route::post('/task-store', 'TaskController@store')->name('store');
+		Route::get('/task-edit/{id}', 'TaskController@edit')->name('edit');
+		Route::get('/task-delete/{id}', 'TaskController@destroy')->name('delete');
+		Route::post('/task-update/{id}', 'TaskController@update')->name('update');
 		Route::post('assign-task-member', 'TaskController@assignTaskMember')->name('assign-task-member');
 		Route::get('/remove-task-member/{id}', 'TaskController@removeTaskMember')->name('remove-task-member');
 	});
-	
+});
+
+Route::group([
+	'prefix' => 'tasks', 
+	'as' => 'tasks.',
+], function () {
+	Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
+	Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
+	Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
+	Route::get('/open-task', 'TaskController@openTask')->name('open-task');
 });

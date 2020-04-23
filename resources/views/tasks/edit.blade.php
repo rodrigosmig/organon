@@ -6,14 +6,14 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route("projects.tasks.update", ['id' => $task->id, 'project_id' => $project->id]) }}" method="POST">
+        <form action="{{ route("projects.task.update", ['id' => $task->id, 'project_id' => $project->id]) }}" method="POST">
             @csrf
             <input id="project_id" type="hidden" name="project_id" value="{{ $project->id }}">
             <div class="card-body">
                 <div class="form-group row">
-                    <label for="tasks-name" class="col-sm-2 col-form-label">Description</label>
+                    <label for="-name" class="col-sm-2 col-form-label">Description</label>
                     <div class="col-sm-10">
-                      <input type="text" id="tasks-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Task description" value="{{ $task->description }}" required>
+                      <input type="text" id="-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Task description" value="{{ $task->description }}" required>
                     </div>
                 </div>
                   <div class="form-group row">
