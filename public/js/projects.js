@@ -118,6 +118,23 @@ $(function() {
     });
   })
 
+  $(".delete-project").on('click', function(event) {
+    event.preventDefault()
+    
+    var link = event.currentTarget.href
+
+    swal({
+      title: 'Are you sure?',
+      text: 'All project data will be deleted',
+      icon: 'warning',
+      buttons: ["Cancel", "Confirm"],
+    }).then(function(confirm) {
+        if (confirm) {          
+          location.href=link
+        }
+    });
+})
+
   $.ajaxSetup({
     headers: {
       'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')

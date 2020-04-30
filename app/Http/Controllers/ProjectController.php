@@ -8,6 +8,7 @@ use App\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\ProjectStatusRequest;
 use App\Http\Requests\StoreProjectFormRequest;
 
 class ProjectController extends Controller
@@ -24,12 +25,15 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $projects = Project::getProjectsByOwnerId(Auth::user()->id);
+    {
+        $open_projects      = Project::getProjectsByStatus(Project::ACTIVE);
+        $finished_projects  = Project::getProjectsByStatus(Project::FINISHED);
 
         $data = [
-            'title'     => $this->title,
-            'projects'  => $projects
+            'title'             => $this->title,
+            'open_projects'     => $open_projects,
+            'finished_projects' => $finished_projects,
+            //'projects'          => $projects
         ];
 
         return view('projects.index', $data);
@@ -240,5 +244,35 @@ class ProjectController extends Controller
             return response($user->name . " was removed from the project.", 200);
         }
         return response("Invalid Request", 400);
+    }
+
+    public function finishProject($id) {
+        $project = Project::find($id);
+        
+        if ($project->status !== Project::ACTIVE) {
+            Alert::error('Invalid Request.', 'This project is not active');
+            return redirect()->route('projects.index');
+        }
+
+        $project->status = Project::FINISHED;
+        $project->save();
+
+        Alert::success("Sucess", "Status changed successfully.");
+        return redirect()->route('projects.index');
+    }
+
+    public function openProject($id) {
+        $project = Project::find($id);
+        
+        if ($project->status !== Project::FINISHED) {
+            Alert::error('Invalid Request.', 'This project is not finished');
+            return redirect()->route('projects.index');
+        }
+
+        $project->status = Project::ACTIVE;
+        $project->save();
+
+        Alert::success("Sucess", "Status changed successfully.");
+        return redirect()->route('projects.index');
     }
 }
