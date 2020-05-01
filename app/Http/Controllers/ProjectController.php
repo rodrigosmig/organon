@@ -6,9 +6,8 @@ use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Http\Requests\ProjectStatusRequest;
+use App\Http\Requests\ProjectMemberRequest;
 use App\Http\Requests\StoreProjectFormRequest;
 
 class ProjectController extends Controller
@@ -102,15 +101,15 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
         $project = Project::find($id);
 
-        if (!$project) {
-            Alert::error(__("Invalid Project"), (__("Project not found.")));
+        if ($project->status === Project::FINISHED) {
+            Alert::error('Invalid Request.', 'This project is not active');
             return redirect()->route('projects.index');
         }
-        
+     
         $data = [
             'title'     => $this->title,
             'project'  => $project
@@ -130,8 +129,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
 
-        if (!$project) {
-            Alert::error(__("Invalid Project"), (__("Project not found.")));
+        if ($project->status === Project::FINISHED) {
+            Alert::error('Invalid Request.', 'This project is not active');
             return redirect()->route('projects.index');
         }
 
@@ -141,7 +140,7 @@ class ProjectController extends Controller
         $project->deadline  = $validated['deadline'];
         $project->save();
 
-        Alert::success(__("Success"), (__("The project was successfully changed")));
+        Alert::success("Success", ("The project was successfully changed"));
 
         return redirect()->route('projects.show', ['id' => $project->id]);
     }
@@ -156,8 +155,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
 
-        if (!$project) {
-            Alert::error(__("Invalid Project"), (__("Project not found.")));
+        if ($project->status === Project::FINISHED) {
+            Alert::error('Invalid Request.', 'This project is not active');
             return redirect()->route('projects.index');
         }
 
@@ -169,81 +168,47 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
     }
 
-    public function addMember(Request $request)
+    public function addMember(ProjectMemberRequest $request)
     {
-        if ($request->input('user') && $request->input("project_id")) {
-            $project_id = $request->input("project_id");
-            $user_id    = $request->input('user');
-
-            $project    = Project::find($project_id);
-            
-            if (!$project) {
-                Alert::error('Invalid Project.', 'Project not found.');
-                return redirect()->route('projects.index');
-            }
-
-            $user = User::find($request->input('user'));
-
-            if (!$user) {
-                Alert::error('Invalid User.', 'User not found.');
-                return redirect()->route('projects.show', ['id' => $project->id]);
-            }
-            
-            if ($user->checkUser($project->owner)) {
-                Alert::error('Invalid User.', 'User is project owner.');
-                return redirect()->route('projects.show', ['id' => $project->id]);
-            }
-
-            if($project->isMember($user)) {
-                Alert::error('Invalid User.', 'User already belongs to the project.');
-                return redirect()->route('projects.show', ['id' => $project->id]);
-            }
-
-            $project->members()->attach($user->id);
-
-            Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
+        $project    = Project::find($request->input("project_id"));
+        $user       = User::find($request->input('user'));
+        
+        if ($user->checkUser($project->owner)) {
+            Alert::error('Invalid User.', 'User is project owner.');
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
-        Alert::error("Invalid Request", "Invalid Request. Try Again.");
-        return redirect()->route('projects.index');
+        if($project->isMember($user)) {
+            Alert::error('Invalid User.', 'User already belongs to the project.');
+            return redirect()->route('projects.show', ['id' => $project->id]);
+        }
+
+        $project->members()->attach($user->id);
+
+        Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
+        return redirect()->route('projects.show', ['id' => $project->id]);
     }
 
-    public function ajaxRemoveMember(Request $request)
+    public function ajaxRemoveMember(ProjectMemberRequest $request)
     {
-        if ($request->input('user_id') && $request->input('project_id')) {
-            $user       = User::find($request->input('user_id'));
-            $project    = Project::find($request->input('project_id'));
+        $user       = User::find($request->input('user_id'));
+        $project    = Project::find($request->input('project_id'));
 
-            if (!$user) {
-                return response("User not found.", 404);
-            }
-
-            if (!$project) {
-                return response("Project not found.", 404);
-            }
-
-            if ($user->checkUser($project->owner)) {
-                return response($user->name . " is the project owner.", 403);
-            }
-
-            if (!$request->user()->checkUser($project->owner)) {
-                return response("You are not the project owner.", 403);
-            }
-
-            if(!$project->isMember($user)) {
-                return response($user->name . " is not a project member.", 403);
-            }
-
-            if (!$project->getTasksByUserId($user->id)->isEmpty()) {
-                return response("It is not possible to remove the user because he has a task assigned.", 403);
-            }
-
-            $project->members()->detach([$user->id]);
-            
-            return response($user->name . " was removed from the project.", 200);
+        if ($user->checkUser($project->owner)) {
+            return response($user->name . " is the project owner.", 403);
         }
-        return response("Invalid Request", 400);
+
+        if(!$project->isMember($user)) {
+            return response($user->name . " is not a project member.", 403);
+        }
+
+        if (!$project->getTasksByUserId($user->id)->isEmpty()) {
+            return response("It is not possible to remove the user because he has a task assigned.", 403);
+        }
+
+        $project->members()->detach([$user->id]);
+        
+        return response($user->name . " was removed from the project.", 200);
     }
 
     public function finishProject($id) {

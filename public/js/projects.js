@@ -1,4 +1,4 @@
-$(function() {
+  $(function() {
     $(".collapse").on('show.bs.collapse', function() {
         $(this).parent().parent().prev().find('.expand i').removeClass('fa-caret-down').addClass('fa-caret-right')       
     }).on('hide.bs.collapse', function(){
@@ -107,7 +107,7 @@ $(function() {
             error: function(response) {
               swal({
                 title: 'Oops...',
-                text: response.responseText,
+                text: response.responseJSON.message,
                 icon: 'error',
               }).then(function() {
                 location.reload();
