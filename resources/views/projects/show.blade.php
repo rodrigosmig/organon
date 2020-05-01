@@ -37,7 +37,7 @@
 					<div class="modal-body">
 						<div class="input-group mb-3">
 							<label for="add-member">Search for a user</label>
-							<select id="add-member" name="user" class="select-user-ajax" style="width: 100%" required></select>
+							<select id="add-member" name="user_id" class="select-user-ajax" style="width: 100%" required></select>
 						</div>
 					</div>
 					<div class="modal-footer">
