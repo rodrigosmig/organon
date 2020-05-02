@@ -53,7 +53,7 @@
                                                                     ></time-counter>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="End task"><i class="fas fa-check"></i></a href="#">
+                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="End task"><i class="fas fa-check"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @endif                                                    
@@ -69,7 +69,7 @@
 
                     @empty($projects[App\Task::OPEN])
                         <h5 style="margin-top:20px">No tasks found.</h3>
-                    @endempty                    
+                    @endempty
                 </div>
                 <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
 

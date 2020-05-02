@@ -1,4 +1,4 @@
-$(function() {
+  $(function() {
     $(".collapse").on('show.bs.collapse', function() {
         $(this).parent().parent().prev().find('.expand i').removeClass('fa-caret-down').addClass('fa-caret-right')       
     }).on('hide.bs.collapse', function(){
@@ -107,7 +107,7 @@ $(function() {
             error: function(response) {
               swal({
                 title: 'Oops...',
-                text: response.responseText,
+                text: response.responseJSON.message,
                 icon: 'error',
               }).then(function() {
                 location.reload();
@@ -117,6 +117,23 @@ $(function() {
         }
     });
   })
+
+  $(".delete-project").on('click', function(event) {
+    event.preventDefault()
+    
+    var link = event.currentTarget.href
+
+    swal({
+      title: 'Are you sure?',
+      text: 'All project data will be deleted',
+      icon: 'warning',
+      buttons: ["Cancel", "Confirm"],
+    }).then(function(confirm) {
+        if (confirm) {          
+          location.href=link
+        }
+    });
+})
 
   $.ajaxSetup({
     headers: {

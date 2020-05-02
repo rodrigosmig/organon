@@ -9,6 +9,9 @@ class Project extends Model
 {
     use SoftDeletes;
 
+    const ACTIVE    = 'active';
+    const FINISHED  = 'finished';
+
     const STATUS = [
         'active'    => "Active", 
         'finished'  => "Finished"
@@ -60,6 +63,20 @@ class Project extends Model
     public static function getProjectsByOwnerId($id)
     {
         return Project::where('owner_id', $id)->get();
+    }
+
+    /**
+     * Fetch projects by status.
+     *
+     * @param  string  $status
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public static function getProjectsByStatus($status)
+    {
+        return Project::where([
+            'owner_id'  => Auth()->user()->id,
+            'status'    => $status
+        ])->get();
     }
     
     /**

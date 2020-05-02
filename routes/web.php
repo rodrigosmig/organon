@@ -42,9 +42,11 @@ Route::group([
 	Route::get('/delete/{id}', 'ProjectController@destroy')->name('delete');
 	Route::get('/edit/{id}', 'ProjectController@edit')->name('edit');
 	Route::post('/update/{id}', 'ProjectController@update')->name('update');
-	Route::get('/show/{id}', 'ProjectController@show')->name('show')->middleware(['owner']);;
+	Route::get('/show/{id}', 'ProjectController@show')->name('show');
 	Route::post('/{project_id}/add-member', 'ProjectController@addMember')->name('add-member');
 	Route::post('/del-member', 'ProjectController@ajaxRemoveMember')->name('del-member');
+	Route::get('/finish-project/{id}', 'ProjectController@finishProject')->name('finish-project');
+	Route::get('/open-project/{id}', 'ProjectController@openProject')->name('open-project');
 
 	Route::group([
 		'prefix' => '{project_id}', 
