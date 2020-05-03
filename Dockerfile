@@ -20,9 +20,13 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libonig-dev \
-    libzip-dev \
-    nodejs \
-    npm
+    libzip-dev
+
+# Node.js
+RUN curl -sL https://deb.nodesource.com/setup_12.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+RUN apt-get install nodejs -y
+RUN npm install npm@6.13.0 -g
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
