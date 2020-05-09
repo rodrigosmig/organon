@@ -25,7 +25,7 @@
                                 <form id="formEditPhoto" action="{{ route('user.edit-photo') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     
-                                    @if (auth()->user()->photo == 'user.png')
+                                    @if (! auth()->user()->hasPhoto())
                                         <img src="{{ asset('img/user.png') }}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
                                     @else
                                         <img src="/storage/{{auth()->user()->photo}}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />

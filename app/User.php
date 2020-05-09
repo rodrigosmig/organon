@@ -77,13 +77,22 @@ class User extends Authenticatable
     /**
      * Delete user photo
      *
-     * @var String
      * @return void
      */
-    public function deletePhoto(String $photo)
+    public function deletePhoto()
     {
-        Storage::disk('public')->delete($photo);
+        Storage::disk('public')->delete($this->photo);
         $this->photo = "user.png";
+    }
+
+    /**
+     * Returns true if user has a  photo
+     *
+     * @return bool
+     */
+    public function hasPhoto()
+    {
+        return $this->photo !== "user.png";
     }
 
     /**
