@@ -36,7 +36,7 @@ class UserController extends Controller
         $user->deletePhoto();
 
         $photo = $request->file('file')->store('photo', 'public');
-        $user->photo = $photo;
+        $user->setPhoto($photo);
         $user->save();
         
         Alert::Success('Success', __("Photo changed successfully"));

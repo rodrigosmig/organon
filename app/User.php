@@ -96,6 +96,19 @@ class User extends Authenticatable
     }
 
     /**
+     * Add photo in user profile
+     *
+     * @param string  $photo
+     * @return void
+     */
+    public function setPhoto($photo)
+    {
+        if ($photo) {
+            $this->photo = $photo;
+        }
+    }
+
+    /**
      * Returns the number of user tasks
      *
      * @return int
