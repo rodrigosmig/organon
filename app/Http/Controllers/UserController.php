@@ -33,8 +33,6 @@ class UserController extends Controller
             return redirect()->route('user.profile');
         }
 
-        $user->deletePhoto();
-
         $photo = $request->file('file')->store('photo', 'public');
         $user->setPhoto($photo);
         $user->save();

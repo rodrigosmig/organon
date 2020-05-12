@@ -81,8 +81,10 @@ class User extends Authenticatable
      */
     public function deletePhoto()
     {
-        Storage::disk('public')->delete($this->photo);
-        $this->photo = "user.png";
+        if ($this->hasPhoto()) {
+            Storage::disk('public')->delete($this->photo);
+            $this->photo = "user.png";
+        }
     }
 
     /**
@@ -104,6 +106,7 @@ class User extends Authenticatable
     public function setPhoto($photo)
     {
         if ($photo) {
+            $this->deletePhoto();
             $this->photo = $photo;
         }
     }
@@ -113,7 +116,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function countTasks()
+    public function countAllTasks()
     {
         return Task::where('user_id', $this->id)->count();
     }
@@ -123,7 +126,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function countProjects()
+    public function countAllProjects()
     {
         return Project::where('owner_id', $this->id)->count();
     }
