@@ -55,6 +55,17 @@ class Project extends Model
     }
 
     /**
+     * Add a member to the project
+     *
+     * @param  int  $id
+     * @return void
+     */
+    public function addMember($id): void
+    {
+        $this->members()->attach($id);
+    }
+
+    /**
      * Fetch projects by given owner id.
      *
      * @param  int  $id
