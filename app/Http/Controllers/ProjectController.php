@@ -183,7 +183,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
-        $project->addMember($user->id);
+        $project->addMember($user);
 
         Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
         return redirect()->route('projects.show', ['id' => $project->id]);

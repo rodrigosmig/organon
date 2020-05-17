@@ -57,12 +57,12 @@ class Project extends Model
     /**
      * Add a member to the project
      *
-     * @param  int  $id
+     * @param  User  $user
      * @return void
      */
-    public function addMember($id): void
+    public function addMember(User $user): void
     {
-        $this->members()->attach($id);
+        $this->members()->attach($user);
     }
 
     /**
