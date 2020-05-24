@@ -34,7 +34,7 @@ class ProjectTest extends TestCase
               
         $this->assertEquals(2, $this->project->getProjectsByOwnerId($this->user->id)->count());
         
-        $this->assertEquals(0, $this->project->getProjectsByOwnerId(123)->count());
+        $this->assertEquals(0, $this->project->getProjectsByOwnerId(654564)->count());
     }
 
     /**

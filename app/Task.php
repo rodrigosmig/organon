@@ -13,6 +13,9 @@ class Task extends Model
     
     const OPEN      = 'open';
     const FINISHED  = 'finished';
+    const START     = 'start';
+    const PAUSE     = 'pause';
+    const RESET     = 'reset';
 
     const STATUS = [
         'open'      => "Open", 
@@ -140,16 +143,26 @@ class Task extends Model
      */
     public function startTime()
     {
-        $task = TaskTime::create([
-            'start'     => Carbon::create('now')->timestamp,
-            'user_id'   => $this->user->id,
-            'task_id'   => $this->id
-        ]);
+        $task_time = $this->getTimeStarted();
+
+        if(! $task_time) {
+            $task = TaskTime::create([
+                'start'     => Carbon::create('now')->timestamp,
+                'user_id'   => $this->user->id,
+                'task_id'   => $this->id
+            ]);
+    
+            return [
+                'status' => 'success',
+                'msg'    => 'Time started'
+            ];
+        }
 
         return [
-            'status' => 'success',
-            'msg'    => 'Time started'
+            'status' => 'error',
+            'msg'    => 'Invalid request'
         ];
+        
     }
 
     /**
@@ -185,7 +198,11 @@ class Task extends Model
      */
     public function resetTime()
     {
-        if ($this->times()->delete() > 0) {
+        $delete = $this->times()
+                        ->where('user_id', Auth::user()->id)
+                        ->delete();
+
+        if ($delete > 0) {
             return [
                 'status' => 'success',
                 'msg'    => 'Task time has been restarted'
@@ -211,15 +228,15 @@ class Task extends Model
             'msg'    => 'Unable to update time.'
         ];
 
-        if ($type === 'start') {
+        if ($type === static::START) {
             $response = $this->startTime();
         }
 
-        if ($type ==='pause') {
+        if ($type === static::PAUSE) {
             $response = $this->pauseTime();
         }
 
-        if ($type ==='reset') {
+        if ($type === static::RESET) {
             $response = $this->resetTime();
         }
 
@@ -235,7 +252,7 @@ class Task extends Model
     public function getTimeStarted()
     {
         return $this->times()
-                    ->where('user_id', $this->user->id)
+                    ->where('user_id', Auth::user()->id)
                     ->whereNull('end')
                     ->get()
                     ->last();

@@ -42,7 +42,7 @@
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->name }}</a></h2>
                                 <h4 class="d-block" style="font-size: 0.8rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->email }}</a></h4>
                                 <h6 class="d-block">{{ auth()->user()->countAllProjects() }} Projects</h6>
-                                <h6 class="d-block">{{ auth()->user()->countTasks() }} Tasks</h6>
+                                <h6 class="d-block">{{ auth()->user()->countAllTasks() }} Tasks</h6>
                             </div>
                             <div class="ml-auto">
                                 <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="{{ __('Discard Changes') }}" />
