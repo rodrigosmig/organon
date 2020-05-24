@@ -153,7 +153,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ auth()->user()->name }}</span>
 
-                @if (auth()->user()->photo == 'user.png')
+                @if (! auth()->user()->hasPhoto())
                     <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}">
                 @else
                     <img class="img-profile rounded-circle" src="/storage/{{auth()->user()->photo}}">

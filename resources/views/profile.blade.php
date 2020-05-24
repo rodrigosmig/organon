@@ -25,7 +25,7 @@
                                 <form id="formEditPhoto" action="{{ route('user.edit-photo') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     
-                                    @if (auth()->user()->photo == 'user.png')
+                                    @if (! auth()->user()->hasPhoto())
                                         <img src="{{ asset('img/user.png') }}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
                                     @else
                                         <img src="/storage/{{auth()->user()->photo}}" id="imgProfile" style="width: 150px; height: 150px" class="img-thumbnail" />
@@ -41,8 +41,8 @@
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->name }}</a></h2>
                                 <h4 class="d-block" style="font-size: 0.8rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->email }}</a></h4>
-                                <h6 class="d-block">{{ auth()->user()->countProjects() }} Projects</h6>
-                                <h6 class="d-block">{{ auth()->user()->countTasks() }} Tasks</h6>
+                                <h6 class="d-block">{{ auth()->user()->countAllProjects() }} Projects</h6>
+                                <h6 class="d-block">{{ auth()->user()->countAllTasks() }} Tasks</h6>
                             </div>
                             <div class="ml-auto">
                                 <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="{{ __('Discard Changes') }}" />

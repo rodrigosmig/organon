@@ -171,8 +171,8 @@ class ProjectController extends Controller
     public function addMember(ProjectMemberRequest $request)
     {
         $project    = Project::find($request->input("project_id"));
-        $user       = User::find($request->input('user'));
-        
+        $user       = User::find($request->input('user_id'));
+
         if ($user->checkUser($project->owner)) {
             Alert::error('Invalid User.', 'User is project owner.');
             return redirect()->route('projects.show', ['id' => $project->id]);
@@ -183,7 +183,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
-        $project->members()->attach($user->id);
+        $project->addMember($user);
 
         Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
         return redirect()->route('projects.show', ['id' => $project->id]);

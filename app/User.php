@@ -46,7 +46,7 @@ class User extends Authenticatable
      */
     public function projects()
     {
-        return $this->belongsToMany('App\Project', 'project_members');
+        return $this->belongsToMany(Project::class, 'project_members');
     }
 
     /**
@@ -77,13 +77,38 @@ class User extends Authenticatable
     /**
      * Delete user photo
      *
-     * @var String
      * @return void
      */
-    public function deletePhoto(String $photo)
+    public function deletePhoto()
     {
-        Storage::disk('public')->delete($photo);
-        $this->photo = "user.png";
+        if ($this->hasPhoto()) {
+            Storage::disk('public')->delete($this->photo);
+            $this->photo = "user.png";
+        }
+    }
+
+    /**
+     * Returns true if user has a  photo
+     *
+     * @return bool
+     */
+    public function hasPhoto()
+    {
+        return $this->photo !== "user.png";
+    }
+
+    /**
+     * Add photo in user profile
+     *
+     * @param string  $photo
+     * @return void
+     */
+    public function setPhoto($photo)
+    {
+        if ($photo) {
+            $this->deletePhoto();
+            $this->photo = $photo;
+        }
     }
 
     /**
@@ -91,7 +116,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function countTasks()
+    public function countAllTasks()
     {
         return Task::where('user_id', $this->id)->count();
     }
@@ -101,7 +126,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function countProjects()
+    public function countAllProjects()
     {
         return Project::where('owner_id', $this->id)->count();
     }
