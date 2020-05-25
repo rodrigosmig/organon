@@ -42,7 +42,7 @@ class TaskTest extends TestCase
             'task_id' => $this->task->id,
         ]);
     }
-    
+
     /**
      * @test
      */
@@ -68,19 +68,20 @@ class TaskTest extends TestCase
      */
     public function getTotalWorkedByUser()
     {
-        $user = factory(User::class)->create();
+        $this->actingAs($this->user);
+
+        $this->assertEquals(7200, $this->task->getTotalWorkedByUser());
 
         $now = now();
 
         $taskTime = factory(TaskTime::class)->create([
             'start' => $now->getTimestamp(),
             'end' => $now->modify('+30 minutes')->getTimestamp(),
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'task_id' => $this->task->id,
         ]);
-
-
-        $this->assertEquals(9000, $this->task->getTotalWorked());
+        
+        $this->assertEquals(9000, $this->task->getTotalWorkedByUser());
     }
 
     /**
@@ -101,10 +102,18 @@ class TaskTest extends TestCase
     public function getUserTasksGroupedByProjects()
     {
         $this->actingAs($this->user);
-        $tasks = $this->task->getUserTasksGroupedByProjects();
-        
-        $this->assertTrue(isset($tasks[Task::OPEN]));
-        $this->assertFalse(isset($tasks[Task::FINISHED]));
+
+        $task = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'status' => Task::FINISHED,
+            'project_id' => $this->project->id,
+        ]);
+
+        $tasks1 = $this->task->getUserTasksGroupedByProjects();
+
+        $this->assertTrue(isset($tasks1[Task::OPEN]));
+        $this->assertTrue(isset($tasks1[Task::FINISHED]));
+
     }
 
     /**
@@ -229,14 +238,30 @@ class TaskTest extends TestCase
     /**
      * @test
      */
-    public function isFinished()
+    public function finishTask()
     {
-        $this->actingAs($this->user);
+        $this->assertFalse($this->task->isFinished());
 
-        $this->assertFalse($this->task->taskInProgress());
+        $this->assertTrue($this->task->finishTask());
 
-        $this->task->updateTime(Task::START);
+        $this->assertTrue($this->task->isFinished());
 
-        $this->assertTrue($this->task->taskInProgress());
+        $this->assertFalse($this->task->finishTask());
+    }
+
+    /**
+     * @test
+     */
+    public function openTask()
+    {
+        $this->assertTrue($this->task->finishTask());
+
+        $this->assertTrue($this->task->isFinished());
+
+        $this->assertTrue($this->task->openTask());
+
+        $this->assertFalse($this->task->isFinished());
+
+        $this->assertFalse($this->task->openTask());
     }
 }
