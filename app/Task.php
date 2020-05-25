@@ -81,7 +81,7 @@ class Task extends Model
         $seconds = 0;
         
         $task_times = $this->times()
-                            ->where(['user_id' => $this->user_id])
+                            ->where(['user_id' => Auth::user()->id])
                             ->get();
 
         foreach ($task_times as $time) {
@@ -276,5 +276,37 @@ class Task extends Model
     public function isFinished()
     {
         return $this->status === $this::FINISHED;
+    }
+
+    /**
+     * Finish task.
+     *
+     * @return bool
+     */
+    public function finishTask(): bool
+    {
+        if ($this->isFinished()) {
+            return false;
+        }
+
+        $this->status = $this::FINISHED;
+
+        return true;
+    }
+
+    /**
+     * Open task.
+     *
+     * @return bool
+     */
+    public function openTask(): bool
+    {
+        if (! $this->isFinished()) {
+            return false;
+        }
+
+        $this->status = $this::OPEN;
+
+        return true;
     }
 }

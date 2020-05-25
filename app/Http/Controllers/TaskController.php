@@ -275,7 +275,11 @@ class TaskController extends Controller
             return redirect()->route('tasks.my-tasks');
         }
 
-        $task->status = Task::FINISHED;
+        if (! $task->finishTask()) {
+            Alert::error('Invalid Request.', 'Task is not open.');
+            return redirect()->route('tasks.my-tasks');
+        }
+
         $task->save();
 
         Alert::success('Success.', 'Task successfully completed.');
@@ -286,12 +290,11 @@ class TaskController extends Controller
     {
         $task = Task::find($request->input('task_id'));
 
-        if (!$task->isFinished()) {
+        if (! $task->openTask()) {
             Alert::error('Invalid Request.', 'Task is not finished.');
             return redirect()->route('tasks.my-tasks');
         }
 
-        $task->status = Task::OPEN;
         $task->save();
 
         Alert::success('Success.', 'Task successfully opened.');
