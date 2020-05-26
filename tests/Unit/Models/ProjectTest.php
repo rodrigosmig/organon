@@ -205,4 +205,14 @@ class ProjectTest extends TestCase
 
         $this->assertEquals(9000, $this->project->getTotalWorkedOnProject());
     }
+
+    /**
+     * @test
+     */
+    public function isOwner()
+    {
+        $user = factory(User::class)->create();
+        $this->assertFalse($this->project->isOwner($user));
+        $this->assertTrue($this->project->isOwner($this->user));
+    }
 }

@@ -167,4 +167,15 @@ class Project extends Model
             'user_id'       => $user_id
         ])->get();
     }
+
+    /**
+     * Checks if the user is project owner
+     *
+     * @param  User  $user
+     * @return bool
+     */
+    public function isOwner($user): bool
+    {
+        return $this->owner->id === $user->id;
+    }
 }
