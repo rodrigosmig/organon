@@ -74,14 +74,15 @@ class Task extends Model
     /**
      * Returns the total worked on the task in seconds for the given user
      * 
+     * @param  int $user_id 
      * @return int
      */
-    public function getTotalWorkedByUser() :int
+    public function getTotalWorkedByUser($user_id) :int
     {
         $seconds = 0;
         
         $task_times = $this->times()
-                            ->where(['user_id' => Auth::user()->id])
+                            ->where(['user_id' => $user_id])
                             ->get();
 
         foreach ($task_times as $time) {

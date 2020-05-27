@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->date('deadline')->nullable();
             $table->enum('status', ['active', 'finished'])->default('active');
+            $table->double('amount_charged')->default(0.0);
             $table->bigInteger('owner_id')->unsigned();
             $table->foreign('owner_id')->references('id')->on('users');
             $table->softDeletes();

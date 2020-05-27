@@ -6,6 +6,7 @@ use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TaskTimeRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreTaskFormRequest;
@@ -270,7 +271,7 @@ class TaskController extends Controller
             return redirect()->route('tasks.my-tasks');
         }
 
-        if ($task->getTotalWorkedByUser() <= 0) {
+        if ($task->getTotalWorkedByUser(Auth::user()->id) <= 0) {
             Alert::error('Invalid Request.', 'Unable to finish task. Time worked not started.');
             return redirect()->route('tasks.my-tasks');
         }

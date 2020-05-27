@@ -68,12 +68,12 @@ class ProjectTest extends TestCase
         $project = factory(Project::class)->create(['owner_id' => $this->user->id]);
         $user1 = factory(User::class)->create();
       
-        $project->addMember($user1);
+        $project->addMember($user1, 0);
         
         $this->assertTrue($project->isMember($user1));
         $this->assertEquals(2, $project->getAllProjectMembers()->count());
         
-        $project->addMember($user1);
+        $project->addMember($user1, 0);
     }
 
     /**
@@ -84,8 +84,8 @@ class ProjectTest extends TestCase
         $user1 = factory(User::class)->create();
         $user2 = factory(User::class)->create();
 
-        $this->project->addMember($user1);
-        $this->project->addMember($user2);
+        $this->project->addMember($user1, 0);
+        $this->project->addMember($user2, 0);
       
         $this->assertEquals(3, $this->project->getAllProjectMembers()->count());        
     }
@@ -97,7 +97,7 @@ class ProjectTest extends TestCase
     {
         $user1 = factory(User::class)->create();
 
-        $this->project->addMember($user1);
+        $this->project->addMember($user1, 0);
       
         $this->assertTrue($this->project->isMember($user1));
     }
@@ -166,7 +166,7 @@ class ProjectTest extends TestCase
     public function getTotalWorkedOnProject()
     {
         $user = factory(User::class)->create();
-        $this->project->addMember($user);
+        $this->project->addMember($user, 0);
 
         $task1 = factory(Task::class)->create([
             'user_id' => $this->user->id,
@@ -214,5 +214,30 @@ class ProjectTest extends TestCase
         $user = factory(User::class)->create();
         $this->assertFalse($this->project->isOwner($user));
         $this->assertTrue($this->project->isOwner($this->user));
+    }
+
+    /**
+     * @test
+     */
+    public function getTotalProjectCost()
+    {
+        $user = factory(User::class)->create();
+        $task = factory(Task::class)->create([
+            'user_id' => $user->id,
+            'project_id' => $this->project->id
+        ]);
+
+        $this->project->addMember($user, 10);
+
+        $now = now();
+
+        $taskTime = factory(TaskTime::class)->create([
+            'start' => $now->getTimestamp(),
+            'end' => $now->modify('+2 hour')->getTimestamp(),
+            'user_id' => $user->id,
+            'task_id' => $task->id,
+        ]);
+
+        $this->assertEquals(20, $this->project->getTotalProjectCost());
     }
 }

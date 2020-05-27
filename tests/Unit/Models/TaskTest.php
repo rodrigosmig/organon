@@ -68,9 +68,7 @@ class TaskTest extends TestCase
      */
     public function getTotalWorkedByUser()
     {
-        $this->actingAs($this->user);
-
-        $this->assertEquals(7200, $this->task->getTotalWorkedByUser());
+        $this->assertEquals(7200, $this->task->getTotalWorkedByUser($this->user->id));
 
         $now = now();
 
@@ -81,7 +79,7 @@ class TaskTest extends TestCase
             'task_id' => $this->task->id,
         ]);
         
-        $this->assertEquals(9000, $this->task->getTotalWorkedByUser());
+        $this->assertEquals(9000, $this->task->getTotalWorkedByUser($this->user->id));
     }
 
     /**
