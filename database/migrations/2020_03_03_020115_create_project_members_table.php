@@ -18,6 +18,7 @@ class CreateProjectMembersTable extends Migration
             $table->foreign('project_id')->references('id')->on('projects');
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->double('hour_value')->default(0.0)->nullable();
             $table->timestamps();
             $table->primary(['user_id', 'project_id']);
         });

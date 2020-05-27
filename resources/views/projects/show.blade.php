@@ -38,7 +38,11 @@
 						<div class="input-group mb-3">
 							<label for="add-member">Search for a user</label>
 							<select id="add-member" name="user_id" class="select-user-ajax" style="width: 100%" required></select>
-						</div>
+            </div>
+            <div class="input-group mb-3">
+							<label for="hour_value">Hour Value</label>
+							<input type="number" id="hour_value" name="hour_value" class="input-user-ajax" style="width: 100%" value="0.0"></select>
+            </div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -160,8 +164,8 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project cost</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ $project->getTotalProjectCost() }}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -176,8 +180,8 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project Value</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ $project->amount_charged }}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -276,6 +280,7 @@
                         <th>Avatar</th>
                         <th>Name</th>
                         <th>Total Worked</th>
+                        <th>Hour Value</th>
                         <th>Action</th>
                     </thead>
                     <tbody>
@@ -294,6 +299,12 @@
                                 <td>
                                     {{ secondsToTime($user->total_worked) }}
                                 </td>
+                                @if (! $project->isOwner($user))
+                                  <td>{{ $user->pivot->hour_value }}</td>    
+                                @else
+                                <td>0</td>
+                                @endif
+                                
                                 <td>
                                     <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" data-project="{{ $project->id }}" data-toggle="tooltip" data-placement="right" title="Remove Member"><i class="fas fa-user-minus"></i></a>
                                 </td>

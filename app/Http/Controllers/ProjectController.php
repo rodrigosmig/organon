@@ -59,9 +59,10 @@ class ProjectController extends Controller
         $validated = $request->validated();
 
         $project = Project::create([
-            'name'      => $validated['name'],
-            'deadline'  => $validated['deadline'],
-            'owner_id'  => $request->user()->id
+            'name'              => $validated['name'],
+            'deadline'          => $validated['deadline'],
+            'owner_id'          => $request->user()->id,
+            'amount_charged'    => $request->input('amount_charged', 0.0)
         ]);
         
         Alert::success(__('Success'), "The {$project->name} project was successfully created");
@@ -136,8 +137,9 @@ class ProjectController extends Controller
 
         $validated = $request->validated();
         
-        $project->name      = $validated['name'];
-        $project->deadline  = $validated['deadline'];
+        $project->name              = $validated['name'];
+        $project->deadline          = $validated['deadline'];
+        $project->amount_charged    = $request->input('amount_charged', 0.0);
         $project->save();
 
         Alert::success("Success", ("The project was successfully changed"));
@@ -172,7 +174,8 @@ class ProjectController extends Controller
     {
         $project    = Project::find($request->input("project_id"));
         $user       = User::find($request->input('user_id'));
-
+        $hour_value = $request->input('hour_value', 0);
+        
         if ($user->checkUser($project->owner)) {
             Alert::error('Invalid User.', 'User is project owner.');
             return redirect()->route('projects.show', ['id' => $project->id]);
@@ -183,7 +186,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
-        $project->addMember($user);
+        $project->addMember($user, $hour_value);
 
         Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
         return redirect()->route('projects.show', ['id' => $project->id]);

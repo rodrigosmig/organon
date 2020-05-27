@@ -107,7 +107,7 @@
             error: function(response) {
               swal({
                 title: 'Oops...',
-                text: response.responseJSON.message,
+                text: response.responseText,
                 icon: 'error',
               }).then(function() {
                 location.reload();

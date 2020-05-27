@@ -32,6 +32,12 @@
                       <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="project-deadline" name="deadline" value="{{ old('deadline') }}" required>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <label for="project-amount_charged" class="col-sm-2 col-form-label">Amount Charged</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control" id="project-amount_charged" name="amount_charged" value="0.0">
+                    </div>
+                </div>
             </div>
             <div class="card-footer text-muted">
                 <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">Cancel</a>
