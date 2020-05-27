@@ -7,7 +7,7 @@ services:
         restart: unless-stopped
         tty: true
         environment:
-            SERVICE_NAME: app
+            SERVICE_NAME: app_organon
             SERVICE_TAGS: dev
         working_dir: /var/www
         volumes:
@@ -18,7 +18,7 @@ services:
     
     webserver:
         image: nginx:alpine
-        container_name: webserver
+        container_name: webserver_organon
         restart: unless-stopped
         tty: true
         ports:
@@ -32,7 +32,7 @@ services:
         
     db:
         image: mysql:5.7.22
-        container_name: db
+        container_name: db_organon
         restart: unless-stopped
         tty: true
         ports:

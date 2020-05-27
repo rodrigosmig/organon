@@ -46,7 +46,7 @@
                                                                 <td>{{ $item->deadline }}</td>
                                                                 <td>
                                                                     <time-counter 
-                                                                        total-worked="{{ $item->getTotalWorkedByUser() }}"
+                                                                        total-worked="{{ $item->getTotalWorkedByUser($item->user->id) }}"
                                                                         project_id="{{ $item->project->id }}"
                                                                         user_id="{{ $item->user->id }}"
                                                                         task_id="{{ $item->id }}"
@@ -100,7 +100,7 @@
                                                             <tr>
                                                                 <td>{{ $item->description }}</td>
                                                                 <td>{{ $item->deadline }}</td>
-                                                                <td>{{secondsToTime( $item->getTotalWorkedByUser()) }}</td>
+                                                                <td>{{secondsToTime( $item->getTotalWorkedByUser($item->user->id)) }}</td>
                                                                 <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
                                                             </tr>
                                                         @endif

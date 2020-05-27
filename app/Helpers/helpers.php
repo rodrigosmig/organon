@@ -12,4 +12,9 @@
         return $hours . "h " . $minutes . "m " . $seconds_left . "s";
     }
 
+    function secondsToHour($seconds) :float
+    {
+        return $seconds / 3600;
+    }
+
 ?>
