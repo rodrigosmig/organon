@@ -20,7 +20,11 @@ class ProjectTest extends TestCase
         
         $this->user = factory(User::class)->create();
 
-        $this->project = factory(Project::class)->create(['owner_id' => $this->user->id]);
+        $this->project = factory(Project::class)->create([
+            'owner_id' => $this->user->id,
+            'amount_charged' => 100.00,
+            'deadline' => now()->modify('-1 days')->format('Y-m-d')
+        ]);
     }
 
     /**
@@ -239,5 +243,88 @@ class ProjectTest extends TestCase
         ]);
 
         $this->assertEquals(20, $this->project->getTotalProjectCost());
+    }
+
+    /**
+     * @test
+     */
+    public function getTotalCostActiveProjects()
+    {
+        $this->actingAs($this->user);
+
+        $user = factory(User::class)->create();
+
+        $this->project->addMember($user, 10);
+
+        $task = factory(Task::class)->create([
+            'user_id' => $user->id,
+            'project_id' => $this->project->id
+        ]);        
+
+        $now = now();
+
+        $taskTime = factory(TaskTime::class)->create([
+            'start' => $now->getTimestamp(),
+            'end' => $now->modify('+2 hour')->getTimestamp(),
+            'user_id' => $user->id,
+            'task_id' => $task->id,
+        ]);
+
+        $user2 = factory(User::class)->create();
+        $project2 = factory(Project::class)->create(['owner_id' => $this->user]);
+        $project2->addMember($user2, 20);
+
+        $task2 = factory(Task::class)->create([
+            'user_id' => $user2->id,
+            'project_id' => $project2->id
+        ]);
+
+        $taskTime2 = factory(TaskTime::class)->create([
+            'start' => $now->getTimestamp(),
+            'end' => $now->modify('+1 hour')->getTimestamp(),
+            'user_id' => $user2->id,
+            'task_id' => $task2->id,
+        ]);
+
+        $this->assertEquals(40.0, Project::getTotalCostActiveProjects());
+    }
+
+    /**
+     * @test
+     */
+    public function getTotalValueOfActiveProjects()
+    {
+        $this->actingAs($this->user);
+
+        $project2 = factory(Project::class)->create([
+            'owner_id' => $this->user->id,
+            'amount_charged' => 350.00
+        ]);
+
+        $project3 = factory(Project::class)->create([
+            'owner_id' => $this->user->id,
+            'amount_charged' => 630.00
+        ]);
+
+        $this->assertEquals(1080, Project::getTotalValueOfActiveProjects());
+    }
+
+    /**
+     * @test
+     */
+    public function getDelayedProjects()
+    {
+        $this->actingAs($this->user);
+
+        $this->assertEquals(1, Project::getDelayedProjects()->count());
+
+        $now = now();
+
+        $project = factory(Project::class)->create([
+            'owner_id' => $this->user->id,
+            'deadline' => $now->modify('-2 days')
+        ]);
+        
+        $this->assertEquals(2, Project::getDelayedProjects()->count());
     }
 }

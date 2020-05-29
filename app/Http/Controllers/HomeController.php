@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Project;
 use SendGrid\Mail\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home', ['title' => $this->title]);
+        $data = [
+            'title' => $this->title,
+            'totalProjectsCost' => Project::getTotalCostActiveProjects(),
+            'totalProjectValue' => Project::getTotalValueOfActiveProjects(),
+            'delayedProjects'   => Project::getDelayedProjects()->count()
+        ];
+
+        return view('home', $data);
     }
 
 }

@@ -104,4 +104,22 @@ class UserTest extends TestCase
 
         $this->assertEquals(2, $this->user->countAllTasks());        
     }
+
+    /**
+     * @test
+     */
+    public function countActiveProjects()
+    {
+        $this->actingAs($this->user);
+
+        $project1 = factory(Project::class)->create(['owner_id' => $this->user->id]);
+        $this->assertEquals(1, $this->user->countActiveProjects());
+
+        $project2 = factory(Project::class)->create(['owner_id' => $this->user->id]);
+        $this->assertEquals(2, $this->user->countActiveProjects());
+
+        $project3 = factory(Project::class)->create(['owner_id' => $this->user->id]);
+        $project4 = factory(Project::class)->create(['owner_id' => $this->user->id]);
+        $this->assertEquals(4, $this->user->countActiveProjects());
+    }
 }
