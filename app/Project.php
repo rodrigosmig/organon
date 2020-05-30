@@ -200,4 +200,96 @@ class Project extends Model
 
         return $total_cost;
     }
+
+    /**
+     * returns the cost of active projects
+     *
+     * @return float
+     */
+    public static function getTotalCostActiveProjects(): float
+    {
+        $total = 0.0;
+
+        $projects = static::getProjectsByStatus(Project::ACTIVE);
+
+        foreach ($projects as $project) {
+            $total += $project->getTotalProjectCost();
+        }
+
+        return $total;
+    }
+
+    /**
+     * Returns total value of active projects
+     *
+     * @return float
+     */
+    public static function getTotalValueOfActiveProjects(): float
+    {
+        $total = 0.0;
+
+        $projects = static::getProjectsByStatus(Project::ACTIVE);
+
+        foreach ($projects as $project) {
+            $total += $project->amount_charged;
+        }
+
+        return $total;
+    }
+
+    /**
+     * Returns total projects with missed deadlines
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public static function getDelayedProjects()
+    {
+        $now        = now();
+        $projects   = static::getProjectsByStatus(Project::ACTIVE);
+
+        $delayed_projects = collect();
+
+        foreach ($projects as $project) {
+            $date = (new \DateTime($project->deadline))->getTimestamp();
+            
+            if($date < $now->getTimestamp()) {
+                $delayed_projects->push($project);
+            }
+        }
+
+        return $delayed_projects;
+    }
+
+    /**
+     * Returns project progress as a percentage
+     *
+     * @return float
+     */
+    public function getProjectsProgress(): float
+    {
+        $number_finish_tasks    = $this->tasks()->where('status', Task::FINISHED)->get()->count();
+        $total_of_projects      = $this->tasks()->count();
+        
+        if($total_of_projects === 0) {
+            return 0.0;
+        }
+
+        return ($number_finish_tasks / $total_of_projects) * 100;
+    }
+
+    /**
+     * Checks if the prject has a task is in progress
+     *
+     * @return bool
+     */
+    public function hasTaskInProgress(): bool
+    {
+        foreach ($this->tasks as $task) {
+            if ($task->taskInProgress()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -161,6 +161,11 @@ class ProjectController extends Controller
             Alert::error('Invalid Request.', 'This project is not active');
             return redirect()->route('projects.index');
         }
+        
+        if ($project->hasTaskInProgress()) {
+            Alert::error('The project has a task in progress.', 'It is not possible to delete the project.');
+            return redirect()->route('projects.index');
+        }
 
         $project->tasks()->delete();
         $project->delete();
