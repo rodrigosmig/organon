@@ -36,6 +36,7 @@ Route::group([
 	'as' => 'projects.',
 	'middleware' => ['owner']
 ], function () {
+	Route::any('/search', 'ProjectController@search')->name('search');
 	Route::get('/', 'ProjectController@index')->name('index');
 	Route::get('/new', 'ProjectController@create')->name('new');
 	Route::post('/store', 'ProjectController@store')->name('store');
