@@ -248,4 +248,16 @@ class ProjectController extends Controller
         Alert::success("Sucess", "Status changed successfully.");
         return redirect()->route('projects.index');
     }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except('_token');
+        
+        $projects = Project::search($request->project_name);
+
+        return view('projects.search', [
+            'projects' => $projects,
+            'filters' => $filters
+        ]);
+    }
 }

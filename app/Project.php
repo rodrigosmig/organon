@@ -292,4 +292,15 @@ class Project extends Model
 
         return false;
     }
+
+    /**
+     * Search for a project
+     *
+     * @return bool
+     */
+    public static function search($filter)
+    {
+        return Project::where('name', 'LIKE', "%{$filter}%")
+                    ->paginate();
+    }
 }
