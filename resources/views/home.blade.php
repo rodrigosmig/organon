@@ -80,7 +80,10 @@
                 </div>
                 <div class="card-body">
                     @foreach ($projects as $project)
-                        <h4 class="small font-weight-bold">{{ $project->name }} <span class="float-right">{{ $project->getProjectsProgress() == 100 ? 'Complete!' : $project->getProjectsProgress() . "%" }}</span></h4>
+                        <h4 class="small font-weight-bold">
+                            <a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
+                            <span class="float-right">{{ $project->getProjectsProgress() == 100 ? 'Complete!' : $project->getProjectsProgress() . "%" }}</span>
+                        </h4>
                         <div class="progress mb-4">
                             @if ($project->tasks()->count() > 0)
                                 @if ($project->getProjectsProgress() <= 20)
