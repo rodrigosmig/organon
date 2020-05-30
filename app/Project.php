@@ -276,4 +276,20 @@ class Project extends Model
 
         return ($number_finish_tasks / $total_of_projects) * 100;
     }
+
+    /**
+     * Checks if the prject has a task is in progress
+     *
+     * @return bool
+     */
+    public function hasTaskInProgress(): bool
+    {
+        foreach ($this->tasks as $task) {
+            if ($task->taskInProgress()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

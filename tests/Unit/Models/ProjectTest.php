@@ -364,4 +364,23 @@ class ProjectTest extends TestCase
 
         $this->assertEquals(40, $this->project->getProjectsProgress());
     }
+
+    /**
+     * @test
+     */
+    public function hasTaskInProgress()
+    {
+        $this->actingAs($this->user);
+
+        $task = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id,
+        ]);
+
+        $this->assertFalse($this->project->hasTaskInProgress());
+        
+        $task->startTime();
+        
+        $this->assertTrue($this->project->hasTaskInProgress());
+    }
 }
