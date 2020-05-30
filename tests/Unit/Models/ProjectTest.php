@@ -327,4 +327,41 @@ class ProjectTest extends TestCase
         
         $this->assertEquals(2, Project::getDelayedProjects()->count());
     }
+
+    /**
+     * @test
+     */
+    public function getProjectsProgress()
+    {
+        $task1 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id,
+            'status' => Task::FINISHED
+        ]);
+        
+        $task2 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id,
+            'status' => Task::FINISHED
+        ]);
+
+        $task3 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id
+        ]);
+
+        $task4 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id
+        ]);
+
+        $this->assertEquals(50, $this->project->getProjectsProgress());
+
+        $task5 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id
+        ]);
+
+        $this->assertEquals(40, $this->project->getProjectsProgress());
+    }
 }

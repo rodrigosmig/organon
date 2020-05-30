@@ -259,4 +259,21 @@ class Project extends Model
 
         return $delayed_projects;
     }
+
+    /**
+     * Returns project progress as a percentage
+     *
+     * @return float
+     */
+    public function getProjectsProgress(): float
+    {
+        $number_finish_tasks    = $this->tasks()->where('status', Task::FINISHED)->get()->count();
+        $total_of_projects      = $this->tasks()->count();
+        
+        if($total_of_projects === 0) {
+            return 0.0;
+        }
+
+        return ($number_finish_tasks / $total_of_projects) * 100;
+    }
 }

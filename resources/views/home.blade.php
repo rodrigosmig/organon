@@ -73,56 +73,30 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-6 mb-4">
+        <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
                 </div>
                 <div class="card-body">
-                    <h4 class="small font-weight-bold">Server Migration <span class="float-right">20%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Sales Tracking <span class="float-right">40%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Customer Database <span class="float-right">60%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Payout Details <span class="float-right">80%</span></h4>
-                    <div class="progress mb-4">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <h4 class="small font-weight-bold">Account Setup <span class="float-right">Complete!</span></h4>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                </div>
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <canvas id="myPieChart"></canvas>
-                    </div>
-                    <div class="mt-4 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-primary"></i> Direct
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-success"></i> Social
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle text-info"></i> Referral
-                        </span>
-                    </div>
+                    @foreach ($projects as $project)
+                        <h4 class="small font-weight-bold">{{ $project->name }} <span class="float-right">{{ $project->getProjectsProgress() == 100 ? 'Complete!' : $project->getProjectsProgress() . "%" }}</span></h4>
+                        <div class="progress mb-4">
+                            @if ($project->tasks()->count() > 0)
+                                @if ($project->getProjectsProgress() <= 20)
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                @elseif ($project->getProjectsProgress() <= 40)
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                @elseif ($project->getProjectsProgress() <= 60)
+                                    <div class="progress-bar" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                @elseif ($project->getProjectsProgress() <= 80)
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                @else
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                @endif
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

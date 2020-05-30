@@ -28,11 +28,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $delayed_projects = Project::getDelayedProjects();
         $data = [
             'title' => $this->title,
+            'projects'          => Project::getProjectsByStatus(Project::ACTIVE),
             'totalProjectsCost' => Project::getTotalCostActiveProjects(),
             'totalProjectValue' => Project::getTotalValueOfActiveProjects(),
-            'delayedProjects'   => Project::getDelayedProjects()->count()
+            'delayedProjects'   => $delayed_projects->count()
         ];
 
         return view('home', $data);
