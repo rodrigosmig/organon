@@ -165,7 +165,7 @@
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project cost</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ $project->getTotalProjectCost() }}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -181,7 +181,7 @@
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project Value</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">$ {{ $project->amount_charged }}</div>
+                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->amount_charged, 2, ',', '.') }}</div>
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -300,7 +300,7 @@
                                     {{ secondsToTime($user->total_worked) }}
                                 </td>
                                 @if (! $project->isOwner($user))
-                                  <td>{{ $user->pivot->hour_value }}</td>    
+                                  <td>${{ number_format($user->pivot->hour_value, 2, ',', '.') }}</td>    
                                 @else
                                 <td>0</td>
                                 @endif

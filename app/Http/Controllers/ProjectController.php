@@ -32,7 +32,6 @@ class ProjectController extends Controller
             'title'             => $this->title,
             'open_projects'     => $open_projects,
             'finished_projects' => $finished_projects,
-            //'projects'          => $projects
         ];
 
         return view('projects.index', $data);
