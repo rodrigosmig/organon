@@ -13,44 +13,98 @@ class TasksSeeder extends Seeder
      */
     public function run()
     {
+        //Project1
         Task::create([
             'description'   => 'Layout',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '25/03/2020'),
-            'user_id'       => 1,
+            'deadline'      => now()->modify("-15 days")->format('Y-m-d'),
+            'user_id'       => 2,
             'project_id'    => 1,
-            'status'        => 'finished'
+            'status'        => Task::FINISHED
         ]);
-
         Task::create([
-            'description'   => 'Ilustração',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '15/04/2020'),
+            'description'   => 'Illustration',
+            'deadline'      => now()->modify("-13 days")->format('Y-m-d'),
             'user_id'       => 4,
             'project_id'    => 1,
+            'status'        => Task::FINISHED
         ]);
-
         Task::create([
             'description'   => 'Frontend',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '29/04/2020'),
-            'user_id'       => 2,
+            'deadline'      => now()->modify("-10 days")->format('Y-m-d'),
+            'user_id'       => 3,
             'project_id'    => 1
         ]);
-
         Task::create([
             'description'   => 'Backend',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '25/05/2020'),
+            'deadline'      => now()->modify("-1 days")->format('Y-m-d'),
+            'user_id'       => 6,
             'project_id'    => 1
         ]);
 
+        //Preoject2
         Task::create([
-            'description'   => 'Análise de Requisitos',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '23/05/2020'),
+            'description'   => 'Layout',
+            'deadline'      => now()->modify("-5 days")->format('Y-m-d'),
+            'user_id'       => 10,
+            'project_id'    => 2,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Illustration',
+            'deadline'      => now()->modify("-1 days")->format('Y-m-d'),
+            'user_id'       => 10,
+            'project_id'    => 2,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Systems Requirement Analysis',
+            'deadline'      => now()->modify("-10 days")->format('Y-m-d'),
+            'user_id'       => 9,
+            'project_id'    => 2,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Frontend',
+            'deadline'      => now()->modify("+15 days")->format('Y-m-d'),
+            'user_id'       => 7,
+            'project_id'    => 2,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Backend',
+            'deadline'      => now()->modify("+25 days")->format('Y-m-d'),
+            'user_id'       => 9,
             'project_id'    => 2
         ]);
 
+         //Preoject3
+         Task::create([
+            'description'   => 'Layout',
+            'deadline'      => now()->modify("-45 days")->format('Y-m-d'),
+            'user_id'       => 12,
+            'project_id'    => 3,
+            'status'        => Task::FINISHED
+        ]);
         Task::create([
-            'description'   => 'Design',
-            'deadline'      => Carbon\Carbon::createFromFormat('d/m/Y', '27/05/2020'),
-            'project_id'    => 4
+            'description'   => 'Illustration',
+            'deadline'      => now()->modify("-40 days")->format('Y-m-d'),
+            'user_id'       => 11,
+            'project_id'    => 3,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Frontend',
+            'deadline'      => now()->modify("-25 days")->format('Y-m-d'),
+            'user_id'       => 8,
+            'project_id'    => 3,
+            'status'        => Task::FINISHED
+        ]);
+        Task::create([
+            'description'   => 'Backend',
+            'deadline'      => now()->modify("-25 days")->format('Y-m-d'),
+            'user_id'       => 1,
+            'project_id'    => 3,
+            'status'        => Task::FINISHED
         ]);
     }
 }

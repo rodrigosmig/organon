@@ -251,6 +251,11 @@ class ProjectController extends Controller
 
     public function search(Request $request)
     {
+        if (empty($request->project_name)) {
+            Alert::warning("No search word", "Enter a search word.");
+            return redirect()->route('home');
+        }
+        
         $filters = $request->except('_token');
         
         $projects = Project::search($request->project_name);
