@@ -32,7 +32,6 @@ class ProjectController extends Controller
             'title'             => $this->title,
             'open_projects'     => $open_projects,
             'finished_projects' => $finished_projects,
-            //'projects'          => $projects
         ];
 
         return view('projects.index', $data);
@@ -161,6 +160,11 @@ class ProjectController extends Controller
             Alert::error('Invalid Request.', 'This project is not active');
             return redirect()->route('projects.index');
         }
+        
+        if ($project->hasTaskInProgress()) {
+            Alert::error('The project has a task in progress.', 'It is not possible to delete the project.');
+            return redirect()->route('projects.index');
+        }
 
         $project->tasks()->delete();
         $project->delete();
@@ -242,5 +246,22 @@ class ProjectController extends Controller
 
         Alert::success("Sucess", "Status changed successfully.");
         return redirect()->route('projects.index');
+    }
+
+    public function search(Request $request)
+    {
+        if (empty($request->project_name)) {
+            Alert::warning("No search word", "Enter a search word.");
+            return redirect()->route('home');
+        }
+        
+        $filters = $request->except('_token');
+        
+        $projects = Project::search($request->project_name);
+
+        return view('projects.search', [
+            'projects' => $projects,
+            'filters' => $filters
+        ]);
     }
 }

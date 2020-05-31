@@ -130,4 +130,17 @@ class User extends Authenticatable
     {
         return Project::where('owner_id', $this->id)->count();
     }
+
+    /**
+     * Returns the number of active user projects
+     *
+     * @return int
+     */
+    public function countActiveProjects()
+    {
+        return Project::where([
+            'owner_id'  => $this->id,
+            'status'    => Project::ACTIVE
+        ])->count();
+    }
 }
