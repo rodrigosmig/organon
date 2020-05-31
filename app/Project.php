@@ -194,7 +194,7 @@ class Project extends Model
 
             foreach ($tasks as $task) {
                 $time_in_hour = secondsToHour($task->getTotalWorkedByUser($member->id));
-                $total_cost = $time_in_hour * $hour_value;
+                $total_cost += $time_in_hour * $hour_value;
             }
         }
 
