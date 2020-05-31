@@ -14,76 +14,76 @@ class UsersSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'      => 'Rodrigo Miguel',
-            'email'     => 'rodrigosmig@outlook.com',
+            'name'      => 'Michael Scott',
+            'email'     => 'michael@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'photo/K23H3MzEeSpGqYTQnepal9PdxlPMixCKHF1mCmWN.png'
+            'photo'     => 'photo/pwFU6I5HxQVeOGem0LEaK3NWY3XoK98dFENYCe6F.jpeg'
         ]);
         User::create([
-            'name'      => 'Isabela Prado',
-            'email'     => 'isabela@gmail.com',
+            'name'      => 'Pam Beesly',
+            'email'     => 'pam@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'photo/uogW6LB8Db1cp5e25d74mkM4ESnu7hlruZwdi7rg.jpeg'
+            'photo'     => 'photo/3SagOjd7UwF2qXdkkWb61R8f7sP4yAEqnTnDgYrs.png'
         ]);
         User::create([
-            'name'      => 'Rafaela Medeiros',
-            'email'     => 'rafaela@gmail.com',
+            'name'      => 'Jim Halpert',
+            'email'     => 'jim@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/f24iQgDrHX7y1HX9jQZIezTpieG8pS4fMwqNWcOM.jpeg'
         ]);
         User::create([
-            'name'      => 'Lucas Alves',
-            'email'     => 'lucas@gmail.com',
+            'name'      => 'Dwight Schrute',
+            'email'     => 'dwight@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'photo/lgI9zA7DeLv6Q4ooH6yexWqfvCUneC2P0C99FyI2.jpeg'
+            'photo'     => 'photo/YSOLYC5GRELX4uNhphISUxz97IjhnA7sbbZESzC4.jpeg'
         ]);
         User::create([
-            'name'      => 'Roberto Silva',
-            'email'     => 'roberto@gmail.com',
+            'name'      => 'Ryan Howard',
+            'email'     => 'ryan@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'photo/If6PBBV4fQ2QnnzU1XT0zDnde2y9KdWJcvrtcc19.jpeg'
+            'photo'     => 'photo/YIpQFSTrkDWPoEoF3fzICszxaAC9xdeyqJsLDCoF.jpeg'
         ]);
         User::create([
-            'name'      => 'Marcela Rafael',
-            'email'     => 'marcela@gmail.com',
+            'name'      => 'Angela Martin',
+            'email'     => 'angela@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'photo/QWQtmfWfowqdwQ04MwzwtV4IZKPDNIUaZJDWy1Bx.png'
+            'photo'     => 'photo/XgzZoFvVeNOKeCBLHnBJqTCXNKQkBhsdBzzJTNnA.jpeg'
         ]);
         User::create([
-            'name'      => 'Vanessa Guimarães',
-            'email'     => 'vanessa@gmail.com',
+            'name'      => 'Kevin Malone',
+            'email'     => 'kevin@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/VbHyg9wpehn3U8g8uq7fo1qJwZq0vBi5rC1g6jlh.jpeg'
         ]);
         User::create([
-            'name'      => 'Rogério Martins',
-            'email'     => 'rogerio@gmail.com',
+            'name'      => 'Oscar Martinez ',
+            'email'     => 'oscar@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/ajju2mqV0mQDE9lEE2yswuyC8W8V2YQNBe5gCrEz.jpeg'
         ]);
         User::create([
-            'name'      => 'Thiago Santos',
-            'email'     => 'thiago@gmail.com',
+            'name'      => 'Stanley Hudson',
+            'email'     => 'stanley@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/tPpVoFs9AihUffHuHOd0vXJaqNofaWh2fVeykjyT.jpeg'
         ]);
         User::create([
-            'name'      => 'Felipe Figueireiro',
-            'email'     => 'felipe@gmail.com',
+            'name'      => 'Creed Bratton',
+            'email'     => 'creed@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/rhsPs4tjqqLRpFCzzcrMsDFTx6fLbqaqKW5kXdIu.jpeg'
         ]);
         User::create([
-            'name'      => 'Raíssa Fernandes',
-            'email'     => 'raissa@gmail.com',
+            'name'      => 'Phyllis Lapin',
+            'email'     => 'phyllis@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/UZ5oxnBp32sLchX8WmkLa9somF5eAwmlQoo8jUbx.jpeg'
         ]);
         User::create([
-            'name'      => 'Letícia Rocha',
-            'email'     => 'leticia@gmail.com',
+            'name'      => 'Kelly Kapoor',
+            'email'     => 'kelly@gmail.com',
             'password'  => Hash::make('12345678'),
-            'photo'     => 'user.png'
+            'photo'     => 'photo/E0GYqe9z70a4sOJQMmyh5Rk6LJIh1OsX7zkd7nYR.jpeg'
         ]);
     }
 }

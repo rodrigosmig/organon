@@ -13,24 +13,23 @@ class ProjectsSeeder extends Seeder
     public function run()
     {
         Project::create([
-            'name'      => 'APP Meudinherim',
-            'deadline'  => Carbon\Carbon::createFromFormat('d/m/Y', '01/05/2020'),
+            'name'          => 'Web System for Dunder Mifflin',
+            'deadline'      => now()->modify("+5 days")->format('Y-m-d'),
+            'amount_charged' => 10000,
+            'owner_id'      => 1,
+        ]);
+        Project::create([
+            'name'      => 'E-commerce System',
+            'deadline'  => now()->modify("+30 days")->format('Y-m-d'),
+            'amount_charged' => 8500,
             'owner_id'  => 1,
         ]);
         Project::create([
-            'name'      => 'Gestão de Rotas',
-            'deadline'  => Carbon\Carbon::createFromFormat('d/m/Y', '26/06/2020'),
+            'name'      => 'Finance System',
+            'deadline'  => now()->modify("-30 days")->format('Y-m-d'),
+            'status' => Project::FINISHED,
+            'amount_charged' => 15000,
             'owner_id'  => 1,
-        ]);
-        Project::create([
-            'name'      => 'Meudinherim/laravel',
-            'deadline'  => Carbon\Carbon::createFromFormat('d/m/Y', '17/05/2020'),
-            'owner_id'  => 1,
-        ]);
-        Project::create([
-            'name'      => 'Orty',
-            'deadline'  => Carbon\Carbon::createFromFormat('d/m/Y', '30/04/2020'),
-            'owner_id'  => 2,
         ]);
     }
 }
