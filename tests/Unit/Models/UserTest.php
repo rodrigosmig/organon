@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Task;
 use App\User;
+use App\Client;
 use App\Project;
 use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
@@ -121,5 +122,28 @@ class UserTest extends TestCase
         $project3 = factory(Project::class)->create(['owner_id' => $this->user->id]);
         $project4 = factory(Project::class)->create(['owner_id' => $this->user->id]);
         $this->assertEquals(4, $this->user->countActiveProjects());
+    }
+
+     /**
+     * @test
+     */
+    public function getClients()
+    {
+        $this->actingAs($this->user);
+
+        $user = factory(User::class)->create();
+
+        $client1 = factory(Client::class)->create(['owner_id' => $this->user->id]);
+        $client2 = factory(Client::class)->create(['owner_id' => $user->id]);
+        
+        $this->assertEquals(1, $user->getClients()->count());
+
+        $client3 = factory(Client::class)->create(['owner_id' => $this->user->id]);
+
+        $this->assertEquals(2, $user->getClients()->count());
+
+        $this->actingAs($user);
+
+        $this->assertEquals(1, $user->getClients()->count());
     }
 }

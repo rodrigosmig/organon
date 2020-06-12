@@ -17,14 +17,13 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('owner_id');
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('cpf_cnpj')->nullable()->unique();
-            $table->date('birth_date')->nullable();
+            $table->string('email');
+            $table->string('cpf_cnpj')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state', 2)->nullable();
-            $table->string('phone', 11)->nullable();
+            $table->string('phone', 12)->nullable();
             $table->string('status')->default('active');
             $table->timestamps();
 
