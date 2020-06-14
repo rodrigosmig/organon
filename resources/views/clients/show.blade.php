@@ -13,7 +13,7 @@
 @section('content')
     <div class="card-body">
                     
-        @include('clients.partials.form')
+        @include('clients.partials.form', $client)
 
     </div>
 

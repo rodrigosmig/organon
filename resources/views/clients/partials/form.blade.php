@@ -20,11 +20,11 @@
 </div>
 
 <check-address
-    postal_code="{{ $client->postal_code ?? old('postal_code') }}"
-    address = "{{ $client->address ?? old('address') }}"
-    city = "{{ $client->city ?? old('city') }}"
-    state = "{{ $client->state ?? old('state') }}"
-    readonly = "{{ isset($readonly) && $readonly ? "true" : "false" }}"
+    ca_code="{{ $client->postal_code ?? old('postal_code') }}"
+    ca_address="{{ $client->address ?? old('postal_code') }}"
+    ca_city="{{ $client->city ?? old('city') }}"
+    ca_state="{{ $client->state ?? old('state') }}"
+    readonly="{{ isset($readonly) && $readonly ? "true" : "false" }}"
 ></check-address>
 
 <div class="form-group row">

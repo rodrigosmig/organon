@@ -1945,17 +1945,78 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'check-address',
-  props: ['postal_code', 'address', 'city', 'state', 'readonly'],
+  props: ['ca_code', 'ca_address', 'ca_city', 'ca_state', 'readonly'],
   data: function data() {
     return {
-      readOnly: this.readonly == 'true' ? 'readonly' : ""
+      postal_code: this.ca_code,
+      address: this.ca_address,
+      city: this.ca_city,
+      state: this.ca_state,
+      readOnly: this.readonly == 'true' ? 'readonly' : "",
+      loading: false,
+      disabled: false
     };
   },
-  mounted: function mounted() {
-    console.log(this.readonly);
+  methods: {
+    getPostalCode: function getPostalCode() {
+      var _this = this;
+
+      if (!this.validatePostalCode()) {
+        this.alert('Invalid postal code', 'warning');
+        return;
+      }
+
+      this.loading = true;
+      this.disabled = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("https://viacep.com.br/ws/" + this.postal_code + "/json/").then(function (response) {
+        var data = response.data;
+
+        if (data.erro) {
+          _this.alert('Invalid postal code', 'warning');
+        } else {
+          _this.setFields(data);
+        }
+
+        _this.loading = false;
+        _this.disabled = false;
+      });
+    },
+    setFields: function setFields(data) {
+      this.postal_code = data.cep;
+      this.address = data.logradouro;
+      this.city = data.localidade;
+      this.state = data.uf;
+    },
+    validatePostalCode: function validatePostalCode() {
+      var code = this.postal_code.replace(/\D/g, '');
+      var validator = /^[0-9]{8}$/;
+      return validator.test(code);
+    },
+    alert: function alert(title, icon) {
+      swal.fire({
+        title: title,
+        icon: icon
+      });
+    }
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      if (!this.postal_code) {
+        return true;
+      }
+
+      if (this.postal_code.length > 7) {
+        return false;
+      }
+
+      return true;
+    }
   }
 });
 
@@ -40659,14 +40720,29 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "input-group-append" }, [
-          !_vm.readonly
+          _vm.readonly == "false"
             ? _c(
                 "button",
                 {
-                  staticClass: "btn btn-outline-secondary",
-                  attrs: { type: "button", id: "button-addon2" }
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    type: "button",
+                    id: "button-addon2",
+                    disabled: _vm.isDisabled || _vm.disabled
+                  },
+                  on: { click: _vm.getPostalCode }
                 },
-                [_vm._v("Consultar")]
+                [
+                  _vm._v(
+                    "\n                    Consultar\n                    "
+                  ),
+                  _vm.loading
+                    ? _c("span", {
+                        staticClass: "spinner-grow spinner-grow-sm",
+                        attrs: { role: "status", "aria-hidden": "true" }
+                      })
+                    : _vm._e()
+                ]
               )
             : _vm._e()
         ])
