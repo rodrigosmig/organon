@@ -13,7 +13,7 @@ class ClientController extends Controller
     {
         $this->repository = $repository;
         $this->middleware(['auth', 'verified']);
-        $this->title = 'Clientes';
+        $this->title = __('client.clients');
     }
 
     /**
@@ -67,7 +67,7 @@ class ClientController extends Controller
             'phone'         => $data['phone'],
         ]);
 
-        Alert::success(__('Success'), "The client was successfully added");
+        Alert::success(__('client.success.success'), __('client.success.store'));
         
         return redirect()->route('clients.index');
     }
@@ -120,6 +120,8 @@ class ClientController extends Controller
 
         $client->update($request->all());
         
+        Alert::success(__('client.success.success'), __('client.success.update'));
+
         return redirect()->route('clients.show', $client->id);
     }
 

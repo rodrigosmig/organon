@@ -5,7 +5,7 @@
 @endsection
 
 @section('button-header')
-	<a href="{{ route('clients.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> Novo Cliente</a>
+	<a href="{{ route('clients.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{ __('client.new_client') }}</a>
 @endsection
 
 @section('content')
@@ -18,10 +18,10 @@
             <table class="table">
                 <thead>
                     <th></th>
-                    <th>Name</th>
-                    <th>E-mail</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>{{ __('client.name') }}</th>
+                    <th>{{ __('client.email') }}</th>
+                    <th>{{ __('client.status') }}</th>
+                    <th>{{ __('client.actions') }}</th>
                 </thead>
 
                 <tbody>
@@ -45,7 +45,7 @@
                                         <i class="fas fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="projectActions">
-                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="fas fa-edit"></i> Edit</a>
+                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="fas fa-edit"></i> {{ __('client.edit') }}</a>
                                     </div>
                                 </div>
                             </td>

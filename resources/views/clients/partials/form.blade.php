@@ -1,19 +1,19 @@
 <div class="form-group row">
-    <label for="client-name" class="col-sm-2 col-form-label">Nome</label>
+    <label for="client-name" class="col-sm-2 col-form-label">{{ __('client.name') }}</label>
     <div class="col-sm-10">
       <input type="text" id="client-name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $client->name ?? old('name') }}" required {{ isset($readonly) && $readonly ? "readonly" : "" }}>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="client-email" class="col-sm-2 col-form-label">E-mail</label>
+    <label for="client-email" class="col-sm-2 col-form-label">{{ __('client.email') }}</label>
     <div class="col-sm-10">
       <input type="email" id="client-email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $client->email ?? old('email') }}" required {{ isset($readonly) && $readonly ? "readonly" : "" }}>
     </div>
 </div>
 
 <div class="form-group row">
-    <label for="client-cpf_cnpj" class="col-sm-2 col-form-label">CPF/CNPJ</label>
+    <label for="client-cpf_cnpj" class="col-sm-2 col-form-label">{{ __('client.tax_id') }}</label>
     <div class="col-sm-10">
       <input type="number" id="client-cpf_cnpj" class="form-control @error('cpf_cnpj') is-invalid @enderror" name="cpf_cnpj" value="{{ $client->cpf_cnpj ?? old('cpf_cnpj') }}" {{ isset($readonly) && $readonly ? "readonly" : "" }}>
     </div>
@@ -28,7 +28,7 @@
 ></check-address>
 
 <div class="form-group row">
-    <label for="client-phone" class="col-sm-2 col-form-label">Telefone</label>
+    <label for="client-phone" class="col-sm-2 col-form-label">{{ __('client.telephone') }}</label>
     <div class="col-sm-10">
       <input type="text" id="client-phone" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $client->phone ?? old('phone') }}" {{ isset($readonly) && $readonly ? "readonly" : "" }}>
     </div>

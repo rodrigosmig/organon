@@ -5,7 +5,7 @@
 @endsection
 
 @section('button-header')
-<a href="{{ route('clients.edit', $client->id) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="Edit Client">
+<a href="{{ route('clients.edit', $client->id) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="{{ __('client.edit_client') }}">
     <i class="fas fa-edit"></i>
   </a>
 @endsection
@@ -18,6 +18,6 @@
     </div>
 
     <div class="card-footer text-muted">
-        <a href="{{ route('clients.index') }}" class="btn btn-outline-dark">Voltar</a>
+        <a href="{{ route('clients.index') }}" class="btn btn-outline-dark">{{ __('client.back') }}</a>
     </div>
 @endsection
