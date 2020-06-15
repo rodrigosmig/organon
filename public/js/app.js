@@ -1988,15 +1988,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     setFields: function setFields(data) {
-      this.postal_code = data.cep;
+      this.setOnlyNumbersInPostalCode();
       this.address = data.logradouro;
       this.city = data.localidade;
       this.state = data.uf;
     },
     validatePostalCode: function validatePostalCode() {
-      var code = this.postal_code.replace(/\D/g, '');
+      var code = this.getOnlyNumbersInPostalCode();
       var validator = /^[0-9]{8}$/;
       return validator.test(code);
+    },
+    setOnlyNumbersInPostalCode: function setOnlyNumbersInPostalCode(code) {
+      this.postal_code = this.postal_code.replace(/\D/g, '');
+    },
+    getOnlyNumbersInPostalCode: function getOnlyNumbersInPostalCode() {
+      return this.postal_code.replace(/\D/g, '');
     },
     alert: function alert(title, icon) {
       swal.fire({

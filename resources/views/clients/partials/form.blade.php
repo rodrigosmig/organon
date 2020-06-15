@@ -21,7 +21,7 @@
 
 <check-address
     ca_code="{{ $client->postal_code ?? old('postal_code') }}"
-    ca_address="{{ $client->address ?? old('postal_code') }}"
+    ca_address="{{ $client->address ?? old('address') }}"
     ca_city="{{ $client->city ?? old('city') }}"
     ca_state="{{ $client->state ?? old('state') }}"
     readonly="{{ isset($readonly) && $readonly ? "true" : "false" }}"

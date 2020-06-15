@@ -78,16 +78,22 @@
                     })
             },
             setFields(data) {
-                this.postal_code = data.cep
+                this.setOnlyNumbersInPostalCode()
                 this.address = data.logradouro
                 this.city = data.localidade
                 this.state = data.uf
             },
             validatePostalCode() {
-                let code = this.postal_code.replace(/\D/g, '');
+                let code = this.getOnlyNumbersInPostalCode()
                 let validator = /^[0-9]{8}$/;
 
                 return validator.test(code)
+            },
+            setOnlyNumbersInPostalCode(code) {
+                this.postal_code = this.postal_code.replace(/\D/g, '');
+            },
+            getOnlyNumbersInPostalCode() {
+                return this.postal_code.replace(/\D/g, '');
             },
             alert: function(title, icon) {
                 swal.fire({
