@@ -192,6 +192,14 @@
           </div>
     </div>
 
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Client Name:</span>
+        </div>
+        <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" value="{{ $project->client->name }}" disabled>
+    </div>
+
     <div class="card shadow mb-4">
         <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
             @csrf

@@ -143,4 +143,16 @@ class User extends Authenticatable
             'status'    => Project::ACTIVE
         ])->count();
     }
+
+     /**
+     * Fetch clients of the logged user
+     * 
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getClients()
+    {
+        return Client::where('owner_id', auth()
+            ->user()->id)
+            ->get();
+    }
 }

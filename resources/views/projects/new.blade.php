@@ -20,24 +20,9 @@
         <form action="{{ route("projects.store") }}" method="POST">
             @csrf
             <div class="card-body">
-                <div class="form-group row">
-                    <label for="projects-name" class="col-sm-2 col-form-label">Name</label>
-                    <div class="col-sm-10">
-                      <input type="text" id="projects-name" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Project Name" value="{{ old('name') }}" required>
-                    </div>
-                </div>
-                  <div class="form-group row">
-                    <label for="project-deadline" class="col-sm-2 col-form-label">Deadline</label>
-                    <div class="col-sm-10">
-                      <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="project-deadline" name="deadline" value="{{ old('deadline') }}" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="project-amount_charged" class="col-sm-2 col-form-label">Amount Charged</label>
-                    <div class="col-sm-10">
-                      <input type="number" class="form-control" id="project-amount_charged" name="amount_charged" value="0.0">
-                    </div>
-                </div>
+                
+                @include('projects.partials.form')
+
             </div>
             <div class="card-footer text-muted">
                 <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">Cancel</a>

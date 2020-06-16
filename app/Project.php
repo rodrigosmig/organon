@@ -51,7 +51,17 @@ class Project extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Fetch the project client.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 
     /**

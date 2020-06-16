@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Request;
@@ -44,7 +43,12 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.new', ['title' => $this->title]);
+        $data = [
+            'title'     => $this->title,
+            'clients'   => auth()->user()->getClients()
+        ];
+
+        return view('projects.new', $data);
     }
 
     /**
@@ -61,7 +65,8 @@ class ProjectController extends Controller
             'name'              => $validated['name'],
             'deadline'          => $validated['deadline'],
             'owner_id'          => $request->user()->id,
-            'amount_charged'    => $request->input('amount_charged', 0.0)
+            'amount_charged'    => $request->input('amount_charged', 0.0),
+            'client_id'         => $validated['client']
         ]);
         
         Alert::success(__('Success'), "The {$project->name} project was successfully created");
@@ -112,7 +117,8 @@ class ProjectController extends Controller
      
         $data = [
             'title'     => $this->title,
-            'project'  => $project
+            'project'   => $project,
+            'clients'   => $project->owner->getClients()
         ];
 
         return view('projects.edit', $data);
@@ -135,10 +141,11 @@ class ProjectController extends Controller
         }
 
         $validated = $request->validated();
-        
+
         $project->name              = $validated['name'];
         $project->deadline          = $validated['deadline'];
         $project->amount_charged    = $request->input('amount_charged', 0.0);
+        $project->client_id         = $validated['client'];
         $project->save();
 
         Alert::success("Success", ("The project was successfully changed"));

@@ -25,7 +25,8 @@ class StoreProjectFormRequest extends FormRequest
     {
         return [
             'name'      => 'required|min:5',
-            'deadline'  => 'required|date|after:today'
+            'deadline'  => 'required|date|after:today',
+            'client'    => 'required'
         ];
     }
 }
