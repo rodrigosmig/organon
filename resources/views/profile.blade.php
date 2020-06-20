@@ -41,11 +41,11 @@
                             <div class="userData ml-3">
                                 <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->name }}</a></h2>
                                 <h4 class="d-block" style="font-size: 0.8rem; font-weight: bold"><a href="javascript:void(0);">{{ auth()->user()->email }}</a></h4>
-                                <h6 class="d-block">{{ auth()->user()->countAllProjects() }} Projects</h6>
-                                <h6 class="d-block">{{ auth()->user()->countAllTasks() }} Tasks</h6>
+                                <h6 class="d-block">{{ auth()->user()->countAllProjects() }} {{ __('project.projects') }}</h6>
+                                <h6 class="d-block">{{ auth()->user()->countAllTasks() }} {{ __('task.tasks') }}</h6>
                             </div>
                             <div class="ml-auto">
-                                <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="{{ __('Discard Changes') }}" />
+                                <input type="button" class="btn btn-primary d-none" id="btnDiscard" value="{{ __('user.discard_changes') }}" />
                             </div>
                         </div>
                     </div>
@@ -54,10 +54,10 @@
                         <div class="col-12">
                             <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">{{ __('Basic Info') }}</a>
+                                    <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab" aria-controls="basicInfo" aria-selected="true">{{ __('user.data') }}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="Password" aria-selected="false">{{ __('Change Password') }}</a>
+                                    <a class="nav-link" id="password-tab" data-toggle="tab" href="#password" role="tab" aria-controls="Password" aria-selected="false">{{ __('user.change_password') }}</a>
                                 </li>
                             </ul>
                             <div class="tab-content ml-1" id="myTabContent">
@@ -66,16 +66,16 @@
                                         @csrf
                                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                         <div class="form-group">
-                                            <label for="user_name">{{ __('Name') }}</label>
+                                            <label for="user_name">{{ __('user.name') }}</label>
                                             <input type="text" class="form-control" id="User_name" name="name" required value="{{ auth()->user()->name }}">
                                         </div>
     
                                         <div class="form-group">
-                                            <label for="user_email">{{ __('E-mail') }}</label>
+                                            <label for="user_email">{{ __('user.email') }}</label>
                                             <input type="email" class="form-control" id="user_email" name="email" required value="{{ auth()->user()->email }}">
                                         </div>
                                         <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">{{ __('Update') }}</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('user.update') }}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -84,22 +84,22 @@
                                         @csrf
                                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                         <div class="form-group">
-                                            <label for="current_password">{{ __('Current Password') }}</label>
+                                            <label for="current_password">{{ __('user.current_password') }}</label>
                                             <input type="password" class="form-control" id="current_password" name="current_password" required>
                                         </div>
     
                                         <div class="form-group">
-                                            <label for="new_password">{{ __('New Password') }}</label>
+                                            <label for="new_password">{{ __('user.new_password') }}</label>
                                             <input type="password" class="form-control" id="new_password" name="new_password" required>
                                         </div>
     
                                         <div class="form-group">
-                                            <label for="confirm_password">{{ __('Confirm Password') }}</label>
+                                            <label for="confirm_password">{{ __('user.confirm_password') }}</label>
                                             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                                         </div>
     
                                         <div class="form-group">
-                                            <button class="btn btn-primary" type="submit">{{ __('Update') }}</button>
+                                            <button class="btn btn-primary" type="submit">{{ __('user.update') }}</button>
                                         </div>
                                     </form>
                                 </div>

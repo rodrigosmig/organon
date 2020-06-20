@@ -51,6 +51,7 @@ return [
     'no_search_word'    => 'Nenhum termo de busca',
     'search_word'       => 'Entre com um termo de busca',
     'user_removed'      => 'Usuário Removido',
+    'search_project'    => 'Procure um projeto',
     
     
     'messages' => [
