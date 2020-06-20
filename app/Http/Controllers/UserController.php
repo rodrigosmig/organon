@@ -15,7 +15,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->title = 'Profile';
+        $this->title = __('user.profile');
     }
 
     public function profile()
@@ -29,7 +29,7 @@ class UserController extends Controller
         $user       = User::find($user_id);
 
         if (!$user || !$user->checkUser($request->user())) {
-            Alert::error(__('Invalid User.'), __('User not found.'));
+            Alert::error(__('user.invalid_user'), __('user.messages.not_found'));
             return redirect()->route('user.profile');
         }
 
@@ -37,7 +37,7 @@ class UserController extends Controller
         $user->setPhoto($photo);
         $user->save();
         
-        Alert::Success('Success', __("Photo changed successfully"));
+        Alert::Success(__('user.sucesso'), __("user.messages.photo_updated"));
         return redirect()->route('user.profile');
     }
 
@@ -47,7 +47,7 @@ class UserController extends Controller
         $user       = User::find($user_id);
 
         if (!$user || !$user->checkUser($request->user())) {
-            Alert::error(__('Invalid User.'), __('User not found.'));
+            Alert::error(__('user.invalid_user'), __('user.messages.not_found'));
             return redirect()->route('user.profile');
         }
 
@@ -55,7 +55,7 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->save();
 
-        Alert::Success('Success', __("Successfully changed data"));
+        Alert::Success(__('user.sucesso'), __("user.messages.data_updated"));
         return redirect()->route('user.profile');
     }
 
@@ -65,19 +65,19 @@ class UserController extends Controller
         $user       = User::find($user_id);
 
         if (!$user || !$user->checkUser($request->user())) {
-            Alert::error(__('Invalid User.'), __('User not found.'));
+            Alert::error(__('user.invalid_user'), __('user.messages.not_found'));
             return redirect()->route('user.profile');
         }
         
         if (!Hash::check($request->input('current_password'), $request->user()->password)) {
-            Alert::error(__('Invalid Password.'), __('Current password is incorrect.'));
+            Alert::error(__('user.invalid_password'), __('user.messages.incorrect_password'));
             return redirect()->route('user.profile');
         }
 
         $user->password = Hash::make($request->input('new_password'));
         $user->save();
 
-        Alert::Success('Success', __("password changed successfully"));
+        Alert::Success(__('user.sucesso'), __("user.messages.password_changed"));
         return redirect()->route('user.profile');
     }
 

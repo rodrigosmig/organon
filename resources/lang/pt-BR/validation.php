@@ -178,5 +178,8 @@ return [
         'year'                  => 'ano',
         'email'                 => 'e-mail',
         'remember'              => 'lembrar-me',
+        'deadline'              => 'prazo',
+        'new_password'          => 'nova senha',
+        'confirm_password'      => 'confirmar senha',
     ],
 ];

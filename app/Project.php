@@ -22,7 +22,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged'];
+    protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged', 'client_id'];
 
     /**
      * Fetch project tasks.
@@ -288,7 +288,7 @@ class Project extends Model
     }
 
     /**
-     * Checks if the prject has a task is in progress
+     * Checks if the project has a task is in progress
      *
      * @return bool
      */
@@ -296,6 +296,22 @@ class Project extends Model
     {
         foreach ($this->tasks as $task) {
             if ($task->taskInProgress()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if the project has a open task
+     *
+     * @return bool
+     */
+    public function hasOpenTask(): bool
+    {
+        foreach ($this->tasks as $task) {
+            if ($task->status === Task::OPEN) {
                 return true;
             }
         }

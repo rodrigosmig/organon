@@ -14,7 +14,7 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->title = 'Projects';
+        $this->title = __('project.projects');
     }
 
     /**
@@ -60,7 +60,7 @@ class ProjectController extends Controller
     public function store(StoreProjectFormRequest $request)
     {
         $validated = $request->validated();
-
+        //dd($request->all(), $validated['client']);
         $project = Project::create([
             'name'              => $validated['name'],
             'deadline'          => $validated['deadline'],
@@ -69,7 +69,7 @@ class ProjectController extends Controller
             'client_id'         => $validated['client']
         ]);
         
-        Alert::success(__('Success'), "The {$project->name} project was successfully created");
+        Alert::success(__('project.success'), __('project.messages.new'));
         
         return redirect()->route('projects.show', ['id' => $project->id]);
     }
@@ -111,7 +111,7 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if ($project->status === Project::FINISHED) {
-            Alert::error('Invalid Request.', 'This project is not active');
+            Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.index');
         }
      
@@ -136,7 +136,7 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if ($project->status === Project::FINISHED) {
-            Alert::error('Invalid Request.', 'This project is not active');
+            Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.index');
         }
 
@@ -148,7 +148,7 @@ class ProjectController extends Controller
         $project->client_id         = $validated['client'];
         $project->save();
 
-        Alert::success("Success", ("The project was successfully changed"));
+        Alert::success(__('project.success'), __('project.messages.update'));
 
         return redirect()->route('projects.show', ['id' => $project->id]);
     }
@@ -164,19 +164,19 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if ($project->status === Project::FINISHED) {
-            Alert::error('Invalid Request.', 'This project is not active');
+            Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.index');
         }
         
         if ($project->hasTaskInProgress()) {
-            Alert::error('The project has a task in progress.', 'It is not possible to delete the project.');
+            Alert::error(__('project.messages.not_delete'), __('project.messages.task_in_progress'));
             return redirect()->route('projects.index');
         }
 
         $project->tasks()->delete();
         $project->delete();
 
-        Alert::success(__("Success"), (__("The project was successfully deleted")));
+        Alert::success(__("project.success"), (__('project.messages.delete')));
         
         return redirect()->route('projects.index');
     }
@@ -188,18 +188,18 @@ class ProjectController extends Controller
         $hour_value = $request->input('hour_value', 0);
         
         if ($user->checkUser($project->owner)) {
-            Alert::error('Invalid User.', 'User is project owner.');
+            Alert::error(__("project.invalid_user"), __("project.messages.owner"));
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
         if($project->isMember($user)) {
-            Alert::error('Invalid User.', 'User already belongs to the project.');
+            Alert::error(__("project.invalid_user"), __("project.messages.is_member"));
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
         $project->addMember($user, $hour_value);
 
-        Alert::success('User Added.', "User " . $user->name . " has been added to the project.");
+        Alert::success(__('project.user_added'), __("project.messages.add_user"));
         return redirect()->route('projects.show', ['id' => $project->id]);
     }
 
@@ -209,34 +209,39 @@ class ProjectController extends Controller
         $project    = Project::find($request->input('project_id'));
 
         if ($user->checkUser($project->owner)) {
-            return response($user->name . " is the project owner.", 403);
+            return response(__('project.messages.owner'), 403);
         }
 
         if(!$project->isMember($user)) {
-            return response($user->name . " is not a project member.", 403);
+            return response(__('project.messages.is_not_member'), 403);
         }
 
         if (!$project->getTasksByUserId($user->id)->isEmpty()) {
-            return response("It is not possible to remove the user because he has a task assigned.", 403);
+            return response(__('project.messages.task_assigned'), 403);
         }
 
         $project->members()->detach([$user->id]);
         
-        return response($user->name . " was removed from the project.", 200);
+        return response(__('project.messages.remove_member'), 200);
     }
 
     public function finishProject($id) {
         $project = Project::find($id);
         
         if ($project->status !== Project::ACTIVE) {
-            Alert::error('Invalid Request.', 'This project is not active');
+            Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
+            return redirect()->route('projects.index');
+        }
+
+        if ($project->hasOpenTask()) {
+            Alert::error(__('project.messages.not_finish'), __('project.messages.open_task'));
             return redirect()->route('projects.index');
         }
 
         $project->status = Project::FINISHED;
         $project->save();
 
-        Alert::success("Sucess", "Status changed successfully.");
+        Alert::success(__('project.success'), __('project.messages.status_finish'));
         return redirect()->route('projects.index');
     }
 
@@ -244,21 +249,21 @@ class ProjectController extends Controller
         $project = Project::find($id);
         
         if ($project->status !== Project::FINISHED) {
-            Alert::error('Invalid Request.', 'This project is not finished');
+            Alert::error(__('project.invalid_request'), __('project.messages.not_finished'));
             return redirect()->route('projects.index');
         }
 
         $project->status = Project::ACTIVE;
         $project->save();
 
-        Alert::success("Sucess", "Status changed successfully.");
+        Alert::success(__('project.success'), __('project.messages.status_open'));
         return redirect()->route('projects.index');
     }
 
     public function search(Request $request)
     {
         if (empty($request->project_name)) {
-            Alert::warning("No search word", "Enter a search word.");
+            Alert::warning(__('project.no_search_word'), __('project.search_word'));
             return redirect()->route('home');
         }
         

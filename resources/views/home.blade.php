@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Active Projects</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ __('user.active_projects') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ auth()->user()->countActiveProjects() }}</div>
                         </div>
                         <div class="col-auto">
@@ -23,7 +23,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">Number of delayed projects</div>
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">{{ __('user.number_of_delayed') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $delayedProjects }}</div>
                         </div>
                         <div class="col-auto">
@@ -39,7 +39,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total cost of projects</div>
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">{{ __('user.total_cost') }}</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${{ number_format($totalProjectsCost, 2, ',', '.') }}</div>
@@ -60,7 +60,7 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total charged for projects</div>
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">{{ __('user.total_charged') }}</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($totalProjectValue, 2, ',', '.') }}</div>
                         </div>
                         <div class="col-auto">
@@ -76,7 +76,7 @@
         <div class="col-lg-12 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ __('project.projects') }}</h6>
                 </div>
                 <div class="card-body">
                     @foreach ($projects as $project)

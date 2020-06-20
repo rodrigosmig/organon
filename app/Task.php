@@ -253,7 +253,7 @@ class Task extends Model
     public function getTimeStarted()
     {
         return $this->times()
-                    ->where('user_id', Auth::user()->id)
+                    ->where('user_id', $this->user_id)
                     ->whereNull('end')
                     ->get()
                     ->last();

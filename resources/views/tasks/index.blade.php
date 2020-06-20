@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-	<h1 class="h3 mb-0 text-gray-800">{{ $title }} / <small>My Tasks</small></h1>
+	<h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
 @endsection
 
 @section('content')
@@ -9,10 +9,10 @@
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="open-tab" data-toggle="tab" href="#open" role="tab" aria-controls="open" aria-selected="true">Open</a>
+                    <a class="nav-link active" id="open-tab" data-toggle="tab" href="#open" role="tab" aria-controls="open" aria-selected="true">{{ __('task.open') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="finished-tab" data-toggle="tab" href="#finished" role="tab" aria-controls="finished" aria-selected="false">Finished</a>
+                    <a class="nav-link" id="finished-tab" data-toggle="tab" href="#finished" role="tab" aria-controls="finished" aria-selected="false">{{ __('task.finished') }}</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -32,10 +32,10 @@
                                         <div class="card-body">
                                             <table class="table">
                                                 <thead>
-                                                    <th>Description</th>
-                                                    <th>Deadline</th>
-                                                    <th>Work Timer</th>
-                                                    <th>Finish</th>
+                                                    <th>{{ __('task.description') }}</th>
+                                                    <th>{{ __('task.deadline') }}</th>
+                                                    <th>{{ __('task.worked_time') }}</th>
+                                                    <th>{{ __('task.finish') }}</th>
                                                 </thead>
 
                                                 <tbody>
@@ -53,7 +53,7 @@
                                                                     ></time-counter>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="End task"><i class="fas fa-check"></i></a>
+                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="{{ __('task.finish_task') }}"><i class="fas fa-check"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @endif                                                    
@@ -68,7 +68,7 @@
                     @endif
 
                     @empty($projects[App\Task::OPEN])
-                        <h5 style="margin-top:20px">No tasks found.</h3>
+                        <h5 style="margin-top:20px">{{ __('task.no_task_found') }}.</h3>
                     @endempty
                 </div>
                 <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
@@ -88,10 +88,10 @@
                                         <div class="card-body">
                                             <table class="table">
                                                 <thead>
-                                                    <th>Description</th>
-                                                    <th>Deadline</th>
-                                                    <th>Total Worked</th>
-                                                    <th>Reopen Task</th>
+                                                    <th>{{ __('task.description') }}</th>
+                                                    <th>{{ __('task.deadline') }}</th>
+                                                    <th>{{ __('task.worked_time') }}</th>
+                                                    <th>{{ __('task.reopen_task') }}</th>
                                                 </thead>
 
                                                 <tbody>
@@ -116,7 +116,7 @@
                     @endif
 
                     @empty($projects[App\Task::FINISHED])
-                        <h5 style="margin-top:20px">No tasks found.</h3>
+                        <h5 style="margin-top:20px">{{ __('task.no_task_found') }}.</h3>
                     @endempty    
                 </div>
             </div>

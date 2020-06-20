@@ -5,7 +5,7 @@
 @endsection
 
 @section('button-header')
-	<a href="{{ route('projects.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("New Project")}}</a>
+	<a href="{{ route('projects.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("project.new_project")}}</a>
 @endsection
 
 @section('link-css')
@@ -19,13 +19,20 @@
 	<script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
 
+@section('messages-js')
+    <script>
+        var delete_title = '{{ __('project.messages.delete_title') }}';
+        var delete_msg = '{{ __('project.messages.delete_msg') }}';
+    </script>
+@endsection
+    
 @section('content')
     <div class="card">
         <div class="card-body">
 			<nav>
 				<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				  <a class="nav-item nav-link active" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="true">Active</a>
-				  <a class="nav-item nav-link" id="nav-finished-tab" data-toggle="tab" href="#nav-finished" role="tab" aria-controls="nav-finished" aria-selected="false">Finished</a>
+				  <a class="nav-item nav-link active" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="true">{{__("project.active")}}</a>
+				  <a class="nav-item nav-link" id="nav-finished-tab" data-toggle="tab" href="#nav-finished" role="tab" aria-controls="nav-finished" aria-selected="false">{{__("project.finished")}}</a>
 				</div>
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
@@ -35,10 +42,10 @@
 							<thead>
 								<tr>
 									<th></th>
-									<th>Name</th>
-									<th>Deadline</th>
-									<th>Team</th>
-									<th>Actions</th>
+									<th>{{__("project.name")}}</th>
+									<th>{{__("project.deadline")}}</th>
+									<th>{{__("project.members")}}</th>
+									<th>{{__("project.actions")}}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -49,7 +56,11 @@
 												<i class="fas fa-eye"></i>
 											</a>
 										</td>
-										<td>{{ $project->name }}</td>
+										<td>
+                                            <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+												{{ $project->name }}
+											</a>
+                                        </td>
 										<td>{{ $project->deadline }}</td>
 										<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
 										<td>
@@ -58,9 +69,9 @@
 													<i class="fas fa-ellipsis-h"></i>
 												</a>
 												<div class="dropdown-menu" aria-labelledby="projectActions">
-													<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit</a>
-													<a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> Delete</a>
-													<a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}"><i class="fas fa-check"></i> Finish</a>
+													<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> {{__("project.edit")}}</a>
+													<a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> {{__("project.delete")}}</a>
+													<a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}"><i class="fas fa-check"></i> {{__("project.finish")}}</a>
 												</div>
 											</div>
 										</td>
@@ -69,7 +80,7 @@
 							</tbody>
 						</table>
 					@else
-						<h5 style="margin-top:20px">No projects found.</h3>
+						<h5 style="margin-top:20px">{{__("project.no_projectd")}}.</h3>
 					@endif
 					
 				</div>
@@ -80,11 +91,10 @@
 								<thead>
 									<tr>
 										<th></th>
-										<th>Name</th>
-										<th>Deadline</th>
-										<th>Total Worked</th>
-										<th>Team</th>
-										<th>Open Task</th>
+                                        <th>{{__("project.name")}}</th>
+                                        <th>{{__("project.deadline")}}</th>
+                                        <th>{{__("project.members")}}</th>
+                                        <th>{{__("project.actions")}}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -107,7 +117,7 @@
 								</tbody>
 							</table>
 						@else
-							<h5 style="margin-top:20px">No projects found.</h3>
+							<h5 style="margin-top:20px">{{__("project.no_projectd")}}</h3>
 						@endif
 					</div>
 				</div>

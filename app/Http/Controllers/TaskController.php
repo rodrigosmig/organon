@@ -17,7 +17,7 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        $this->title = "Tasks";
+        $this->title = __('task.tasks');
     }
 
     /**
