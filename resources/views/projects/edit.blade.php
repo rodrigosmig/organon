@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('title')
-    <h1 class="h3 mb-0 text-gray-800">{{ $title }} <small> / {{ $project->name }} </small><small> / Edit</small></h1>
+    <h1 class="h3 mb-0 text-gray-800">{{ $title }} <small> / {{ $project->name }} </small><small> / {{ __('project.edit') }}</small></h1>
 @endsection
 
 @section('link-css')
@@ -24,8 +24,8 @@
                 
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">{{ __("Cancel") }}</a>
-                <button class="btn btn-primary" type="submit">{{ __("Submit") }}</button>
+                <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
+                <button class="btn btn-primary" type="submit">{{ __('project.submit') }}</button>
             </div>
         </form>
     </div>

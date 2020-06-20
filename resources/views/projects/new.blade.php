@@ -12,7 +12,7 @@
 @endsection
 
 @section('title')
-	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small>/ New Project</small></h1>
+	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small>/ {{ __('project.new_project') }}</small></h1>
 @endsection
 
 @section('content')
@@ -25,8 +25,8 @@
 
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">Cancel</a>
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
+                <button class="btn btn-primary" type="submit">{{ __('project.submit') }}</button>
             </div>
         </form>
     </div>

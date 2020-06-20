@@ -52,6 +52,8 @@
 
         @yield('modal')
 
+        @yield('messages-js')
+
         <script src="{{ asset('js/app.js' )}}" type="text/javascript"></script>
         <script src="{{ asset('js/sb-admin-2.min.js' )}}" type="text/javascript"></script>
         @yield('script-js')
