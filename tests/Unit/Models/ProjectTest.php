@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Task;
 use App\User;
+use App\Client;
 use App\Project;
 use App\TaskTime;
 use PDOException;
@@ -23,7 +24,8 @@ class ProjectTest extends TestCase
         $this->project = factory(Project::class)->create([
             'owner_id' => $this->user->id,
             'amount_charged' => 100.00,
-            'deadline' => now()->modify('-1 days')->format('Y-m-d')
+            'deadline' => now()->modify('-1 days')->format('Y-m-d'),
+            'client_id' => factory(Client::class)
         ]);
     }
 
@@ -382,5 +384,17 @@ class ProjectTest extends TestCase
         $task->startTime();
         
         $this->assertTrue($this->project->hasTaskInProgress());
+    }
+
+    /**
+     * @test
+     */
+    public function isActive()
+    {
+        $this->assertTrue($this->project->isActive());
+
+        $this->project->status = Project::FINISHED;
+
+        $this->assertFalse($this->project->isActive());
     }
 }

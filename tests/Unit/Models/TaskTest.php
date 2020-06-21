@@ -262,4 +262,25 @@ class TaskTest extends TestCase
 
         $this->assertFalse($this->task->openTask());
     }
+
+    /**
+     * @test
+     */
+    public function getTasksByStatus()
+    {
+        $this->actingAs($this->user);
+
+        $task1 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id
+        ]);
+
+        $this->assertEquals(2, Task::getTasksByStatus(Task::OPEN)->count());
+
+        $task1->finishTask();
+        $task1->save();
+
+        $this->assertEquals(1, Task::getTasksByStatus(Task::OPEN)->count());
+        $this->assertEquals(1, Task::getTasksByStatus(Task::FINISHED)->count());
+    }
 }
