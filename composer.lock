@@ -1841,16 +1841,16 @@
         },
         {
             "name": "sendgrid/php-http-client",
-            "version": "3.10.6",
+            "version": "3.10.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sendgrid/php-http-client.git",
-                "reference": "1c97ab5475b0aa98032ea3f89d7f12453469fc08"
+                "reference": "f01e6fe7e33b811715ba93da3f85573e175bb801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/php-http-client/zipball/1c97ab5475b0aa98032ea3f89d7f12453469fc08",
-                "reference": "1c97ab5475b0aa98032ea3f89d7f12453469fc08",
+                "url": "https://api.github.com/repos/sendgrid/php-http-client/zipball/f01e6fe7e33b811715ba93da3f85573e175bb801",
+                "reference": "f01e6fe7e33b811715ba93da3f85573e175bb801",
                 "shasum": ""
             },
             "require": {
@@ -1889,20 +1889,20 @@
                 "rest",
                 "sendgrid"
             ],
-            "time": "2020-04-29T19:42:26+00:00"
+            "time": "2020-06-10T20:13:05+00:00"
         },
         {
             "name": "sendgrid/sendgrid",
-            "version": "7.5.2",
+            "version": "7.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sendgrid/sendgrid-php.git",
-                "reference": "8016aeacc1e32c4af2a2933c390977be14fdb11c"
+                "reference": "cbfb2f063b75bfac9197894de882d30aff6ca769"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/8016aeacc1e32c4af2a2933c390977be14fdb11c",
-                "reference": "8016aeacc1e32c4af2a2933c390977be14fdb11c",
+                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/cbfb2f063b75bfac9197894de882d30aff6ca769",
+                "reference": "cbfb2f063b75bfac9197894de882d30aff6ca769",
                 "shasum": ""
             },
             "require": {
@@ -1911,7 +1911,8 @@
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "php": ">=5.6",
-                "sendgrid/php-http-client": "~3.10"
+                "sendgrid/php-http-client": "~3.10",
+                "starkbank/ecdsa": "0.*"
             },
             "replace": {
                 "sendgrid/sendgrid-php": "*"
@@ -1924,8 +1925,9 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SendGrid\\Mail\\": "lib/mail/",
                     "SendGrid\\Contacts\\": "lib/contacts/",
+                    "SendGrid\\EventWebhook\\": "lib/eventwebhook/",
+                    "SendGrid\\Mail\\": "lib/mail/",
                     "SendGrid\\Stats\\": "lib/stats/"
                 },
                 "classmap": [
@@ -1947,7 +1949,46 @@
                 "sendgrid",
                 "twilio sendgrid"
             ],
-            "time": "2020-05-27T22:02:04+00:00"
+            "time": "2020-06-10T19:53:58+00:00"
+        },
+        {
+            "name": "starkbank/ecdsa",
+            "version": "0.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/starkbank/ecdsa-php.git",
+                "reference": "9369d35ed9019321adb4eb9fd3be21357d527c74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/starkbank/ecdsa-php/zipball/9369d35ed9019321adb4eb9fd3be21357d527c74",
+                "reference": "9369d35ed9019321adb4eb9fd3be21357d527c74",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/ellipticcurve.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "StarkBank",
+                    "email": "developers@starkbank.com",
+                    "homepage": "https://starkbank.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "fast openSSL-compatible implementation of the Elliptic Curve Digital Signature Algorithm (ECDSA)",
+            "homepage": "https://github.com/starkbank/ecdsa-php",
+            "time": "2020-05-15T15:46:20+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
