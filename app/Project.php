@@ -329,4 +329,14 @@ class Project extends Model
         return Project::where('name', 'LIKE', "%{$filter}%")
                     ->paginate();
     }
+
+    /**
+     * Checks if the project is active
+     *
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === Project::ACTIVE;
+    }
 }

@@ -51,7 +51,8 @@ return [
     'no_search_word'    => 'No search word',
     'search_word'       => 'Enter a search word',
     'user_removed'      => 'User Removed',
-    'search_project'    => 'Search for a project',    
+    'search_project'    => 'Search for a project',
+    'reopen'            => 'Reopen',
     
     'messages' => [
         'new'               => 'The project was successfully created',

@@ -13,6 +13,7 @@
 
 @section('messages-js')
     <script>
+        var delete_msg = '{{ __('project.messages.delete_msg') }}';
         var delete_title = '{{ __('project.messages.delete_title') }}';
         var user_removed = '{{ __('project.user_removed') }}';
         var user_msg = '{{ __('project.messages.user_removed') }}'
@@ -27,9 +28,32 @@
 @endsection
 
 @section('button-header')
-<a href="{{ route('projects.edit', ['id' => $project->id]) }}" class="menuMembers d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="{{ __('project.edit_project') }}">
-    <i class="fas fa-edit"></i>
-  </a>
+    <div class="dropdown">
+        <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            @if ($project->isActive())
+                <a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}">
+                    <i class="fas fa-edit"></i>
+                    {{ __('project.edit') }}
+                </a>
+                <a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}">
+                    <i class="fas fa-trash-alt"></i>
+                    {{ __('project.delete') }}
+                </a>
+                <a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}">
+                    <i class="fas fa-check"></i>
+                    {{ __('project.finish') }}
+                </a>
+            @else
+                <a class="dropdown-item" href="{{ route('projects.open-project', ['id' => $project->id]) }}">
+                    <i class="fas fa-folder-open"></i>
+                    {{ __('project.reopen') }}
+                </a>
+            @endif
+        </div>
+    </div>
 @endsection
 
 @section('modal')
@@ -210,7 +234,11 @@
               <h4>
                 <i class="fas fa-tasks"></i>
                 {{ __('task.tasks') }}
-                <a class="btn btn-success btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#modal-add_task"><i class="fas fa-plus"></i> {{ __('task.add_task') }}</a>
+                @if ($project->isActive())
+                    <a class="btn btn-success btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#modal-add_task"><i class="fas fa-plus">
+                        </i> {{ __('task.add_task') }}
+                    </a>
+                @endif
               </h4>
             </div>
             <div class="card-body">
@@ -281,7 +309,11 @@
               <h4>
                 <i class="fas fa-users"></i>
                 {{ __('project.members') }}
-                <button class="btn btn-success btn-sm add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user"><i class="fas fa-plus"></i> {{ __('project.add_members') }}</button>
+                @if ($project->isActive())
+                    <a class="btn btn-success btn-sm add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user">
+                        <i class="fas fa-plus"></i> {{ __('project.add_members') }}
+                    </a>
+                @endif
               </h4>
             </div>
             <div class="card-body">
@@ -317,7 +349,16 @@
                                 @endif
                                 
                                 <td>
-                                    <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" data-project="{{ $project->id }}" data-toggle="tooltip" data-placement="right" title="{{ __('project.remove_member') }}"><i class="fas fa-user-minus"></i></a>
+                                    @if ($project->isActive())
+                                        <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" 
+                                            data-project="{{ $project->id }}" data-toggle="tooltip" 
+                                            data-placement="right" 
+                                            title="{{ __('project.remove_member') }}">
+                                            <i class="fas fa-user-minus"></i>
+                                        </a>
+                                    @else
+                                        <i class="fas fa-user-minus"></i>
+                                    @endif
                                 </td>
                             </tr>
                             
