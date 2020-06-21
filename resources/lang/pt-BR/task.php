@@ -46,7 +46,7 @@ return [
         'time_not_started'      => 'Não foi possível concluir a tarefa. Tempo trabalhado não iniciado',
         'is_not_open'           => 'Tarefa não está aberta',
         'is_not_finished'       => 'Tarefa não está finalizada',
-        'task_completed'        => 'Tarefa completada com sucesso',
+        'task_completed'        => 'Tarefa finalizada com sucesso',
         'task_opened'           => 'Tarefa aberta com sucesso',
         'time_started'          => 'Tempo iniciado',
         'time_paused'           => 'Tempo pausado',

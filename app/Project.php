@@ -68,6 +68,7 @@ class Project extends Model
      * Add a member to the project
      *
      * @param  User  $user
+     * @param  float $hour_value
      * @return void
      */
     public function addMember(User $user, $hour_value): void
@@ -322,9 +323,10 @@ class Project extends Model
     /**
      * Search for a project
      *
+     * @param string $filter
      * @return bool
      */
-    public static function search($filter)
+    public static function search(string $filter)
     {
         return Project::where('name', 'LIKE', "%{$filter}%")
                     ->paginate();

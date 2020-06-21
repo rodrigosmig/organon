@@ -59,18 +59,6 @@
                                         <td>${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</td>
                                         <td>${{ number_format($project->amount_charged, 2, ',', '.') }}</td>
 										<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
-										{{-- <td>
-											<div class="dropdown">
-												<a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<i class="fas fa-ellipsis-h"></i>
-												</a>
-												<div class="dropdown-menu" aria-labelledby="projectActions">
-													<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> {{__("project.edit")}}</a>
-													<a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> {{__("project.delete")}}</a>
-													<a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}"><i class="fas fa-check"></i> {{__("project.finish")}}</a>
-												</div>
-											</div>
-										</td> --}}
 									</tr>
 								@endforeach										
 							</tbody>

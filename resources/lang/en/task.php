@@ -46,7 +46,7 @@ return [
         'time_not_started'      => 'Unable to finish task. Time worked not started',
         'is_not_open'           => 'Task is not open',
         'is_not_finished'       => 'Task is not finished',
-        'task_completed'        => 'Task successfully completed',
+        'task_completed'        => 'Task successfully finished',
         'task_opened'           => 'Task successfully opened',
         'time_started'          => 'Time started',
         'time_paused'           => 'Time paused',

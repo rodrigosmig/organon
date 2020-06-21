@@ -310,4 +310,17 @@ class Task extends Model
 
         return true;
     }
+
+    /**
+     * Fetch user tasks by given status.
+     *
+     * @param  string $status
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public static function getTasksByStatus(string $status) {
+        return Task::where('status', $status)
+            ->where('user_id', auth()->user()->id)
+            ->orderBy('deadline', 'asc')
+            ->get();
+    }
 }

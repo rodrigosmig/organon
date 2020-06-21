@@ -28,10 +28,11 @@ class TaskController extends Controller
     public function index()
     {
         $data = [
-            'title'     => $this->title,
-            'projects'  => Task::getUserTasksGroupedByProjects()
+            'title'             => $this->title,
+            'open_tasks'        => Task::getTasksByStatus(Task::OPEN),
+            'finished_tasks'    => Task::getTasksByStatus(Task::FINISHED)
         ];
-
+        //dd($data);
         return view('tasks.index', $data);
     }
 
