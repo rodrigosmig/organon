@@ -2086,7 +2086,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'time-counter',
-  props: ['totalWorked', 'task_id', 'project_id'],
+  props: ['totalWorked', 'task_id', 'project_id', 'msg_title', 'msg_message', 'msg_confirm', 'msg_cancel'],
   data: function data() {
     return {
       time_running: localStorage.getItem(this.task_id + '_timer_running') == "true" ? true : false,
@@ -2154,13 +2154,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       swal.fire({
-        title: 'Are you sure?',
-        text: "All task time will be restarted!",
+        title: this.msg_title,
+        text: this.msg_message,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, restart it!'
+        cancelButtonText: this.msg_cancel,
+        confirmButtonText: this.msg_confirm
       }).then(function (result) {
         if (result.value) {
           clearInterval(_this.timer);

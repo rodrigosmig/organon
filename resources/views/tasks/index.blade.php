@@ -50,6 +50,10 @@
                                                                         project_id="{{ $item->project->id }}"
                                                                         user_id="{{ $item->user->id }}"
                                                                         task_id="{{ $item->id }}"
+                                                                        msg_title="{{ __('task.messages.are_you_sure') }}"
+                                                                        msg_message="{{ __('task.messages.all_task_restarted') }}"
+                                                                        msg_confirm="{{ __('task.messages.yes_restart_it') }}"
+                                                                        msg_cancel="{{ __('task.cancel') }}"
                                                                     ></time-counter>
                                                                 </td>
                                                                 <td>

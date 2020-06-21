@@ -155,13 +155,13 @@ class Task extends Model
     
             return [
                 'status' => 'success',
-                'msg'    => 'Time started'
+                'msg'    => __('task.messages.time_started')
             ];
         }
 
         return [
             'status' => 'error',
-            'msg'    => 'Invalid request'
+            'msg'    => __('task.invalid_request')
         ];
         
     }
@@ -178,7 +178,7 @@ class Task extends Model
         if (!$task_time) {
             return [
                 'status' => 'error',
-                'msg'    => 'Invalid request'
+                'msg'    => __('task.invalid_request')
             ];
         }
         
@@ -187,7 +187,7 @@ class Task extends Model
 
         return [
             'status' => 'success',
-            'msg'    => 'Time paused'
+            'msg'    => __('task.messages.time_paused')
         ]; 
     }
 
@@ -206,13 +206,13 @@ class Task extends Model
         if ($delete > 0) {
             return [
                 'status' => 'success',
-                'msg'    => 'Task time has been restarted'
+                'msg'    => __('task.messages.time_restarted')
             ];
         }
 
         return [
             'status' => 'error',
-            'msg'    => 'There is no time for this task'
+            'msg'    => __('task.messages.no_time')
         ];
     }
 
@@ -226,7 +226,7 @@ class Task extends Model
     {
         $response = [
             'status' => 'error',
-            'msg'    => 'Unable to update time.'
+            'msg'    => __('task.messages.unable_update_time')
         ];
 
         if ($type === static::START) {
