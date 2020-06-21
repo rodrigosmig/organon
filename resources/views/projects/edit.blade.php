@@ -24,7 +24,7 @@
                 
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('projects.index') }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
+                <a href="{{ route('projects.show', ['id' => $project->id]) }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
                 <button class="btn btn-primary" type="submit">{{ __('project.submit') }}</button>
             </div>
         </form>

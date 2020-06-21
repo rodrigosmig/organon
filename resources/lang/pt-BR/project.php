@@ -52,7 +52,7 @@ return [
     'search_word'       => 'Entre com um termo de busca',
     'user_removed'      => 'Usuário Removido',
     'search_project'    => 'Procure um projeto',
-    
+    'reopen'            => 'Reabrir',
     
     'messages' => [
         'new'               => 'O projeto foi criado com sucesso',

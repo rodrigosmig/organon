@@ -18,14 +18,7 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
-
-@section('messages-js')
-    <script>
-        var delete_title = '{{ __('project.messages.delete_title') }}';
-        var delete_msg = '{{ __('project.messages.delete_msg') }}';
-    </script>
-@endsection
-    
+   
 @section('content')
     <div class="card">
         <div class="card-body">
@@ -41,40 +34,31 @@
 						<table class="table table-hover" style="border-collapse:collapse;">
 							<thead>
 								<tr>
-									<th></th>
-									<th>{{__("project.name")}}</th>
-									<th>{{__("project.deadline")}}</th>
+                                    <th>{{__("project.name")}}</th>
+                                    <th>{{ __('project.client') }}</th>
+                                    <th>{{__("project.deadline")}}</th>
+                                    <th>{{ __('project.cost') }}</th>
+                                    <th>{{ __('project.amount_charged') }}</th>
 									<th>{{__("project.members")}}</th>
-									<th>{{__("project.actions")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach ($open_projects as $key => $project)
 									<tr>
 										<td>
-											<a href="{{ route('projects.show', ['id' => $project->id]) }}">
-												<i class="fas fa-eye"></i>
-											</a>
-										</td>
-										<td>
                                             <a href="{{ route('projects.show', ['id' => $project->id]) }}">
 												{{ $project->name }}
 											</a>
                                         </td>
-										<td>{{ $project->deadline }}</td>
+                                        <td>
+                                            <a href="{{ route('clients.show', $project->client->id) }}" target="_blank">
+                                                {{$project->client->name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $project->deadline }}</td>
+                                        <td>${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</td>
+                                        <td>${{ number_format($project->amount_charged, 2, ',', '.') }}</td>
 										<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
-										<td>
-											<div class="dropdown">
-												<a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<i class="fas fa-ellipsis-h"></i>
-												</a>
-												<div class="dropdown-menu" aria-labelledby="projectActions">
-													<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> {{__("project.edit")}}</a>
-													<a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> {{__("project.delete")}}</a>
-													<a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}"><i class="fas fa-check"></i> {{__("project.finish")}}</a>
-												</div>
-											</div>
-										</td>
 									</tr>
 								@endforeach										
 							</tbody>
@@ -90,28 +74,31 @@
 							<table class="table table-hover" style="border-collapse:collapse;">
 								<thead>
 									<tr>
-										<th></th>
-                                        <th>{{__("project.name")}}</th>
-                                        <th>{{__("project.deadline")}}</th>
+										<th>{{__("project.name")}}</th>
+                                        <th>{{ __('project.client') }}</th>
+                                        <th>{{ __('project.cost') }}</th>
+                                        <th>{{ __('project.amount_charged') }}</th>
+                                        <th>{{ __('project.time.total_time_worked') }}</th>
                                         <th>{{__("project.members")}}</th>
-                                        <th>{{__("project.actions")}}</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach ($finished_projects as $key => $project)
 										<tr>
-											<td>
-												<a href="{{ route('projects.show', ['id' => $project->id]) }}">
-													<i class="fas fa-eye"></i>
-												</a>
-											</td>
-											<td>{{ $project->name }}</td>
-											<td>{{ $project->deadline }}</td>
+                                            <td>
+                                                <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                                    {{ $project->name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('clients.show', $project->client->id) }}" target="_blank">
+                                                    {{$project->client->name }}
+                                                </a>
+                                            </td>
+                                            <td>${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</td>
+                                            <td>${{ number_format($project->amount_charged, 2, ',', '.') }}</td>
 											<td>{{ secondsToTime($project->getTotalWorkedOnProject()) }}</td>
 											<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
-											<td>
-												<a class="btn btn-sm btn-success" href="{{ route('projects.open-project', ['id' => $project->id]) }}"><i class="fas fa-folder-open"></i></a>
-											</td>
 										</tr>
 									@endforeach											
 								</tbody>

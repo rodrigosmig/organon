@@ -14,7 +14,7 @@
 
     export default {
         name: 'time-counter',
-        props: ['totalWorked', 'task_id', 'project_id'],
+        props: ['totalWorked', 'task_id', 'project_id', 'msg_title', 'msg_message', 'msg_confirm', 'msg_cancel'],
         data() {
             return {
                 time_running: localStorage.getItem(this.task_id + '_timer_running') == "true" ? true : false,
@@ -84,13 +84,14 @@
             },
             resetTimer: function() {
                 swal.fire({
-                title: 'Are you sure?',
-                text: "All task time will be restarted!",
+                title: this.msg_title,
+                text: this.msg_message,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, restart it!'
+                cancelButtonText: this.msg_cancel,
+                confirmButtonText: this.msg_confirm
                 }).then((result) => {
                     if (result.value) {
                         clearInterval(this.timer)

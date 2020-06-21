@@ -6,6 +6,7 @@
 
 @section('content')
     <div class="card">
+        <div class="card-header">{{ __('task.my_tasks') }}</div>
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -17,107 +18,71 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="open" role="tabpanel" aria-labelledby="open-tab">
-                    @if (isset($projects[App\Task::OPEN]))
-                        @foreach ($projects[App\Task::OPEN] as $key => $task)
-                            <div class="accordion" id="project_tasks">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#project-{{ $key }}" aria-expanded="true" aria-controls="project">
-                                            {{ $task['project_name'] }}
-                                        </button>
-                                        </h2>
-                                    </div>            
-                                    <div id="project-{{ $key }}" class="collapse" aria-labelledby="headingOne" data-parent="#project_tasks">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                    <th>{{ __('task.description') }}</th>
-                                                    <th>{{ __('task.deadline') }}</th>
-                                                    <th>{{ __('task.worked_time') }}</th>
-                                                    <th>{{ __('task.finish') }}</th>
-                                                </thead>
+                    @if ($open_tasks->isNotEmpty())
+                        <table class="table">
+                            <thead>
+                                <th>{{ __('project.project') }}</th>
+                                <th>{{ __('task.description') }}</th>
+                                <th>{{ __('task.deadline') }}</th>
+                                <th>{{ __('task.worked_time') }}</th>
+                                <th>{{ __('task.finish') }}</th>
+                            </thead>
 
-                                                <tbody>
-                                                    @foreach ($task as $key => $item)
-                                                        @if ($key !== 'project_name')
-                                                            <tr>
-                                                                <td>{{ $item->description }}</td>
-                                                                <td>{{ $item->deadline }}</td>
-                                                                <td>
-                                                                    <time-counter 
-                                                                        total-worked="{{ $item->getTotalWorkedByUser($item->user->id) }}"
-                                                                        project_id="{{ $item->project->id }}"
-                                                                        user_id="{{ $item->user->id }}"
-                                                                        task_id="{{ $item->id }}"
-                                                                    ></time-counter>
-                                                                </td>
-                                                                <td>
-                                                                    <a href="{{ route('tasks.finish-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}" class="btn btn-circle btn-success" title="{{ __('task.finish_task') }}"><i class="fas fa-check"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        @endif                                                    
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>        
-                            </div>
-                        @endforeach
-                    @endif
-
-                    @empty($projects[App\Task::OPEN])
+                            <tbody>
+                                @foreach ($open_tasks as $task)
+                                    <tr>
+                                        <td>{{ $task->project->name }}</td>
+                                        <td>{{ $task->description }}</td>
+                                        <td>{{ $task->deadline }}</td>
+                                        <td>
+                                            <time-counter 
+                                                total-worked="{{ $task->getTotalWorkedByUser($task->user->id) }}"
+                                                project_id="{{ $task->project->id }}"
+                                                user_id="{{ $task->user->id }}"
+                                                task_id="{{ $task->id }}"
+                                                msg_title="{{ __('task.messages.are_you_sure') }}"
+                                                msg_message="{{ __('task.messages.all_task_restarted') }}"
+                                                msg_confirm="{{ __('task.messages.yes_restart_it') }}"
+                                                msg_cancel="{{ __('task.cancel') }}"
+                                            ></time-counter>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('tasks.finish-task', ['task_id'=>$task->id, 'project_id'=>$task->project->id]) }}" class="btn btn-circle btn-success" title="{{ __('task.finish_task') }}"><i class="fas fa-check"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
                         <h5 style="margin-top:20px">{{ __('task.no_task_found') }}.</h3>
-                    @endempty
+                    @endif                    
                 </div>
                 <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
+                    @if ($finished_tasks->isNotEmpty())
+                        <table class="table">
+                            <thead>
+                                <th>{{ __('task.description') }}</th>
+                                <th>{{ __('task.deadline') }}</th>
+                                <th>{{ __('task.worked_time') }}</th>
+                                <th>{{ __('task.reopen_task') }}</th>
+                            </thead>
 
-                    @if (isset($projects[App\Task::FINISHED]))
-                        @foreach ($projects[App\Task::FINISHED] as $key => $task)
-                            <div class="accordion" id="project_tasks">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h2 class="mb-0">
-                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#project-{{ $key }}" aria-expanded="true" aria-controls="project">
-                                            {{ $task['project_name'] }}
-                                        </button>
-                                        </h2>
-                                    </div>            
-                                    <div id="project-{{ $key }}" class="collapse" aria-labelledby="headingOne" data-parent="#project_tasks">
-                                        <div class="card-body">
-                                            <table class="table">
-                                                <thead>
-                                                    <th>{{ __('task.description') }}</th>
-                                                    <th>{{ __('task.deadline') }}</th>
-                                                    <th>{{ __('task.worked_time') }}</th>
-                                                    <th>{{ __('task.reopen_task') }}</th>
-                                                </thead>
-
-                                                <tbody>
-                                                    @foreach ($task as $key => $item)
-                                                        @if ($key !== 'project_name')
-                                                            <tr>
-                                                                <td>{{ $item->description }}</td>
-                                                                <td>{{ $item->deadline }}</td>
-                                                                <td>{{secondsToTime( $item->getTotalWorkedByUser($item->user->id)) }}</td>
-                                                                <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$item->id, 'project_id'=>$item->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
-                                                            </tr>
-                                                        @endif
-                                                        
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>        
-                            </div>
-                        @endforeach
-                    @endif
-
-                    @empty($projects[App\Task::FINISHED])
+                            <tbody>
+                                @foreach ($finished_tasks as $task)
+                                    <tr>
+                                        <tr>
+                                            <td>{{ $task->description }}</td>
+                                            <td>{{ $task->deadline }}</td>
+                                            <td>{{secondsToTime( $task->getTotalWorkedByUser($task->user->id)) }}</td>
+                                            <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$task->id, 'project_id'=>$task->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
+                                        </tr>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @else
                         <h5 style="margin-top:20px">{{ __('task.no_task_found') }}.</h3>
-                    @endempty    
+                    @endif  
                 </div>
             </div>
         </div>
