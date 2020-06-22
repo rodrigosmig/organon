@@ -5,7 +5,7 @@
 @endsection
 
 @section('button-header')
-	<a href="{{ route('projects.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("New Project")}}</a>
+	<a href="{{ route('projects.new' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("project.new_project")}}</a>
 @endsection
 
 @section('link-css')
@@ -18,14 +18,14 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
-
+   
 @section('content')
     <div class="card">
         <div class="card-body">
 			<nav>
 				<div class="nav nav-tabs" id="nav-tab" role="tablist">
-				  <a class="nav-item nav-link active" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="true">Active</a>
-				  <a class="nav-item nav-link" id="nav-finished-tab" data-toggle="tab" href="#nav-finished" role="tab" aria-controls="nav-finished" aria-selected="false">Finished</a>
+				  <a class="nav-item nav-link active" id="nav-active-tab" data-toggle="tab" href="#nav-active" role="tab" aria-controls="nav-active" aria-selected="true">{{__("project.active")}}</a>
+				  <a class="nav-item nav-link" id="nav-finished-tab" data-toggle="tab" href="#nav-finished" role="tab" aria-controls="nav-finished" aria-selected="false">{{__("project.finished")}}</a>
 				</div>
 			</nav>
 			<div class="tab-content" id="nav-tabContent">
@@ -34,42 +34,37 @@
 						<table class="table table-hover" style="border-collapse:collapse;">
 							<thead>
 								<tr>
-									<th></th>
-									<th>Name</th>
-									<th>Deadline</th>
-									<th>Team</th>
-									<th>Actions</th>
+                                    <th>{{__("project.name")}}</th>
+                                    <th>{{ __('project.client') }}</th>
+                                    <th>{{__("project.deadline")}}</th>
+                                    <th>{{ __('project.cost') }}</th>
+                                    <th>{{ __('project.amount_charged') }}</th>
+									<th>{{__("project.members")}}</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach ($open_projects as $key => $project)
 									<tr>
 										<td>
-											<a href="{{ route('projects.show', ['id' => $project->id]) }}">
-												<i class="fas fa-eye"></i>
+                                            <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+												{{ $project->name }}
 											</a>
-										</td>
-										<td>{{ $project->name }}</td>
-										<td>{{ $project->deadline }}</td>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('clients.show', $project->client->id) }}" target="_blank">
+                                                {{$project->client->name }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $project->deadline }}</td>
+                                        <td>${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</td>
+                                        <td>${{ number_format($project->amount_charged, 2, ',', '.') }}</td>
 										<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
-										<td>
-											<div class="dropdown">
-												<a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<i class="fas fa-ellipsis-h"></i>
-												</a>
-												<div class="dropdown-menu" aria-labelledby="projectActions">
-													<a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit</a>
-													<a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}"><i class="fas fa-trash-alt"></i> Delete</a>
-													<a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}"><i class="fas fa-check"></i> Finish</a>
-												</div>
-											</div>
-										</td>
 									</tr>
 								@endforeach										
 							</tbody>
 						</table>
 					@else
-						<h5 style="margin-top:20px">No projects found.</h3>
+						<h5 style="margin-top:20px">{{__("project.no_projectd")}}.</h3>
 					@endif
 					
 				</div>
@@ -79,35 +74,37 @@
 							<table class="table table-hover" style="border-collapse:collapse;">
 								<thead>
 									<tr>
-										<th></th>
-										<th>Name</th>
-										<th>Deadline</th>
-										<th>Total Worked</th>
-										<th>Team</th>
-										<th>Open Task</th>
+										<th>{{__("project.name")}}</th>
+                                        <th>{{ __('project.client') }}</th>
+                                        <th>{{ __('project.cost') }}</th>
+                                        <th>{{ __('project.amount_charged') }}</th>
+                                        <th>{{ __('project.time.total_time_worked') }}</th>
+                                        <th>{{__("project.members")}}</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach ($finished_projects as $key => $project)
 										<tr>
-											<td>
-												<a href="{{ route('projects.show', ['id' => $project->id]) }}">
-													<i class="fas fa-eye"></i>
-												</a>
-											</td>
-											<td>{{ $project->name }}</td>
-											<td>{{ $project->deadline }}</td>
+                                            <td>
+                                                <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                                    {{ $project->name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('clients.show', $project->client->id) }}" target="_blank">
+                                                    {{$project->client->name }}
+                                                </a>
+                                            </td>
+                                            <td>${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</td>
+                                            <td>${{ number_format($project->amount_charged, 2, ',', '.') }}</td>
 											<td>{{ secondsToTime($project->getTotalWorkedOnProject()) }}</td>
 											<td><i class="fas fa-users"></i> {{ $project->members->count() + 1 }}</td>
-											<td>
-												<a class="btn btn-sm btn-success" href="{{ route('projects.open-project', ['id' => $project->id]) }}"><i class="fas fa-folder-open"></i></a>
-											</td>
 										</tr>
 									@endforeach											
 								</tbody>
 							</table>
 						@else
-							<h5 style="margin-top:20px">No projects found.</h3>
+							<h5 style="margin-top:20px">{{__("project.no_projectd")}}</h3>
 						@endif
 					</div>
 				</div>

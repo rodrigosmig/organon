@@ -14,23 +14,36 @@
 
     <hr class="sidebar-divider">
 
+     <!-- Heading -->
+     <div class="sidebar-heading">
+      {{ __('client.clients') }}
+    </div>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('clients.index') }}">
+        <i class="fas fa-user-friends"></i>
+        <span>{{ __('client.clients') }}</span></a>
+    </li>
+
+    <hr class="sidebar-divider">
+
     <!-- Heading -->
     <div class="sidebar-heading">
-      Projects
+        {{ __('project.projects') }}
     </div>
 
     <!-- Nav Item - Tables -->
     <li class="nav-item">
       <a class="nav-link" href="{{ route('projects.index') }}">
         <i class="fas fa-project-diagram"></i>
-        <span>My Projects</span></a>
+        <span>{{ __('project.projects') }}</span></a>
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
       <a class="nav-link" href="{{ route('tasks.my-tasks') }}">
         <i class="fas fa-tasks"></i>
-        <span>My Tasks</span>
+        <span>{{ __('task.tasks') }}</span>
       </a>
     </li>
 

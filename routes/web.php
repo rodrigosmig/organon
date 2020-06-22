@@ -72,3 +72,15 @@ Route::group([
 	Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
 	Route::get('/open-task', 'TaskController@openTask')->name('open-task');
 });
+
+Route::prefix('clients')
+    ->as('clients.')
+    ->middleware('clientOwner')
+	->group(function() {
+		Route::get('/', 'ClientController@index')->name('index');
+		Route::get('/new', 'ClientController@create')->name('new');
+        Route::post('/store', 'ClientController@store')->name('store');
+        Route::get('/show/{client_id}', 'ClientController@show')->name('show');
+        Route::put('/update/{client_id}', 'ClientController@update')->name('update');
+        Route::get('/edit/{client_id}', 'ClientController@edit')->name('edit');
+    });

@@ -11,14 +11,49 @@
     <script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
 
+@section('messages-js')
+    <script>
+        var delete_msg = '{{ __('project.messages.delete_msg') }}';
+        var delete_title = '{{ __('project.messages.delete_title') }}';
+        var user_removed = '{{ __('project.user_removed') }}';
+        var user_msg = '{{ __('project.messages.user_removed') }}'
+        var button_cancel = '{{ __('project.cancel') }}';
+        var button_confirm = '{{ __('project.confirm') }}';
+        var search_for_user = '{{ __('project.search_user') }}'
+    </script>
+@endsection
+
 @section('title')
 	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small>/ {{ $project->name }}</small></h1>
 @endsection
 
 @section('button-header')
-<a href="{{ route('projects.edit', ['id' => $project->id]) }}" class="menuMembers d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="Edit Project">
-    <i class="fas fa-edit"></i>
-  </a>
+    <div class="dropdown">
+        <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            @if ($project->isActive())
+                <a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}">
+                    <i class="fas fa-edit"></i>
+                    {{ __('project.edit') }}
+                </a>
+                <a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}">
+                    <i class="fas fa-trash-alt"></i>
+                    {{ __('project.delete') }}
+                </a>
+                <a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}">
+                    <i class="fas fa-check"></i>
+                    {{ __('project.finish') }}
+                </a>
+            @else
+                <a class="dropdown-item" href="{{ route('projects.open-project', ['id' => $project->id]) }}">
+                    <i class="fas fa-folder-open"></i>
+                    {{ __('project.reopen') }}
+                </a>
+            @endif
+        </div>
+    </div>
 @endsection
 
 @section('modal')
@@ -26,7 +61,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Member</h5>
+					<h5 class="modal-title">{{ __('project.add_member') }}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -36,17 +71,17 @@
 					<input id="project_id" type="hidden" name="project_id">
 					<div class="modal-body">
 						<div class="input-group mb-3">
-							<label for="add-member">Search for a user</label>
+							<label for="add-member">{{ __('project.search_user') }}</label>
 							<select id="add-member" name="user_id" class="select-user-ajax" style="width: 100%" required></select>
             </div>
             <div class="input-group mb-3">
-							<label for="hour_value">Hour Value</label>
+							<label for="hour_value">{{ __('project.hour_value') }}</label>
 							<input type="number" id="hour_value" name="hour_value" class="input-user-ajax" style="width: 100%" value="0.0"></select>
             </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Add Member</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('project.close') }}</button>
+						<button type="submit" class="btn btn-primary">{{ __('project.add_member') }}</button>
 					</div>
 				</form>
 			</div>
@@ -57,7 +92,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Assign User</h5>
+					<h5 class="modal-title">{{ __('project.assign_user') }}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -68,9 +103,9 @@
 					<input id="task_id" type="hidden" name="task_id">
 					<div class="modal-body">
 						<div class="form-group mb-3">
-							<label for="add-member">Select a user</label>
+							<label for="add-member">{{ __('project.select_user') }}</label>
 							<select class="form-control" name="user_id" required>
-                <option value="">None</option>
+                <option value="">{{ __('project.none') }}</option>
                 @foreach ($members as $member)
                   <option value="{{ $member->id }}">{{ $member->name }}</option>
                 @endforeach
@@ -78,8 +113,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Add Member</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('project.close') }}</button>
+						<button type="submit" class="btn btn-primary">{{ __('project.add_member') }}</button>
 					</div>
 				</form>
 			</div>
@@ -90,7 +125,7 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Add Task</h5>
+					<h5 class="modal-title">{{ __('task.add_task') }}</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -100,21 +135,21 @@
 					<input type="hidden" name="project_id" value="{{ $project->id }}">
 					<div class="modal-body">
 						<div class="form-group row">
-              <label for="task-description" class="col-sm-2 col-form-label">Description</label>
+              <label for="task-description" class="col-sm-2 col-form-label">{{ __('project.description') }}</label>
               <div class="col-sm-12">
-                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Task description" value="{{ old('description') }}" >
+                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="{{ __('task.task_description') }}" value="{{ old('description') }}" >
               </div>
             </div>
             <div class="form-group row">
-              <label for="task-deadline" class="col-sm-2 col-form-label">Deadline</label>
+              <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('project.deadline') }}</label>
               <div class="col-sm-12">
                 <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
               </div>
             </div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Add Task</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('project.close') }}</button>
+						<button type="submit" class="btn btn-primary">{{ __('task.add_task') }}</button>
 					</div>
 				</form>
 			</div>
@@ -132,7 +167,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Deadline</div>
+                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">{{ __('project.deadline') }}</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $project->deadline }}</div>
                   </div>
                   <div class="col-auto">
@@ -148,7 +183,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Time Worked</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.time.total_time_worked') }}</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ secondsToTime($total_worked) }}</div>
                   </div>
                   <div class="col-auto">
@@ -164,7 +199,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project cost</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.cost') }}</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</div>
                   </div>
                   <div class="col-auto">
@@ -180,7 +215,7 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Project Value</div>
+                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.amount_charged') }}</div>
                     <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->amount_charged, 2, ',', '.') }}</div>
                   </div>
                   <div class="col-auto">
@@ -198,19 +233,23 @@
             <div class="card-header">
               <h4>
                 <i class="fas fa-tasks"></i>
-                Tasks
-                <a class="btn btn-success btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#modal-add_task"><i class="fas fa-plus"></i> Add Task</a>
+                {{ __('task.tasks') }}
+                @if ($project->isActive())
+                    <a class="btn btn-success btn-sm" href="javascript:void(0)" data-toggle="modal" data-target="#modal-add_task"><i class="fas fa-plus">
+                        </i> {{ __('task.add_task') }}
+                    </a>
+                @endif
               </h4>
             </div>
             <div class="card-body">
                 <table class="table">
                     <thead>
-                        <th>User</th>
-                        <th>Description</th>
-                        <th>Time Worked</th>
-                        <th>Deadline</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>{{ __('project.user') }}</th>
+                        <th>{{ __('project.description') }}</th>
+                        <th>{{ __('project.time.time_worked') }}</th>
+                        <th>{{ __('project.deadline') }}</th>
+                        <th>{{ __('project.status') }}</th>
+                        <th>{{ __('project.actions') }}</th>
                     </thead>
                     <tbody>
                         @foreach ($project->tasks as $task)
@@ -244,12 +283,12 @@
                                       <i class="fas fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="projectActions">
-                                      <a class="dropdown-item" href="{{ route('projects.task.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> Edit Task</a>
-                                      <a class="dropdown-item" href="{{ route('projects.task.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> Delete Task</a>
+                                      <a class="dropdown-item" href="{{ route('projects.task.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> {{ __('task.edit_task') }}</a>
+                                      <a class="dropdown-item" href="{{ route('projects.task.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> {{ __('task.delete_task') }}</a>
                                       @if ($task->user)
-                                        <a class="dropdown-item" href="{{ route('projects.task.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> Remove the user</a>
+                                        <a class="dropdown-item" href="{{ route('projects.task.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> {{ __('task.remove_user') }}</a>
                                       @else
-                                      <a class="dropdown-item assign_task_member" href="javascript:void(0)" data-task="{{ $task->id }}" data-toggle="modal" data-target="#modal-assign_user"><i class="fas fa-user-plus"></i> Assign a user</a>
+                                      <a class="dropdown-item assign_task_member" href="javascript:void(0)" data-task="{{ $task->id }}" data-toggle="modal" data-target="#modal-assign_user"><i class="fas fa-user-plus"></i> {{ __('task.assign_user') }}</a>
                                       @endif
                                     </div>
                                   </div>
@@ -269,19 +308,23 @@
             <div class="card-header">
               <h4>
                 <i class="fas fa-users"></i>
-                Team Members
-                <button class="btn btn-success btn-sm add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user"><i class="fas fa-plus"></i> Add Member</button>
+                {{ __('project.members') }}
+                @if ($project->isActive())
+                    <a class="btn btn-success btn-sm add_member" href="javascript:void(0)" data-project="{{ $project->id }}" data-toggle="modal" data-target="#modal-add_user">
+                        <i class="fas fa-plus"></i> {{ __('project.add_members') }}
+                    </a>
+                @endif
               </h4>
             </div>
             <div class="card-body">
                 
                 <table class="table table-hover">
                     <thead>
-                        <th>Avatar</th>
-                        <th>Name</th>
-                        <th>Total Worked</th>
-                        <th>Hour Value</th>
-                        <th>Action</th>
+                        <th>{{ __('project.avatar') }}</th>
+                        <th>{{ __('project.name') }}</th>
+                        <th>{{ __('project.time.total_worked') }}</th>
+                        <th>{{ __('project.hour_value') }}</th>
+                        <th>{{ __('project.action') }}</th>
                     </thead>
                     <tbody>
                         @foreach ($members as $user)
@@ -306,7 +349,16 @@
                                 @endif
                                 
                                 <td>
-                                    <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" data-project="{{ $project->id }}" data-toggle="tooltip" data-placement="right" title="Remove Member"><i class="fas fa-user-minus"></i></a>
+                                    @if ($project->isActive())
+                                        <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" 
+                                            data-project="{{ $project->id }}" data-toggle="tooltip" 
+                                            data-placement="right" 
+                                            title="{{ __('project.remove_member') }}">
+                                            <i class="fas fa-user-minus"></i>
+                                        </a>
+                                    @else
+                                        <i class="fas fa-user-minus"></i>
+                                    @endif
                                 </td>
                             </tr>
                             

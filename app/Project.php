@@ -22,7 +22,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged'];
+    protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged', 'client_id'];
 
     /**
      * Fetch project tasks.
@@ -51,13 +51,24 @@ class Project extends Model
      */
     public function owner()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Fetch the project client.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 
     /**
      * Add a member to the project
      *
      * @param  User  $user
+     * @param  float $hour_value
      * @return void
      */
     public function addMember(User $user, $hour_value): void
@@ -278,7 +289,7 @@ class Project extends Model
     }
 
     /**
-     * Checks if the prject has a task is in progress
+     * Checks if the project has a task is in progress
      *
      * @return bool
      */
@@ -294,13 +305,40 @@ class Project extends Model
     }
 
     /**
-     * Search for a project
+     * Checks if the project has a open task
      *
      * @return bool
      */
-    public static function search($filter)
+    public function hasOpenTask(): bool
+    {
+        foreach ($this->tasks as $task) {
+            if ($task->status === Task::OPEN) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Search for a project
+     *
+     * @param string $filter
+     * @return bool
+     */
+    public static function search(string $filter)
     {
         return Project::where('name', 'LIKE', "%{$filter}%")
                     ->paginate();
+    }
+
+    /**
+     * Checks if the project is active
+     *
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->status === Project::ACTIVE;
     }
 }

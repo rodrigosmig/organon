@@ -21,7 +21,7 @@
           };
         }
       },
-      placeholder: 'Search for a user',
+      placeholder: search_for_user,
       minimumInputLength: 3,
       templateResult: formatRepo,
       templateSelection: formatRepoSelection,
@@ -80,10 +80,10 @@
       var project_id  = $(this).attr('data-project')
 
       swal({
-        title: 'Are you sure?',
-        text: 'The user will be removed from the project',
+        title: delete_title,
+        text: user_msg,
         icon: 'warning',
-        buttons: ["Cancel", "Confirm"],
+        buttons: [button_cancel, button_confirm],
     }).then(function(confirm) {
         if (confirm) {          
           $.ajax({
@@ -97,7 +97,7 @@
             success: function(response) {
               console.log(response)
               swal({
-                title: 'User removed',
+                title: user_removed,
                 text: response,
                 icon: 'success',
               }).then(function() {
@@ -124,16 +124,16 @@
     var link = event.currentTarget.href
 
     swal({
-      title: 'Are you sure?',
-      text: 'All project data will be deleted',
-      icon: 'warning',
-      buttons: ["Cancel", "Confirm"],
-    }).then(function(confirm) {
-        if (confirm) {          
-          location.href=link
-        }
-    });
-})
+        title: delete_title,
+        text: delete_msg,
+        icon: 'warning',
+        buttons: [button_cancel, button_confirm],
+        }).then(function(confirm) {
+            if (confirm) {          
+            location.href=link
+            }
+        });
+    })
 
   $.ajaxSetup({
     headers: {

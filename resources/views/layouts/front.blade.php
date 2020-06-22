@@ -15,11 +15,12 @@
     </head>
 
     <body id="page-top">
+        @include('sweetalert::alert')
+        
         <div id="app">
             <div id="wrapper">
 
                 @include('layouts.sidebar')
-    
     
                 <div id="content-wrapper" class="d-flex flex-column">
                     <div id="content">
@@ -30,9 +31,7 @@
                                 @yield('title')
                                 @yield('button-header')
                             </div>
-    
-                            @include('sweetalert::alert')
-                            
+                           
                             @yield('content')
                             
                         </div>
@@ -52,6 +51,8 @@
         @include('layouts.logout')
 
         @yield('modal')
+
+        @yield('messages-js')
 
         <script src="{{ asset('js/app.js' )}}" type="text/javascript"></script>
         <script src="{{ asset('js/sb-admin-2.min.js' )}}" type="text/javascript"></script>
