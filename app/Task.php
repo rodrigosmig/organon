@@ -22,7 +22,7 @@ class Task extends Model
         'finished'  => "Finished"
     ];
 
-    protected $fillable = ['description', 'deadline', 'project_id'];
+    protected $fillable = ['description', 'deadline', 'project_id', 'user_id'];
 
     /**
      * Fetch the task project.

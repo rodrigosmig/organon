@@ -23,7 +23,7 @@ return [
     'hour_value'        => 'Valor da Hora',
     'close'             => 'Fechar',
     'assign_user'       => 'Atribuir Usuário',
-    'select_user'       => 'Selecionar a Usuário',
+    'select_user'       => 'Selecione um usuário',
     'none'              => 'Nenhum',
     'description'       => 'Descrição',
     'cost'              => 'Custo',
@@ -53,6 +53,7 @@ return [
     'user_removed'      => 'Usuário Removido',
     'search_project'    => 'Procure um projeto',
     'reopen'            => 'Reabrir',
+    'change_user'       => 'Alterar usuário',
     
     'messages' => [
         'new'               => 'O projeto foi criado com sucesso',

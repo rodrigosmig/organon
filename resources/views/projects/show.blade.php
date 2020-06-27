@@ -100,16 +100,16 @@
 				<form id="form-assign-task-member" action="{{ route('projects.task.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
           @csrf
           <input type="hidden" name="project_id" value="{{ $project->id }}">
-					<input id="task_id" type="hidden" name="task_id">
+				<input id="task_id" type="hidden" name="task_id">
 					<div class="modal-body">
 						<div class="form-group mb-3">
 							<label for="add-member">{{ __('project.select_user') }}</label>
 							<select class="form-control" name="user_id" required>
-                <option value="">{{ __('project.none') }}</option>
-                @foreach ($members as $member)
-                  <option value="{{ $member->id }}">{{ $member->name }}</option>
-                @endforeach
-              </select>
+                                <option value="">{{ __('project.none') }}</option>
+                                @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                @endforeach
+                            </select>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -135,18 +135,25 @@
 					<input type="hidden" name="project_id" value="{{ $project->id }}">
 					<div class="modal-body">
 						<div class="form-group row">
-              <label for="task-description" class="col-sm-2 col-form-label">{{ __('project.description') }}</label>
-              <div class="col-sm-12">
-                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="{{ __('task.task_description') }}" value="{{ old('description') }}" >
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('project.deadline') }}</label>
-              <div class="col-sm-12">
-                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
-              </div>
-            </div>
-					</div>
+                            <label for="task-description" class="col-sm-2 col-form-label">{{ __('project.description') }}</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="{{ __('task.task_description') }}" value="{{ old('description') }}" >
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('project.deadline') }}</label>
+                            <div class="col-sm-12">
+                                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
+                            </div>
+                        </div>
+                        <label for="add-member">{{ __('project.select_user') }}</label>
+                        <select class="form-control" name="user_id">
+                            <option value="">{{ __('project.none') }}</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('project.close') }}</button>
 						<button type="submit" class="btn btn-primary">{{ __('task.add_task') }}</button>

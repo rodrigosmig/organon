@@ -55,7 +55,7 @@ class TaskController extends Controller
     public function store(StoreTaskFormRequest $request)
     {
         $validated = $request->validated();
-        
+
         $project = Project::find($validated['project_id']);
 
         if (!$project) {
@@ -66,7 +66,8 @@ class TaskController extends Controller
         $task = Task::create([
             'description'   => $validated['description'],
             'deadline'      => $validated['deadline'],
-            'project_id'    => $project->id
+            'project_id'    => $project->id,
+            'user_id'       => $validated['user_id']
         ]);
         Alert::success(__('task.success'), __('task.messages.task_created'));
         
@@ -113,7 +114,8 @@ class TaskController extends Controller
         $data = [
             'title'     => $this->title,
             'task'      => $task,
-            'project'   => $project
+            'project'   => $project,
+            'members'   => $project->getAllProjectMembers()
         ];
 
         return view('tasks.edit', $data);
@@ -150,6 +152,7 @@ class TaskController extends Controller
         
         $task->description  = $validated['description'];
         $task->deadline     = $validated['deadline'];
+        $task->user_id      = $validated['user_id'];
         $task->save();
 
         Alert::success(__('task.success'), __('task.messages.task_updated'));

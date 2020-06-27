@@ -53,6 +53,7 @@ return [
     'user_removed'      => 'User Removed',
     'search_project'    => 'Search for a project',
     'reopen'            => 'Reopen',
+    'change_user'       => 'Change user',
     
     'messages' => [
         'new'               => 'The project was successfully created',
