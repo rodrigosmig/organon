@@ -60,12 +60,12 @@ class ProjectController extends Controller
     public function store(StoreProjectFormRequest $request)
     {
         $validated = $request->validated();
-        //dd($request->all(), $validated['client']);
+
         $project = Project::create([
             'name'              => $validated['name'],
             'deadline'          => $validated['deadline'],
             'owner_id'          => $request->user()->id,
-            'amount_charged'    => $request->input('amount_charged', 0.0),
+            'amount_charged'    => $request->input('amount_charged', 0),
             'client_id'         => $validated['client']
         ]);
         
