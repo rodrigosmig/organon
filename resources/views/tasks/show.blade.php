@@ -14,7 +14,41 @@
     <div class="card">
         @csrf
         <div class="card-body">
-            @include('tasks.partials.form')
+            {{-- @include('tasks.partials.form') --}}
+            <div class="form-group row">
+                <label for="task-name" class="col-sm-2 col-form-label">{{ __('task.name') }}</label>
+                <div class="col-sm-10">
+                    {{ $task->name }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="task-description" class="col-sm-2 col-form-label">{{ __('task.description') }}</label>
+                <div class="col-sm-10">
+                    {{ $task->description }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('task.deadline') }}</label>
+                <div class="col-sm-10">
+                    {{ $task->deadline }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="task-project" class="col-sm-2 col-form-label">{{ __('task.project') }}</label>
+                <div class="col-sm-10">
+                    {{ $task->project ? $task->project->name : '-' }}
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="task-client" class="col-sm-2 col-form-label">{{ __('task.client') }}</label>
+                <div class="col-sm-10">
+                    {{ $task->client ? $task->client->name : '-' }}
+                </div>
+            </div>
             
             <div class="form-group row">
                 <label for="task-name" class="col-sm-2 col-form-label">{{ __('task.worked_time') }}</label>

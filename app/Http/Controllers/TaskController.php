@@ -86,9 +86,6 @@ class TaskController extends Controller
         $data = [
             'title'     => $this->title,
             'task'      => Task::find($id),
-            'clients'   => auth()->user()->getClients(),
-            'projects'  => Project::getProjectsByStatus(Project::ACTIVE),
-            'readonly'  => true
         ];
 
         return view('tasks.show', $data);
