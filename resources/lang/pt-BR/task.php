@@ -10,6 +10,7 @@ return [
     'remove_user'           => 'Remover o usuário',
     'assign_user'           => 'Atribuir um usuário',
     'edit'                  => 'Editar',
+    'delete'                => 'Deletar',
     'description'           => 'Descrição',
     'deadline'              => 'Prazo',
     'cancel'                => 'Cancelar',
@@ -29,6 +30,14 @@ return [
     'invalid_request'       => 'Requisição inválida',
     'invalid_task'          => 'Tarefa inválida',
     'request_not_allowed'   => 'Requisição não permitida',
+    'new_task'              => 'Nova Tarefa',
+    'new'                   => 'Nova',
+    'client'                => 'Cliente',
+    'project'               => 'Projeto',
+    'name'                  => 'Nome',
+    'task_name'             => 'Nome da Tarefa',
+    'actions'               => 'Ações',
+    'back'                  => 'Voltar',
 
     'messages' => [
         'not_found'             => 'Projeto não encontrado',

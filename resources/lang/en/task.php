@@ -10,6 +10,7 @@ return [
     'remove_user'           => 'Remove the user',
     'assign_user'           => 'Assign a user',
     'edit'                  => 'Edit',
+    'delete'                => 'Deletar',
     'description'           => 'Description',
     'deadline'              => 'Deadline',
     'cancel'                => 'Cancel',
@@ -29,6 +30,14 @@ return [
     'invalid_request'       => 'Invalid Request',
     'invalid_task'          => 'Invalid Task',
     'request_not_allowed'   => 'Request not allowed',
+    'new_task'              => 'New Task',
+    'new'                   => 'New',
+    'client'                => 'Client',
+    'project'               => 'Project',
+    'name'                  => 'Name',
+    'task_name'             => 'Task Name',
+    'actions'               => 'Actions',
+    'back'                  => 'Back',
 
     'messages' => [
         'not_found'             => 'Project Not Found',

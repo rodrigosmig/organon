@@ -1,14 +1,13 @@
 @extends('layouts.front')
 
 @section('title')
-	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small> / {{ __('task.edit') }}</small> <small>/ {{ $task->name }}</small></h1>
+	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small>/ {{ __('task.new') }}</small></h1>
 @endsection
 
 @section('content')
     <div class="card">
-        <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+        <form action="{{ route('tasks.store') }}" method="POST">
             @csrf
-            <input id="project_id" type="hidden" name="project_id" value="">
             <div class="card-body">
                 
                 @include('tasks.partials.form')

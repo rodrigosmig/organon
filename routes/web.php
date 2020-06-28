@@ -63,15 +63,20 @@ Route::group([
 	});
 });
 
-Route::group([
-	'prefix' => 'tasks', 
-	'as' => 'tasks.',
-], function () {
-	Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
-	Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
-	Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
-	Route::get('/open-task', 'TaskController@openTask')->name('open-task');
-});
+Route::prefix('tasks')
+    ->as('tasks.')
+    //->middleware('clientOwner')
+	->group(function() {
+        Route::get('/create', 'TaskController@create')->name('create');
+        Route::post('/store', 'TaskController@store')->name('store');
+        Route::get('/edit/{id}', 'TaskController@edit')->name('edit');
+        Route::get('/show/{id}', 'TaskController@show')->name('show');
+        Route::post('/update/{id}', 'TaskController@update')->name('update');
+        Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
+        Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
+        Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
+        Route::get('/open-task', 'TaskController@openTask')->name('open-task');
+    });
 
 Route::prefix('clients')
     ->as('clients.')

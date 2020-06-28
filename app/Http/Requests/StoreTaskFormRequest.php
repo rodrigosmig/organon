@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\User;
+use App\Client;
 use App\Project;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -16,12 +16,6 @@ class StoreTaskFormRequest extends FormRequest
      */
     public function authorize()
     {
-        /* $project = Project::find($this->project_id);
-
-        if (!$project) {
-            return false;
-        } */
-
         return true;
     }
 
@@ -33,13 +27,19 @@ class StoreTaskFormRequest extends FormRequest
     public function rules()
     {
         return [
+            'name'          => 'required|min:3',
             'description'   => 'required|min:5',
-            'deadline'      => 'required|date|after:today',
-            'project_id'    => 'required',
-            'user_id'       => [
+            'deadline'      => 'required|date|after_or_equal:today',
+            'project_id'    => [
                 'nullable',
-                Rule::exists(User::class, 'id')->where(function($query) {
-                    $query->where('id', $this->user_id);
+                Rule::exists(Project::class, 'id')->where(function($query) {
+                    $query->where('id', $this->project_id);
+                })
+            ],
+            'client_id'       => [
+                'nullable',
+                Rule::exists(Client::class, 'id')->where(function($query) {
+                    $query->where('id', $this->client_id);
                 })
             ]
         ];

@@ -4,6 +4,10 @@
 	<h1 class="h3 mb-0 text-gray-800">{{ $title }}</h1>
 @endsection
 
+@section('button-header')
+	<a href="{{ route('tasks.create' )}}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm"><i class="fas fa-plus"></i> {{__("task.new_task")}}</a>
+@endsection
+
 @section('content')
     <div class="card">
         <div class="card-header">{{ __('task.my_tasks') }}</div>
@@ -21,21 +25,29 @@
                     @if ($open_tasks->isNotEmpty())
                         <table class="table">
                             <thead>
+                                <th></th>
+                                <th>{{ __('task.name') }}</th>
                                 <th>{{ __('project.project') }}</th>
-                                <th>{{ __('task.description') }}</th>
+                                <th>{{ __('task.client') }}</th>
                                 <th>{{ __('task.deadline') }}</th>
                                 <th>{{ __('task.worked_time') }}</th>
-                                <th>{{ __('task.finish') }}</th>
+                                <th>{{ __('task.actions') }}</th>
                             </thead>
 
                             <tbody>
                                 @foreach ($open_tasks as $task)
                                     <tr>
-                                        <td>{{ $task->project->name }}</td>
-                                        <td>{{ $task->description }}</td>
+                                        <td>
+                                            <a href="{{ route('tasks.show', $task->id) }}">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </td>
+                                        <td>{{ $task->name }}</td>
+                                        <td>{{ $task->project ? $task->project->name : '-' }}</td>
+                                        <td>{{ $task->client ? $task->client->name : '-' }}</td>
                                         <td>{{ $task->deadline }}</td>
                                         <td>
-                                            <time-counter 
+                                            {{-- <time-counter 
                                                 total-worked="{{ $task->getTotalWorkedByUser($task->user->id) }}"
                                                 project_id="{{ $task->project->id }}"
                                                 user_id="{{ $task->user->id }}"
@@ -44,10 +56,19 @@
                                                 msg_message="{{ __('task.messages.all_task_restarted') }}"
                                                 msg_confirm="{{ __('task.messages.yes_restart_it') }}"
                                                 msg_cancel="{{ __('task.cancel') }}"
-                                            ></time-counter>
+                                            ></time-counter> --}}
                                         </td>
                                         <td>
-                                            <a href="{{ route('tasks.finish-task', ['task_id'=>$task->id, 'project_id'=>$task->project->id]) }}" class="btn btn-circle btn-success" title="{{ __('task.finish_task') }}"><i class="fas fa-check"></i></a>
+                                            <div class="dropdown">
+                                                <a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="projectActions">
+                                                    <a class="dropdown-item" href="{{ route('tasks.edit', $task->id) }}"><i class="fas fa-edit"></i> {{ __('task.edit') }}</a>
+                                                    <a class="dropdown-item" href=""><i class="fas fa-trash"></i> {{ __('task.delete') }}</a>
+                                                    <a class="dropdown-item" href=""><i class="fas fa-check"></i> {{ __('task.finish') }}</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -61,8 +82,10 @@
                     @if ($finished_tasks->isNotEmpty())
                         <table class="table">
                             <thead>
-                                <th>{{ __('task.description') }}</th>
-                                <th>{{ __('task.deadline') }}</th>
+                                <th></th>
+                                <th>{{ __('task.name') }}</th>
+                                <th>{{ __('project.project') }}</th>
+                                <th>{{ __('task.client') }}</th>
                                 <th>{{ __('task.worked_time') }}</th>
                                 <th>{{ __('task.reopen_task') }}</th>
                             </thead>
@@ -71,8 +94,14 @@
                                 @foreach ($finished_tasks as $task)
                                     <tr>
                                         <tr>
-                                            <td>{{ $task->description }}</td>
-                                            <td>{{ $task->deadline }}</td>
+                                            <td>
+                                                <a href="{{ route('tasks.show', $task->id) }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                            </td>
+                                            <td>{{ $task->name }}</td>
+                                            <td>{{ $task->project ? $task->project->name : '-' }}</td>
+                                            <td>{{ $task->client ? $task->client->name : '-' }}</td>
                                             <td>{{secondsToTime( $task->getTotalWorkedByUser($task->user->id)) }}</td>
                                             <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$task->id, 'project_id'=>$task->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
                                         </tr>

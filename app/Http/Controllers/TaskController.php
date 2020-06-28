@@ -43,7 +43,13 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title'     => $this->title,
+            'clients'   => auth()->user()->getClients(),
+            'projects'  => Project::getProjectsByStatus(Project::ACTIVE)
+        ];
+
+        return view('tasks.new', $data);
     }
 
     /**
@@ -54,24 +60,19 @@ class TaskController extends Controller
      */
     public function store(StoreTaskFormRequest $request)
     {
-        $validated = $request->validated();
-
-        $project = Project::find($validated['project_id']);
-
-        if (!$project) {
-            Alert::warning(__('task.invalid_request'), __('task.messages.not_found'));
-            return redirect()->route('projects.index');
-        }
-
+        $data = $request->except('_token');
+        
         $task = Task::create([
-            'description'   => $validated['description'],
-            'deadline'      => $validated['deadline'],
-            'project_id'    => $project->id,
-            'user_id'       => $validated['user_id']
+            'name'          => $data['name'],
+            'description'   => $data['description'],
+            'deadline'      => $data['deadline'],
+            'project_id'    => $data['project_id'],
+            'client_id'     => $data['client_id'],
+            'user_id'       => auth()->user()->id
         ]);
         Alert::success(__('task.success'), __('task.messages.task_created'));
         
-        return redirect()->route('projects.show', ['id' => $project->id]);
+        return redirect()->route('tasks.my-tasks');
     }
 
     /**
@@ -82,7 +83,15 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = [
+            'title'     => $this->title,
+            'task'      => Task::find($id),
+            'clients'   => auth()->user()->getClients(),
+            'projects'  => Project::getProjectsByStatus(Project::ACTIVE),
+            'readonly'  => true
+        ];
+
+        return view('tasks.show', $data);
     }
 
     /**
@@ -91,31 +100,20 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($project_id, $id)
+    public function edit($id)
     {
-        $task       = Task::find($id);
-        $project    = Project::find($project_id);
-
-        if (!$project) {
-            Alert::warning(__('task.invalid_request'), __('task.messages.not_found'));
-            return redirect()->route('projects.index');
-        }
-
+        $task = Task::find($id);
+        
         if (!$task) {
             Alert::warning(__('task.invalid_request'), __('task.messages.task_not_found'));
-            return redirect()->route('projects.index');
-        }
-
-        if (!$task->checkByProjectId($project->id)) {
-            Alert::warning(__('task.invalid_request'), __('task.messages.not_belong'));
-            return redirect()->route('projects.index');
+            return redirect()->route('tasks.my-tasks');
         }
 
         $data = [
             'title'     => $this->title,
             'task'      => $task,
-            'project'   => $project,
-            'members'   => $project->getAllProjectMembers()
+            'clients'   => auth()->user()->getClients(),
+            'projects'  => Project::getProjectsByStatus(Project::ACTIVE)
         ];
 
         return view('tasks.edit', $data);
@@ -128,36 +126,23 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreTaskFormRequest $request, $project_id, $id)
+    public function update(StoreTaskFormRequest $request, $id)
     {
-        $task       = Task::find($id);
-        $project    = Project::find($project_id);
-
-        if (!$project) {
-            Alert::warning(__('task.not_found'), __('task.messages.not_found'));
-            return redirect()->route('projects.index');
-        }
-
-        if (!$task) {
-            Alert::warning(__('task.not_found'), __('task.messages.task_not_found'));
-            return redirect()->route('projects.index');
-        }
-
-        if (!$task->checkByProjectId($project->id)) {
-            Alert::warning(__('task.invalid_request'), __('task.messages.not_belong'));
-            return redirect()->route('projects.index');
-        }
-
-        $validated = $request->validated();
+        $task = Task::find($id);
         
+        $validated = $request->validated();
+
+        $task->name  = $validated['name'];
         $task->description  = $validated['description'];
         $task->deadline     = $validated['deadline'];
-        $task->user_id      = $validated['user_id'];
+        $task->project_id   = $validated['project_id'];
+        $task->client_id    = $validated['client_id'];
+
         $task->save();
 
         Alert::success(__('task.success'), __('task.messages.task_updated'));
 
-        return redirect()->route('projects.show', ['id' => $project->id]);
+        return redirect()->route('tasks.my-tasks');
     }
 
     /**
