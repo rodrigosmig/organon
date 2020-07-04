@@ -5,7 +5,6 @@
 @endsection
 
 @section('link-css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/projects.css') }}">
 @endsection
 
@@ -16,7 +15,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
+        <form action="{{ route("projects.update", $project->id) }}" method="POST">
             @csrf
             <div class="card-body">
                 
@@ -24,7 +23,7 @@
                 
             </div>
             <div class="card-footer text-muted">
-                <a href="{{ route('projects.show', ['id' => $project->id]) }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
+                <a href="{{ route('projects.show', $project->id) }}" class="btn btn-outline-dark">{{ __('project.cancel') }}</a>
                 <button class="btn btn-primary" type="submit">{{ __('project.submit') }}</button>
             </div>
         </form>

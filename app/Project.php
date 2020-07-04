@@ -24,6 +24,16 @@ class Project extends Model
      */
     protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged', 'client_id'];
 
+    public function getAmountChargedAttribute($value)
+    {
+        return $value / 100;
+    }
+
+    public function setAmountChargedAttribute($value)
+    {
+        $this->attributes['amount_charged'] = $value * 100;
+    }
+
     /**
      * Fetch project tasks.
      *

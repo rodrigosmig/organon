@@ -10,6 +10,7 @@
         <!-- Custom styles for this template-->
         <link rel="stylesheet" href="{{ asset('css/app.css' )}}">
         <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css' )}}">
+        <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet" />
 
         @yield('link-css')
     </head>
@@ -55,7 +56,14 @@
         @yield('messages-js')
 
         <script src="{{ asset('js/app.js' )}}" type="text/javascript"></script>
+        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/sb-admin-2.min.js' )}}" type="text/javascript"></script>
         @yield('script-js')
+        <script>
+            $(function () {
+                $(document).tooltip();
+                $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
+            })
+        </script>
     </body>
 </html>
