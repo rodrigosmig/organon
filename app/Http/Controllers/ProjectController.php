@@ -232,12 +232,12 @@ class ProjectController extends Controller
         
         if ($project->status !== Project::ACTIVE) {
             Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
-            return redirect()->route('projects.index');
+            return redirect()->route('projects.show', $project->id);
         }
 
         if ($project->hasOpenTask()) {
             Alert::error(__('project.messages.not_finish'), __('project.messages.open_task'));
-            return redirect()->route('projects.index');
+            return redirect()->route('projects.show', $project->id);
         }
 
         $project->status = Project::FINISHED;

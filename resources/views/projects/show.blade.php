@@ -300,7 +300,7 @@
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="projectActions">
                                       <a class="dropdown-item" href="{{ route('tasks.edit-project-task', ['id'=>$task->id, 'project_id'=>$project->id]) }}"><i class="fas fa-edit"></i> {{ __('task.edit_task') }}</a>
-                                      {{-- <a class="dropdown-item" href="{{ route('projects.task.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> {{ __('task.delete_task') }}</a> --}}
+                                      <a class="dropdown-item" href="{{ route('tasks.delete', $task->id) }}"><i class="fas fa-trash"></i> {{ __('task.delete_task') }}</a>
                                       @if ($task->user)
                                         <a class="dropdown-item" href="{{ route('projects.remove-task-member', ['task_id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> {{ __('task.remove_user') }}</a>
                                       @else

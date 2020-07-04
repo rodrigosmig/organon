@@ -74,7 +74,7 @@
                                             ></time-counter>
                                         </td>
                                         <td>
-                                            <a class="menuAction" href="" disabled>
+                                            <a class="menuAction" href="{{ route('tasks.finish-task', $task->id) }}">
                                                 <i class="fas fa-check finish" data-toggle="tooltip" data-placement="top" title="{{ __('task.finish') }}"></i>
                                             </a>
                                             @if ($task->project && $task->project->isOwner(auth()->user()))
@@ -124,7 +124,7 @@
                                             <td>{{ $task->project ? $task->project->name : '-' }}</td>
                                             <td>{{ $task->client ? $task->client->name : '-' }}</td>
                                             <td>{{secondsToTime( $task->getTotalWorkedByUser($task->user->id)) }}</td>
-                                            <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', ['task_id'=>$task->id, 'project_id'=>$task->project->id]) }}"><i class="fas fa-folder-open"></i></a></td>
+                                            <td><a class="btn btn-sm btn-success" href="{{ route('tasks.open-task', $task->id) }}"><i class="fas fa-folder-open"></i></a></td>
                                         </tr>
                                     </tr>
                                 @endforeach

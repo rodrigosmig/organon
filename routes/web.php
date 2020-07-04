@@ -64,8 +64,8 @@ Route::prefix('tasks')
         Route::post('/update/{id}', 'TaskController@update')->name('update');
         Route::get('/my-tasks', 'TaskController@index')->name('my-tasks');
         Route::post('/ajax-update-task-time', 'TaskController@ajaxUpdateTaskTime')->name('update-task-time');
-        Route::get('/finish-task', 'TaskController@finishTask')->name('finish-task');
-        Route::get('/open-task', 'TaskController@openTask')->name('open-task');
+        Route::get('/finish-task/{id}', 'TaskController@finishTask')->name('finish-task');
+        Route::get('/open-task/{id}', 'TaskController@openTask')->name('open-task');
         Route::get('/task-edit/{id}/project/{project_id}', 'TaskController@editProjectTask')->name('edit-project-task');
         Route::post('/task-update/{id}/project/{project_id}', 'TaskController@updateProjectTask')->name('update-project-task');
     });

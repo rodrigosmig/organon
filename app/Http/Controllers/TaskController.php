@@ -222,9 +222,9 @@ class TaskController extends Controller
         return response(json_encode($response), Response::HTTP_BAD_REQUEST);
     }
 
-    public function finishTask(TaskTimeRequest $request)
+    public function finishTask($id)
     {
-        $task = Task::find($request->input('task_id'));
+        $task = Task::find($id);
 
         if ($task->taskInProgress()) {
             Alert::error(__('task.invalid_request'), __('task.messages.time_in_progress'));
@@ -247,9 +247,9 @@ class TaskController extends Controller
         return redirect()->route('tasks.my-tasks');
     }
 
-    public function openTask(TaskTimeRequest $request)
+    public function openTask($id)
     {
-        $task = Task::find($request->input('task_id'));
+        $task = Task::find($id);
 
         if (! $task->openTask()) {
             Alert::error(__('task.invalid_request'), __('task.messages.is_not_finished'));
