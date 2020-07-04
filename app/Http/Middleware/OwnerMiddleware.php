@@ -25,22 +25,10 @@ class OwnerMiddleware
                     return $next($request);
                 }
             }
-            Alert::error("Invalid Request", "You are not project owner.");
+            Alert::error(__('project.invalid_request'), __('project.messages.not_owner'));
             return redirect()->route('projects.index');
         }
-
-        if ($request->route()->hasParameter('id')) {
-            $project = Project::find($request->route()->parameter('id'));
-            
-            if($project) {
-                if($request->user()->checkUser($project->owner)) {
-                    return $next($request);
-                }
-            }
-            Alert::error("Invalid Request", "You are not project owner.");
-            return redirect()->route('projects.index');
-        }
-
+        
         return $next($request);
     }
 }

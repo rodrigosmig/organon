@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\User;
 use App\Client;
 use App\Project;
 use Illuminate\Validation\Rule;
@@ -33,13 +34,20 @@ class StoreTaskFormRequest extends FormRequest
             'project_id'    => [
                 'nullable',
                 Rule::exists(Project::class, 'id')->where(function($query) {
-                    $query->where('id', $this->project_id);
+                    $query->where('id', $this->project_id)
+                        ->where('owner_id', auth()->user()->id);
                 })
             ],
             'client_id'       => [
                 'nullable',
                 Rule::exists(Client::class, 'id')->where(function($query) {
                     $query->where('id', $this->client_id);
+                })
+            ],
+            'user_id'       => [
+                'nullable',
+                Rule::exists(User::class, 'id')->where(function($query) {
+                    $query->where('id', $this->user_id);
                 })
             ]
         ];

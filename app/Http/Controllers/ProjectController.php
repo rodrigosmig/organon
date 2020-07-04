@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\ProjectMemberRequest;
+use App\Http\Requests\AssignTaskMemberRequest;
 use App\Http\Requests\StoreProjectFormRequest;
 
 class ProjectController extends Controller
@@ -71,7 +73,7 @@ class ProjectController extends Controller
         
         Alert::success(__('project.success'), __('project.messages.new'));
         
-        return redirect()->route('projects.show', ['id' => $project->id]);
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**
@@ -150,7 +152,7 @@ class ProjectController extends Controller
 
         Alert::success(__('project.success'), __('project.messages.update'));
 
-        return redirect()->route('projects.show', ['id' => $project->id]);
+        return redirect()->route('projects.show', $project->id);
     }
 
     /**
@@ -200,7 +202,7 @@ class ProjectController extends Controller
         $project->addMember($user, $hour_value);
 
         Alert::success(__('project.user_added'), __("project.messages.add_user"));
-        return redirect()->route('projects.show', ['id' => $project->id]);
+        return redirect()->route('projects.show', $project->id);
     }
 
     public function ajaxRemoveMember(ProjectMemberRequest $request)
@@ -275,5 +277,48 @@ class ProjectController extends Controller
             'projects' => $projects,
             'filters' => $filters
         ]);
+    }
+
+    public function assignTaskMember(AssignTaskMemberRequest $request)
+    {
+        $user       = User::find($request->input('user_id'));
+        $task       = Task::find($request->input('task_id'));
+
+        if ($task->user) {
+            Alert::warning(__('task.invalid_task'), __('task.messages.already_assigned'));
+            return redirect()->route('projects.show', $task->project->id);
+        }
+
+        $task->user()->associate($user);
+        $task->save();
+        
+        Alert::success(__('task.success'), __('task.messages.user_assigned'));
+        return redirect()->route('projects.show', $task->project->id);
+    }
+
+    public function removeTaskMember($project_id, $task_id)
+    {
+        $task = Task::find($task_id);
+
+        if (!$task) {
+            Alert::warning(__('task.invalid_task'), __('task.messages.task_not_found'));
+            return redirect()->route('projects.index');
+        }
+
+        if (!$task->checkByProjectId($project_id)) {
+            Alert::warning(__('task.invalid_request'), __('task.messages.not_belong'));
+            return redirect()->route('projects.index');
+        }
+
+        if (!$task->user) {
+            Alert::error(__('task.invalid_request'), __('task.messages.no_user_assigned'));
+            return redirect()->route('projects.show', $task->project->id);
+        }
+
+        $task->user()->dissociate();
+        $task->save();
+        
+        Alert::success(__('task.success'), __('task.messages.user_removed'));
+        return redirect()->route('projects.show', $task->project->id);
     }
 }

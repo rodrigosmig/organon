@@ -7,6 +7,7 @@ return [
     'email'     => 'E-mail',
     'tax_id'    => 'Tax ID',
     'telephone' => 'Telephone',
+    'not_found' => 'Not Found',
     'success'   => [
         'success'   => 'Success',
         'store'     => 'The client was successfully added',
@@ -20,5 +21,8 @@ return [
     'cancel'        => 'Cancel',
     'submit'        => 'Submit',
     'back'          => 'Back',
-    'actions'       => 'Actions'
+    'actions'       => 'Actions',
+    'message' => [
+        'not_found' => 'Client Not Found'
+    ]
 ];

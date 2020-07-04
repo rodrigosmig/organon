@@ -43,7 +43,7 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ route('tasks.my-tasks') }}">
         <i class="fas fa-tasks"></i>
-        <span>{{ __('task.tasks') }}</span>
+        <span>{{ __('task.my_tasks') }}</span>
       </a>
     </li>
 

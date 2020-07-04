@@ -7,6 +7,7 @@ return [
     'email'     => 'E-mail',
     'tax_id'    => 'CPF/CNPJ',
     'telephone' => 'Telefone',
+    'not_found' => 'Não encontrado',
     'success'   => [
         'success'   => 'Sucesso',
         'store'     => 'O cliente foi adicionado com sucesso',
@@ -20,5 +21,8 @@ return [
     'cancel'        => 'Cancelar',
     'submit'        => 'Enviar',
     'back'          => 'Voltar',
-    'actions'       => 'Ações'
+    'actions'       => 'Ações',
+    'message' => [
+        'not_found' => 'Cliente não encontrado'
+    ]
 ];

@@ -46,7 +46,7 @@
 								@foreach ($open_projects as $key => $project)
 									<tr>
 										<td>
-                                            <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                            <a href="{{ route('projects.show', $project->id) }}">
 												{{ $project->name }}
 											</a>
                                         </td>
@@ -86,7 +86,7 @@
 									@foreach ($finished_projects as $key => $project)
 										<tr>
                                             <td>
-                                                <a href="{{ route('projects.show', ['id' => $project->id]) }}">
+                                                <a href="{{ route('projects.show', $project->id) }}">
                                                     {{ $project->name }}
                                                 </a>
                                             </td>

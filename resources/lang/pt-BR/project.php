@@ -65,6 +65,7 @@ return [
         'open_task'         => 'O projeto tem uma tarefa aberta',
         'not_delete'        => 'Não é possível excluir o projeto',
         'owner'             => 'O usuário é o dono do projeto',
+        'not_owner'         => 'Você não é o dono do projeto',
         'is_member'         => 'O usuário já é um membro do projeto.',
         'is_not_member'     => 'O usuário não é um membro do projeto',
         'add_user'          => 'O usuário foi adicionado ao projeto',

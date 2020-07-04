@@ -26,7 +26,7 @@ return [
     'no_task_found'         => 'Nenhuma tarefa encontrada',
     'my_tasks'              => 'Minhas Tarefas',
     'success'               => 'Sucesso',    
-    'not_found'             => 'Projeto não encontrado',
+    'not_found'             => 'Não Encontrada',
     'invalid_request'       => 'Requisição inválida',
     'invalid_task'          => 'Tarefa inválida',
     'request_not_allowed'   => 'Requisição não permitida',
@@ -40,8 +40,7 @@ return [
     'back'                  => 'Voltar',
 
     'messages' => [
-        'not_found'             => 'Projeto não encontrado',
-        'task_not_found'        => 'Tarefa não encontrada',
+        'not_found'             => 'Tarefa não encontrada',
         'task_created'          => 'A tarefa foi criada com sucesso',
         'task_updated'          => 'A tarefa foi atualizada com sucesso',
         'task_deleted'          => 'A tarefa foi deletada com sucesso',
@@ -64,6 +63,8 @@ return [
         'unable_update_time'    => 'Não foi possível atualizar o tempo',
         'are_you_sure'          => 'Tem certeza?',
         'all_task_restarted'    => 'Todo o tempo da tarefa será reiniciado!',
-        'yes_restart_it'        => 'Sim, pode reiniciar!'
+        'yes_restart_it'        => 'Sim, pode reiniciar!',
+        'not_allowed'           => 'Request not allowed',
+        'delete_msg'            => 'Todos os dados da tarefa serão deletados',
     ]
 ];

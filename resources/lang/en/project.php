@@ -65,6 +65,7 @@ return [
         'open_task'         => 'The project has a open task',
         'not_delete'        => 'It is not possible to delete the project',
         'owner'             => 'User is project owner',
+        'not_owner'         => 'You are not project owner',
         'is_member'         => 'The user is already a project member',
         'is_not_member'     => 'User is not a project member',
         'add_user'          => 'User has been added to the project',
