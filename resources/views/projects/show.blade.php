@@ -34,20 +34,20 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             @if ($project->isActive())
-                <a class="dropdown-item" href="{{ route('projects.edit', ['id' => $project->id]) }}">
+                <a class="dropdown-item" href="{{ route('projects.edit', $project->id) }}">
                     <i class="fas fa-edit"></i>
                     {{ __('project.edit') }}
                 </a>
-                <a class="dropdown-item delete-project" href="{{ route('projects.delete', ['id' => $project->id]) }}">
+                <a class="dropdown-item delete-project" href="{{ route('projects.delete', $project->id) }}">
                     <i class="fas fa-trash-alt"></i>
                     {{ __('project.delete') }}
                 </a>
-                <a class="dropdown-item" href="{{ route('projects.finish-project', ['id' => $project->id]) }}">
+                <a class="dropdown-item" href="{{ route('projects.finish-project', $project->id) }}">
                     <i class="fas fa-check"></i>
                     {{ __('project.finish') }}
                 </a>
             @else
-                <a class="dropdown-item" href="{{ route('projects.open-project', ['id' => $project->id]) }}">
+                <a class="dropdown-item" href="{{ route('projects.open-project', $project->id) }}">
                     <i class="fas fa-folder-open"></i>
                     {{ __('project.reopen') }}
                 </a>
@@ -97,19 +97,19 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form-assign-task-member" action="{{ route('projects.task.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
-          @csrf
-          <input type="hidden" name="project_id" value="{{ $project->id }}">
-					<input id="task_id" type="hidden" name="task_id">
+				<form id="form-assign-task-member" action="{{ route('projects.assign-task-member', ['project_id' => $project->id]) }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="project_id" value="{{ $project->id }}">
+                    <input id="task_id" type="hidden" name="task_id">
 					<div class="modal-body">
 						<div class="form-group mb-3">
 							<label for="add-member">{{ __('project.select_user') }}</label>
 							<select class="form-control" name="user_id" required>
-                <option value="">{{ __('project.none') }}</option>
-                @foreach ($members as $member)
-                  <option value="{{ $member->id }}">{{ $member->name }}</option>
-                @endforeach
-              </select>
+                                <option value="">{{ __('project.none') }}</option>
+                                @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                                @endforeach
+                            </select>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -130,23 +130,37 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<form id="form-add-task" action="{{ route('projects.task.store', ['project_id' => $project->id]) }}" method="post">
+				<form id="form-add-task" action="{{ route('tasks.store') }}" method="post">
 					@csrf
-					<input type="hidden" name="project_id" value="{{ $project->id }}">
+                    <input type="hidden" name="project_id" value="{{ $project->id }}">
+                    <input type="hidden" name="client_id" value="{{ $project->client->id }}">
 					<div class="modal-body">
+                        <div class="form-group row">
+                            <label for="task-name" class="col-sm-2 col-form-label">{{ __('project.name') }}</label>
+                            <div class="col-sm-12">
+                                <input type="text" id="task-name" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="{{ __('task.task_name') }}" value="{{ old('name') }}" >
+                            </div>
+                        </div>
 						<div class="form-group row">
-              <label for="task-description" class="col-sm-2 col-form-label">{{ __('project.description') }}</label>
-              <div class="col-sm-12">
-                <input type="text" id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="{{ __('task.task_description') }}" value="{{ old('description') }}" >
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('project.deadline') }}</label>
-              <div class="col-sm-12">
-                <input type="date" class="form-control @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
-              </div>
-            </div>
-					</div>
+                            <label for="task-description" class="col-sm-2 col-form-label">{{ __('project.description') }}</label>
+                            <div class="col-sm-12">
+                                <textarea id="task-description" class="form-control @error('description') is-invalid @enderror" name="description" placeholder="{{ __('task.task_description') }}" rows="3" required style="resize: none">{{ $task->description ?? old('description') }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="task-deadline" class="col-sm-2 col-form-label">{{ __('project.deadline') }}</label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control datepicker @error('deadline') is-invalid @enderror" id="task-deadline" name="deadline" value="{{ old('deadline') }}" required>
+                            </div>
+                        </div>
+                        <label for="add-member">{{ __('project.select_user') }}</label>
+                        <select class="form-control" name="user_id">
+                            <option value="">{{ __('project.none') }}</option>
+                            @foreach ($members as $member)
+                                <option value="{{ $member->id }}">{{ $member->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('project.close') }}</button>
 						<button type="submit" class="btn btn-primary">{{ __('task.add_task') }}</button>
@@ -228,7 +242,7 @@
     </div>
 
     <div class="card shadow mb-4">
-        <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
+        <form action="{{ route("projects.update", $project->id) }}" method="POST">
             @csrf
             <div class="card-header">
               <h4>
@@ -245,7 +259,7 @@
                 <table class="table">
                     <thead>
                         <th>{{ __('project.user') }}</th>
-                        <th>{{ __('project.description') }}</th>
+                        <th>{{ __('task.task_name') }}</th>
                         <th>{{ __('project.time.time_worked') }}</th>
                         <th>{{ __('project.deadline') }}</th>
                         <th>{{ __('project.status') }}</th>
@@ -266,7 +280,9 @@
                                   @endif
                                 </td>
                                 <td>
-                                  {{ $task->description }}
+                                  <a href="{{ route('tasks.show', $task->id) }}" target="_blank">
+                                    {{ $task->name }}
+                                  </a>
                                 </td>
                                 <td>
                                   {{ secondsToTime($task->getTotalWorked()) }}
@@ -283,10 +299,10 @@
                                       <i class="fas fa-ellipsis-h"></i>
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="projectActions">
-                                      <a class="dropdown-item" href="{{ route('projects.task.edit', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-edit"></i> {{ __('task.edit_task') }}</a>
-                                      <a class="dropdown-item" href="{{ route('projects.task.delete', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-trash"></i> {{ __('task.delete_task') }}</a>
+                                      <a class="dropdown-item" href="{{ route('tasks.edit-project-task', ['id'=>$task->id, 'project_id'=>$project->id]) }}"><i class="fas fa-edit"></i> {{ __('task.edit_task') }}</a>
+                                      <a class="dropdown-item" href="{{ route('tasks.delete', $task->id) }}"><i class="fas fa-trash"></i> {{ __('task.delete_task') }}</a>
                                       @if ($task->user)
-                                        <a class="dropdown-item" href="{{ route('projects.task.remove-task-member', ['id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> {{ __('task.remove_user') }}</a>
+                                        <a class="dropdown-item" href="{{ route('projects.remove-task-member', ['task_id' => $task->id, 'project_id' => $project->id]) }}"><i class="fas fa-user-minus"></i> {{ __('task.remove_user') }}</a>
                                       @else
                                       <a class="dropdown-item assign_task_member" href="javascript:void(0)" data-task="{{ $task->id }}" data-toggle="modal" data-target="#modal-assign_user"><i class="fas fa-user-plus"></i> {{ __('task.assign_user') }}</a>
                                       @endif
@@ -303,7 +319,7 @@
     </div>
 
     <div class="card shadow mb-4">
-        <form action="{{ route("projects.update", ['id' => $project->id]) }}" method="POST">
+        <form action="{{ route("projects.update", $project->id) }}" method="POST">
             @csrf
             <div class="card-header">
               <h4>

@@ -1,13 +1,11 @@
 @extends('layouts.front')
 
 @section('link-css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/projects.css') }}">
 @endsection
 
 @section('script-js')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
 @endsection
 

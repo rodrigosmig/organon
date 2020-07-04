@@ -10,6 +10,7 @@ return [
     'remove_user'           => 'Remove the user',
     'assign_user'           => 'Assign a user',
     'edit'                  => 'Edit',
+    'delete'                => 'Deletar',
     'description'           => 'Description',
     'deadline'              => 'Deadline',
     'cancel'                => 'Cancel',
@@ -25,14 +26,21 @@ return [
     'no_task_found'         => 'No tasks found',
     'my_tasks'              => 'My Tasks',
     'success'               => 'Success',    
-    'not_found'             => 'Project Not Found',
+    'not_found'             => 'Not Found',
     'invalid_request'       => 'Invalid Request',
     'invalid_task'          => 'Invalid Task',
     'request_not_allowed'   => 'Request not allowed',
+    'new_task'              => 'New Task',
+    'new'                   => 'New',
+    'client'                => 'Client',
+    'project'               => 'Project',
+    'name'                  => 'Name',
+    'task_name'             => 'Task Name',
+    'actions'               => 'Actions',
+    'back'                  => 'Back',
 
     'messages' => [
-        'not_found'             => 'Project Not Found',
-        'task_not_found'        => 'Task Not Found',
+        'not_found'             => 'Task Not Found',
         'task_created'          => 'The task was successfully created',
         'task_updated'          => 'The task was successfully updated',
         'task_deleted'          => 'The task was successfully deleted',
@@ -55,6 +63,9 @@ return [
         'unable_update_time'    => 'Unable to update time',
         'are_you_sure'          => 'Are you sure?',
         'all_task_restarted'    => 'All task time will be restarted!',
-        'yes_restart_it'        => 'Yes, restart it!'
+        'yes_restart_it'        => 'Yes, restart it!',
+        'not_allowed'           => 'Request not allowed',
+        'delete_msg'            => 'All task data will be deleted',
+        'different_client'      => 'The task client is different from the project client'
     ]
 ];

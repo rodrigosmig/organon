@@ -24,7 +24,7 @@ class ClientOwnerMiddleware
                         ->first();
 
             if (! $client) {
-                Alert::error("Not Found", "Client Not Found.");
+                Alert::error(__('client.not_found'), __('client.message.not_found'));
                 return redirect()->route('clients.index');
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Client;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +23,7 @@ class Task extends Model
         'finished'  => "Finished"
     ];
 
-    protected $fillable = ['description', 'deadline', 'project_id'];
+    protected $fillable = ['name', 'description', 'deadline', 'project_id', 'client_id', 'user_id'];
 
     /**
      * Fetch the task project.
@@ -51,6 +52,16 @@ class Task extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    /**
+     * Fetch the task project.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 
     /**

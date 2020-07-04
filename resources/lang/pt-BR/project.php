@@ -23,7 +23,7 @@ return [
     'hour_value'        => 'Valor da Hora',
     'close'             => 'Fechar',
     'assign_user'       => 'Atribuir Usuário',
-    'select_user'       => 'Selecionar a Usuário',
+    'select_user'       => 'Selecione um usuário',
     'none'              => 'Nenhum',
     'description'       => 'Descrição',
     'cost'              => 'Custo',
@@ -53,6 +53,7 @@ return [
     'user_removed'      => 'Usuário Removido',
     'search_project'    => 'Procure um projeto',
     'reopen'            => 'Reabrir',
+    'change_user'       => 'Alterar usuário',
     
     'messages' => [
         'new'               => 'O projeto foi criado com sucesso',
@@ -64,6 +65,7 @@ return [
         'open_task'         => 'O projeto tem uma tarefa aberta',
         'not_delete'        => 'Não é possível excluir o projeto',
         'owner'             => 'O usuário é o dono do projeto',
+        'not_owner'         => 'Você não é o dono do projeto',
         'is_member'         => 'O usuário já é um membro do projeto.',
         'is_not_member'     => 'O usuário não é um membro do projeto',
         'add_user'          => 'O usuário foi adicionado ao projeto',
