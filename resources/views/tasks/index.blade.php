@@ -9,8 +9,6 @@
 @endsection
 
 @section('script-js')
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="{{ asset('js/tasks.js' )}}" type="text/javascript"></script>
 @endsection
 
@@ -64,16 +62,16 @@
                                         <td>{{ $task->client ? $task->client->name : '-' }}</td>
                                         <td>{{ $task->deadline }}</td>
                                         <td>
-                                            {{-- <time-counter 
+                                            <time-counter 
                                                 total-worked="{{ $task->getTotalWorkedByUser($task->user->id) }}"
-                                                project_id="{{ $task->project->id }}"
+                                                project_id="{{ $task->project ? $task->project->id : '' }}"
                                                 user_id="{{ $task->user->id }}"
                                                 task_id="{{ $task->id }}"
                                                 msg_title="{{ __('task.messages.are_you_sure') }}"
                                                 msg_message="{{ __('task.messages.all_task_restarted') }}"
                                                 msg_confirm="{{ __('task.messages.yes_restart_it') }}"
                                                 msg_cancel="{{ __('task.cancel') }}"
-                                            ></time-counter> --}}
+                                            ></time-counter>
                                         </td>
                                         <td>
                                             <a class="menuAction" href="" disabled>
@@ -83,17 +81,17 @@
                                                 <a class="menuAction" href="{{ route('tasks.edit', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.edit') }}">
                                                     <i class="fas fa-edit edit"></i>
                                                 </a>
-                                                <a class="menuAction delete-task" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
+                                                <a class="menuAction" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
                                                     <i class="fas fa-trash delete"></i>
                                                 </a>
                                             @elseif(! $task->project)
                                                 <a class="menuAction" href="{{ route('tasks.edit', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.edit') }}">
                                                     <i class="fas fa-edit edit"></i>
                                                 </a>
-                                                <a class="menuAction delete-task" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
+                                                <a class="menuAction" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
                                                     <i class="fas fa-trash delete"></i>
                                                 </a>
-                                            @endif   
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

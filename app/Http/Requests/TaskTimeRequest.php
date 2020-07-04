@@ -51,7 +51,7 @@ class TaskTimeRequest extends FormRequest
                 })
             ],
             'project_id' => [
-                'required',
+                'nullable',
                 Rule::exists(Project::class, 'id')->where(function($query) {
                     $query->where('id', $this->project_id);
                 })
