@@ -66,5 +66,6 @@ return [
         'yes_restart_it'        => 'Yes, restart it!',
         'not_allowed'           => 'Request not allowed',
         'delete_msg'            => 'All task data will be deleted',
+        'different_client'      => 'The task client is different from the project client'
     ]
 ];

@@ -12,12 +12,6 @@
 	<link rel="stylesheet" href="{{ asset('css/projects.css') }}">
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
 @endsection
-
-@section('script-js')
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="{{ asset('js/projects.js' )}}" type="text/javascript"></script>
-@endsection
    
 @section('content')
     <div class="card">

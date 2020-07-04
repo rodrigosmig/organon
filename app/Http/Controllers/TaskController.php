@@ -61,7 +61,14 @@ class TaskController extends Controller
     public function store(StoreTaskFormRequest $request)
     {
         $data       = $request->except('_token');
-        $project    = Project::find($data['project_id']) ;
+        $project    = Project::find($data['project_id']);
+
+        if ($project && !is_null($data['client_id'])) {
+            if ($project->client && $project->client->id != $data['client_id']) {
+                Alert::error(__('Ops...'), __('task.messages.different_client'));
+                return redirect()->route('tasks.create');
+            }
+        }
 
         $task = Task::create([
             'name'          => $data['name'],

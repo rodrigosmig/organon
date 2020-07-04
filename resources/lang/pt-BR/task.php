@@ -66,5 +66,6 @@ return [
         'yes_restart_it'        => 'Sim, pode reiniciar!',
         'not_allowed'           => 'Request not allowed',
         'delete_msg'            => 'Todos os dados da tarefa serão deletados',
+        'different_client'      => 'O cliente da tarefa é dirente do cliente do projeto'
     ]
 ];
