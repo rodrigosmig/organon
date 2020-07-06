@@ -289,7 +289,7 @@ class Project extends Model
             return 0.0;
         }
 
-        return ($number_finish_tasks / $total_of_projects) * 100;
+        return number_format(($number_finish_tasks / $total_of_projects) * 100, 2);
     }
 
     /**
