@@ -187,7 +187,7 @@ class ProjectController extends Controller
     {
         $project    = Project::find($request->input("project_id"));
         $user       = User::find($request->input('user_id'));
-        $hour_value = $request->input('hour_value', 0);
+        $amount     = $request->input('amount', 0);
         
         if ($user->checkUser($project->owner)) {
             Alert::error(__("project.invalid_user"), __("project.messages.owner"));
@@ -199,7 +199,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.show', ['id' => $project->id]);
         }
 
-        $project->addMember($user, $hour_value);
+        $project->addMember($user, $amount);
 
         Alert::success(__('project.user_added'), __("project.messages.add_user"));
         return redirect()->route('projects.show', $project->id);
