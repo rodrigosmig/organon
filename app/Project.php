@@ -51,7 +51,7 @@ class Project extends Model
      */
     public function members()
     {
-        return $this->belongsToMany(User::class, 'project_members')->withPivot('hour_value');
+        return $this->belongsToMany(User::class, 'project_members')->withPivot('amount');
     }
 
     /**
@@ -78,12 +78,12 @@ class Project extends Model
      * Add a member to the project
      *
      * @param  User  $user
-     * @param  float $hour_value
+     * @param  float $amount
      * @return void
      */
-    public function addMember(User $user, $hour_value): void
+    public function addMember(User $user, $amount): void
     {
-        $this->members()->attach($user->id, ['hour_value' => $hour_value]);
+        $this->members()->attach($user->id, ['amount' => $amount]);
     }
 
     /**
@@ -207,16 +207,10 @@ class Project extends Model
      */
     public function getTotalProjectCost(): float
     {
-        $total_cost = 0.0;
+        $total_cost = 0;
 
         foreach ($this->members as $member) {
-            $hour_value = $member->pivot->hour_value;
-            $tasks = $this->getTasksByUserId($member->id);
-
-            foreach ($tasks as $task) {
-                $time_in_hour = secondsToHour($task->getTotalWorkedByUser($member->id));
-                $total_cost += $time_in_hour * $hour_value;
-            }
+            $total_cost += $member->pivot->amount;
         }
 
         return $total_cost;
@@ -295,7 +289,7 @@ class Project extends Model
             return 0.0;
         }
 
-        return ($number_finish_tasks / $total_of_projects) * 100;
+        return number_format(($number_finish_tasks / $total_of_projects) * 100, 2);
     }
 
     /**

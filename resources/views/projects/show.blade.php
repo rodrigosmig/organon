@@ -75,8 +75,8 @@
 							<select id="add-member" name="user_id" class="select-user-ajax" style="width: 100%" required></select>
             </div>
             <div class="input-group mb-3">
-							<label for="hour_value">{{ __('project.hour_value') }}</label>
-							<input type="number" id="hour_value" name="hour_value" class="input-user-ajax" style="width: 100%" value="0.0"></select>
+							<label for="amount">{{ __('project.amount') }}</label>
+							<input type="number" id="amount" name="amount" class="input-user-ajax" style="width: 100%" value="0.0"></select>
             </div>
 					</div>
 					<div class="modal-footer">
@@ -339,7 +339,7 @@
                         <th>{{ __('project.avatar') }}</th>
                         <th>{{ __('project.name') }}</th>
                         <th>{{ __('project.time.total_worked') }}</th>
-                        <th>{{ __('project.hour_value') }}</th>
+                        <th>{{ __('project.amount') }}</th>
                         <th>{{ __('project.action') }}</th>
                     </thead>
                     <tbody>
@@ -359,7 +359,7 @@
                                     {{ secondsToTime($user->total_worked) }}
                                 </td>
                                 @if (! $project->isOwner($user))
-                                  <td>${{ number_format($user->pivot->hour_value, 2, ',', '.') }}</td>    
+                                  <td>${{ number_format($user->pivot->amount, 2, ',', '.') }}</td>    
                                 @else
                                 <td>0</td>
                                 @endif
