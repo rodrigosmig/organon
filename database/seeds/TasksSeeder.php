@@ -15,27 +15,31 @@ class TasksSeeder extends Seeder
     {
         //Project1
         Task::create([
-            'description'   => 'Layout',
+            'name'          => 'Layout',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-15 days")->format('Y-m-d'),
             'user_id'       => 2,
             'project_id'    => 1,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Illustration',
+            'name'          => 'Illustration',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-13 days")->format('Y-m-d'),
             'user_id'       => 4,
             'project_id'    => 1,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Frontend',
+            'name'          => 'Frontend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-10 days")->format('Y-m-d'),
             'user_id'       => 3,
             'project_id'    => 1
         ]);
         Task::create([
-            'description'   => 'Backend',
+            'name'          => 'Backend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-1 days")->format('Y-m-d'),
             'user_id'       => 6,
             'project_id'    => 1
@@ -43,35 +47,40 @@ class TasksSeeder extends Seeder
 
         //Preoject2
         Task::create([
-            'description'   => 'Layout',
+            'name'          => 'Layout',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-5 days")->format('Y-m-d'),
             'user_id'       => 10,
             'project_id'    => 2,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Illustration',
+            'name'          => 'Illustration',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-1 days")->format('Y-m-d'),
             'user_id'       => 10,
             'project_id'    => 2,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Systems Requirement Analysis',
+            'name'          => 'Systems Requirement Analysis',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-10 days")->format('Y-m-d'),
             'user_id'       => 9,
             'project_id'    => 2,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Frontend',
+            'name'          => 'Frontend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("+15 days")->format('Y-m-d'),
             'user_id'       => 7,
             'project_id'    => 2,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Backend',
+            'name'          => 'Backend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("+25 days")->format('Y-m-d'),
             'user_id'       => 9,
             'project_id'    => 2
@@ -79,28 +88,32 @@ class TasksSeeder extends Seeder
 
          //Preoject3
          Task::create([
-            'description'   => 'Layout',
+            'name'          => 'Layout',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-45 days")->format('Y-m-d'),
             'user_id'       => 12,
             'project_id'    => 3,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Illustration',
+            'name'          => 'Illustration',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-40 days")->format('Y-m-d'),
             'user_id'       => 11,
             'project_id'    => 3,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Frontend',
+            'name'          => 'Frontend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-25 days")->format('Y-m-d'),
             'user_id'       => 8,
             'project_id'    => 3,
             'status'        => Task::FINISHED
         ]);
         Task::create([
-            'description'   => 'Backend',
+            'name'          => 'Backend',
+            'description'   => 'Lorem ipsum phasellus dictumst praesent placerat ad aliquam tortor, luctus sem metus sollicitudin venenatis viverra luctus faucibus etiam, aliquet torquent gravida dictumst iaculis cras aptent. urna auctor posuere enim tristique tellus aliquet ultricies proin, habitant vestibulum eu accumsan mi tellus sollicitudin primis odio, sollicitudin curabitur cursus amet orci inceptos mollis.',
             'deadline'      => now()->modify("-25 days")->format('Y-m-d'),
             'user_id'       => 1,
             'project_id'    => 3,

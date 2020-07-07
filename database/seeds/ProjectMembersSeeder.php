@@ -15,54 +15,54 @@ class ProjectMembersSeeder extends Seeder
         DB::table('project_members')->insert([
             'project_id'    => 1,
             'user_id'       => 2,
-            'hour_value'    => 95
+            'amount'    => 475
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 1,
             'user_id'       => 4,
-            'hour_value'    => 90
+            'amount'    => 550
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 1,
             'user_id'       => 6,
-            'hour_value'    => 110
+            'amount'    => 500
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 1,
             'user_id'       => 3,
-            'hour_value'    => 100
+            'amount'    => 850
         ]);
         
         DB::table('project_members')->insert([
             'project_id'    => 2,
             'user_id'       => 9,
-            'hour_value'    => 95
+            'amount'    => 600
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 2,
             'user_id'       => 10,
-            'hour_value'    => 115
+            'amount'    => 730
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 2,
             'user_id'       => 7,
-            'hour_value'    => 135
+            'amount'    => 650
         ]);
 
         DB::table('project_members')->insert([
             'project_id'    => 3,
             'user_id'       => 12,
-            'hour_value'    => 110
+            'amount'    => 440
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 3,
             'user_id'       => 11,
-            'hour_value'    => 125
+            'amount'    => 580
         ]);
         DB::table('project_members')->insert([
             'project_id'    => 3,
             'user_id'       => 8,
-            'hour_value'    => 100
+            'amount'    => 830
         ]);
     }
 }
