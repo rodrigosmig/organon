@@ -20,7 +20,7 @@ return [
     ],
     'add_member'        => 'Add Member',
     'search_user'       => 'Search for a user',
-    'hour_value'        => 'Hour Value',
+    'amount'            => 'Amount',
     'close'             => 'Close',
     'assign_user'       => 'Assign User',
     'select_user'       => 'Select a User',
