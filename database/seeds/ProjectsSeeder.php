@@ -34,5 +34,13 @@ class ProjectsSeeder extends Seeder
             'owner_id'  => 1,
             'client_id'     => 1
         ]);
+        Project::create([
+            'name'      => 'Dunder Mifflin website design',
+            'deadline'  => now()->modify("-30 days")->format('Y-m-d'),
+            'status'    => Project::FINISHED,
+            'amount_charged' => 15000,
+            'owner_id'  => 2,
+            'client_id' => 4
+        ]);
     }
 }
