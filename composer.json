@@ -17,7 +17,8 @@
         "nesbot/carbon": "^2.31",
         "realrashid/sweet-alert": "^3.1",
         "s-ichikawa/laravel-sendgrid-driver": "^2.1",
-        "sendgrid/sendgrid": "^7.4"
+        "sendgrid/sendgrid": "^7.4",
+        "sentry/sentry-laravel": "1.8.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",
