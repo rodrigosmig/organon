@@ -6,6 +6,8 @@ use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Request;
+use App\Notifications\AddedMember;
+use App\Notifications\RemovedMember;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\ProjectMemberRequest;
 use App\Http\Requests\AssignTaskMemberRequest;
@@ -201,6 +203,8 @@ class ProjectController extends Controller
 
         $project->addMember($user, $amount);
 
+        $user->notify(new AddedMember($project));
+
         Alert::success(__('project.user_added'), __("project.messages.add_user"));
         return redirect()->route('projects.show', $project->id);
     }
@@ -223,6 +227,8 @@ class ProjectController extends Controller
         }
 
         $project->members()->detach([$user->id]);
+
+        $user->notify(new RemovedMember($project));
         
         return response(__('project.messages.remove_member'), 200);
     }

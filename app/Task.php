@@ -47,15 +47,15 @@ class Task extends Model
     /**
      * Get the task user.
      * 
-     * @return App\User
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
-     * Fetch the task project.
+     * Fetch the client task.
      *
      * @return Illuminate\Database\Eloquent\Collection
      */
