@@ -81,3 +81,11 @@ Route::prefix('clients')
         Route::put('/update/{client_id}', 'ClientController@update')->name('update');
         Route::get('/edit/{client_id}', 'ClientController@edit')->name('edit');
     });
+
+Route::prefix('notifications')
+    ->as('notifications.')
+	->group(function() {
+        Route::get('/', 'NotificationController@notifications')->name('notifications');
+        Route::put('/read', 'NotificationController@markAsRead');
+        Route::get('/all', 'NotificationController@all');
+    });
