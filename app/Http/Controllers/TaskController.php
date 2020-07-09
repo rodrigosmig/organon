@@ -6,6 +6,8 @@ use App\Task;
 use App\User;
 use App\Project;
 use Illuminate\Http\Response;
+use App\Notifications\OpenTask;
+use App\Notifications\CompletedTask;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TaskTimeRequest;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -250,6 +252,10 @@ class TaskController extends Controller
 
         $task->save();
 
+        if ($task->project && !$task->project->isOwner($task->user)) {
+            $task->project->owner->notify(new CompletedTask($task));
+        }
+        
         Alert::success(__('task.success'), __('task.messages.task_completed'));
         return redirect()->route('tasks.my-tasks');
     }
@@ -264,6 +270,10 @@ class TaskController extends Controller
         }
 
         $task->save();
+
+        if ($task->project && !$task->project->isOwner($task->user)) {
+            $task->project->owner->notify(new OpenTask($task));
+        }
 
         Alert::success(__('task.success'), __('task.messages.task_opened'));
         return redirect()->route('tasks.my-tasks');
