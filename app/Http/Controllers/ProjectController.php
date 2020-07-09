@@ -7,7 +7,9 @@ use App\User;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Notifications\AddedMember;
+use App\Notifications\TaskAssigned;
 use App\Notifications\RemovedMember;
+use App\Notifications\RemovedFromTask;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\ProjectMemberRequest;
 use App\Http\Requests\AssignTaskMemberRequest;
@@ -297,6 +299,8 @@ class ProjectController extends Controller
 
         $task->user()->associate($user);
         $task->save();
+
+        $user->notify(new TaskAssigned($task));
         
         Alert::success(__('task.success'), __('task.messages.user_assigned'));
         return redirect()->route('projects.show', $task->project->id);
@@ -321,9 +325,13 @@ class ProjectController extends Controller
             return redirect()->route('projects.show', $task->project->id);
         }
 
+        $user = $task->user;
+
         $task->user()->dissociate();
         $task->save();
         
+        $user->notify(new RemovedFromTask($task));
+
         Alert::success(__('task.success'), __('task.messages.user_removed'));
         return redirect()->route('projects.show', $task->project->id);
     }
