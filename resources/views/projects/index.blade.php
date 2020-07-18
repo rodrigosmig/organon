@@ -58,7 +58,7 @@
 							</tbody>
 						</table>
 					@else
-						<h5 style="margin-top:20px">{{__("project.no_projectd")}}.</h3>
+						<h5 style="margin-top:20px">{{__("project.no_projects")}}.</h3>
 					@endif
 					
 				</div>
@@ -98,7 +98,7 @@
 								</tbody>
 							</table>
 						@else
-							<h5 style="margin-top:20px">{{__("project.no_projectd")}}</h5>
+							<h5 style="margin-top:20px">{{__("project.no_projects")}}</h5>
 						@endif
 					</div>
 				</div>

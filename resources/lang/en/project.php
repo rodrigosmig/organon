@@ -42,7 +42,7 @@ return [
     'submit'            => 'Submit',
     'active'            => 'Active',
     'finished'          => 'Finished',
-    'no_projectd'       => 'No projects found',
+    'no_projects'       => 'No projects found',
     'select_client'     => 'Select a client',
     'success'           => 'Success',
     'invalid_request'   => 'Invalid Request',
@@ -77,5 +77,6 @@ return [
         'delete_msg'        => 'All project data will be deleted',
         'not_finish'        => 'It is not possible to finish the project',
         'user_removed'      => 'The user will be removed from the project',
+        'no_active_projects' => 'There are no active projects'
     ]
 ];

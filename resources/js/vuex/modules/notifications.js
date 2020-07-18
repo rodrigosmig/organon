@@ -17,7 +17,6 @@ export default {
             axios.get('/notifications')
                 .then(response => {
                     context.commit('LOAD_NOTIFICATIONS', response.data.notifications)
-                    console.log(response.data.notifications, 111)
                 })
         },
         markAsRead(context, params) {

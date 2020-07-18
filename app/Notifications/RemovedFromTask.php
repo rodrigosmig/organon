@@ -71,9 +71,8 @@ class RemovedFromTask extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'task' => $this->task,
-            'user' => $this->task->project->owner,
-            'message' => __('notifications.removed_from_task')
+            'task'      => $this->task,
+            'message'   => $this->task->name . ": " . __('notifications.removed_from_task') . $this->task->project->owner->name
         ];
     }
 }

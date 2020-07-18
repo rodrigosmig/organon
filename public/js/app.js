@@ -2074,6 +2074,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title', 'footer', 'asRead', 'empty'],
   created: function created() {
@@ -2092,31 +2098,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   }
 });
-/* export default {
-    props: ['title', 'footer'],
-    created() {
-        this.loadNotifications()
-    },
-    data() {
-        return {
-            notificationsItems: []
-        }
-    },
-    computed: {
-        notifications() {
-            return this.notificationsItems
-        }
-    },
-    methods: {
-        loadNotifications() {
-            axios.get('/notifications')
-                .then(response => {
-                    console.log(response.data.notifications)
-                    this.notificationsItems = response.data.notifications
-                })
-        }
-    }
-} */
 
 /***/ }),
 
@@ -40995,20 +40976,27 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.notifications, function(notification) {
           return _c(
-            "a",
+            "li",
             {
               key: notification.id,
-              staticClass: "dropdown-item d-flex align-items-center",
-              attrs: { href: "#", title: _vm.asRead },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.markAsRead(notification.id)
-                }
-              }
+              staticClass: "dropdown-item d-flex align-items-center"
             },
             [
-              _vm._m(0, true),
+              _c("div", { staticClass: "mr-3" }, [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "javascript:void(0)", title: _vm.asRead },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.markAsRead(notification.id)
+                      }
+                    }
+                  },
+                  [_vm._m(0, true)]
+                )
+              ]),
               _vm._v(" "),
               _c("div", [
                 _c("div", { staticClass: "small text-gray-500" }, [
@@ -41017,30 +41005,49 @@ var render = function() {
                 _vm._v(" "),
                 notification.data.project
                   ? _c("span", { staticClass: "font-weight-bold" }, [
-                      _vm._v(
-                        _vm._s(notification.data.message) +
-                          " " +
-                          _vm._s(notification.data.project.name) +
-                          "."
-                      )
+                      _vm._v(_vm._s(notification.data.message))
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 notification.data.task
-                  ? _c(
-                      "span",
-                      { staticClass: "font-weight-bold" },
-                      [
-                        _c("U", [_vm._v(_vm._s(notification.data.task.name))]),
-                        _vm._v(
-                          " : " +
-                            _vm._s(notification.data.message) +
-                            " " +
-                            _vm._s(notification.data.user.name)
-                        )
-                      ],
-                      1
-                    )
+                  ? _c("span", { staticClass: "font-weight-bold" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "/tasks/show/" + notification.data.task.id
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(notification.data.message) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                notification.data.comment
+                  ? _c("span", { staticClass: "font-weight-bold" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "/tasks/show/" + notification.data.comment.task_id
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(notification.data.message) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ])
                   : _vm._e()
               ])
             ]
@@ -41080,10 +41087,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mr-3" }, [
-      _c("div", { staticClass: "icon-circle bg-primary" }, [
-        _c("i", { staticClass: "fas fa-file-alt text-white" })
-      ])
+    return _c("div", { staticClass: "icon-circle bg-primary" }, [
+      _c("i", { staticClass: "fab fa-readme text-white" })
     ])
   }
 ]
@@ -54925,7 +54930,6 @@ __webpack_require__.r(__webpack_exports__);
     loadNotifications: function loadNotifications(context) {
       axios.get('/notifications').then(function (response) {
         context.commit('LOAD_NOTIFICATIONS', response.data.notifications);
-        console.log(response.data.notifications, 111);
       });
     },
     markAsRead: function markAsRead(context, params) {

@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Task;
+use App\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class OpenTask extends Notification
+class AddTaskComment extends Notification
 {
     use Queueable;
 
-    private $task;
+    private $comment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Task $task)
+    public function __construct(Comment $comment)
     {
-        $this->task = $task;
+        $this->comment = $comment;
     }
 
     /**
@@ -71,8 +71,9 @@ class OpenTask extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'task'      => $this->task,
-            'message'   => $this->task->name . ": " . __('notifications.open_task') . $this->task->user->name
+            'comment'       => $this->comment,
+            'project_name'  => $this->comment->task->project->name,
+            'message'       => $this->comment->user->name . __('notifications.commented_task') . $this->comment->task->name . '.'
         ];
     }
 }

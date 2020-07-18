@@ -21,17 +21,15 @@
                             <tr style="font-weight: {{ $notification->read_at ? 'none' : 'bolder' }}">
                                 <td>{{ $notification->created_at }}</td>
                                 <td>
-                                    @if (isset($notification->data['project']))
-                                        {{ $notification->data['message'] }}.
-                                    @else
-                                        {{ $notification->data['task']['name'] }}: {{ $notification->data['message'] }} {{ $notification->data['user']['name'] }}.
-                                    @endif
+                                    {{ $notification->data['message'] }}
                                 </td>
                                 <td>
                                     @if (isset($notification->data['project']))
                                         {{ $notification->data['project']['name'] }}
-                                    @else
+                                    @elseif (isset($notification->data['task']))
                                         {{ $notification->data['task']['project']['name'] }}
+                                    @elseif (isset($notification->data['comment']))
+                                        {{ $notification->data['project_name'] }}
                                     @endif   
                                 </td>
                             </tr>

@@ -68,6 +68,7 @@ Route::prefix('tasks')
         Route::get('/open-task/{id}', 'TaskController@openTask')->name('open-task');
         Route::get('/task-edit/{id}/project/{project_id}', 'TaskController@editProjectTask')->name('edit-project-task');
         Route::post('/task-update/{id}/project/{project_id}', 'TaskController@updateProjectTask')->name('update-project-task');
+        Route::post('/{id}/comment', 'TaskController@commentTask')->name('add-comment');
     });
 
 Route::prefix('clients')

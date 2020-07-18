@@ -72,7 +72,7 @@ class AddedMember extends Notification
     {
         return [
             'project' => $this->project,
-            'message' => __('notifications.added_member')
+            'message' => $this->project->name . ": " . __('notifications.added_member') . $this->project->owner->name
         ];
     }
 }

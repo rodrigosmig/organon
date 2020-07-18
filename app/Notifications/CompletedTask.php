@@ -72,8 +72,7 @@ class CompletedTask extends Notification
     {
         return [
             'task' => $this->task,
-            'user' => $this->task->user,
-            'message' => __('notifications.completed_task')
+            'message' => $this->task->name . ": " . __('notifications.completed_task') . $this->task->user->name
         ];
     }
 }

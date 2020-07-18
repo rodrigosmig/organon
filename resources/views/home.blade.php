@@ -79,27 +79,31 @@
                     <h6 class="m-0 font-weight-bold text-primary">{{ __('project.projects') }}</h6>
                 </div>
                 <div class="card-body">
-                    @foreach ($projects as $project)
-                        <h4 class="small font-weight-bold">
-                            <a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
-                            <span class="float-right">{{ $project->getProjectsProgress() == 100 ? 'Complete!' : $project->getProjectsProgress() . "%" }}</span>
-                        </h4>
-                        <div class="progress mb-4">
-                            @if ($project->tasks()->count() > 0)
-                                @if ($project->getProjectsProgress() <= 20)
-                                    <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                @elseif ($project->getProjectsProgress() <= 40)
-                                    <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                @elseif ($project->getProjectsProgress() <= 60)
-                                    <div class="progress-bar" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                @elseif ($project->getProjectsProgress() <= 80)
-                                    <div class="progress-bar bg-info" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                @else
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                    @if ($projects->isNotEmpty())
+                        @foreach ($projects as $project)
+                            <h4 class="small font-weight-bold">
+                                <a href="{{ route('projects.show', $project->id) }}">{{ $project->name }}</a>
+                                <span class="float-right">{{ $project->getProjectsProgress() == 100 ? 'Complete!' : $project->getProjectsProgress() . "%" }}</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                @if ($project->tasks()->count() > 0)
+                                    @if ($project->getProjectsProgress() <= 20)
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    @elseif ($project->getProjectsProgress() <= 40)
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    @elseif ($project->getProjectsProgress() <= 60)
+                                        <div class="progress-bar" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    @elseif ($project->getProjectsProgress() <= 80)
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    @else
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $project->getProjectsProgress() }}%" aria-valuenow="{{ $project->getProjectsProgress() }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    @endif
                                 @endif
-                            @endif
-                        </div>
-                    @endforeach
+                            </div>
+                        @endforeach
+                    @else
+                        <h5 style="margin-top:20px">{{__("project.messages.no_active_projects")}}</h5>
+                    @endif                    
                 </div>
             </div>
         </div>
