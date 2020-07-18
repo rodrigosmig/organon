@@ -73,7 +73,7 @@ class AddTaskComment extends Notification
         return [
             'comment'       => $this->comment,
             'project_name'  => $this->comment->task->project->name,
-            'message'       => $this->comment->user->name . __('comments.messages.commented_task') . $this->comment->task->name . '.'
+            'message'       => $this->comment->user->name . __('notifications.commented_task') . $this->comment->task->name . '.'
         ];
     }
 }

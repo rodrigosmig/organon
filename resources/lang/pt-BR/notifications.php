@@ -15,5 +15,6 @@ return [
     'message'           => 'Mensagem',
     'project'           => 'Projeto',
     'task_assigned'     => 'Essa tarefa foi atribuída a você por ',
-    'removed_from_task' => 'Você foi removido da tarefa por '
+    'removed_from_task' => 'Você foi removido da tarefa por ',
+    'commented_task'    => ' comentou a tarefa '
 ];

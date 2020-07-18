@@ -15,6 +15,5 @@ return [
     'messages' => [
         'no_comment'        => 'Nenhum comentário',
         'add_comment'       => 'Comentário adicionado com sucesso',
-        'commented_task'    => ' comentou a tarefa '
     ]
 ];

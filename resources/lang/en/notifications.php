@@ -15,5 +15,6 @@ return [
     'message'           => 'Message',
     'project'           => 'Project',
     'task_assigned'     => 'This task was assigned to you by ',
-    'removed_from_task' => 'You have been removed from the task by '
+    'removed_from_task' => 'You have been removed from the task by ',
+    'commented_task'    => ' commented the task '
 ];

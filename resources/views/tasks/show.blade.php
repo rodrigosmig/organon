@@ -100,7 +100,7 @@
                 <label for="task-name" class="col-sm-2 col-form-label">{{ __('task.worked_time') }}</label>
                 <div class="col-sm-10">
                     <label style="padding-top: 8px">
-                        {{secondsToTime( $task->getTotalWorkedByUser($task->user->id)) }}
+                        {{secondsToTime( $task->getTotalWorked()) }}
                     </label>
                 </div>
             </div>
