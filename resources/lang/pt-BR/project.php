@@ -42,7 +42,7 @@ return [
     'submit'            => 'Enviar',
     'active'            => 'Ativo',
     'finished'          => 'Finalizado',
-    'no_projectd'       => 'Nenhum projeto encontrado',
+    'no_projects'       => 'Nenhum projeto encontrado',
     'select_client'     => 'Selecione um cliente',
     'success'           => 'Sucesso',
     'invalid_request'   => 'Requisição inválida',
@@ -76,6 +76,7 @@ return [
         'delete_title'      => 'Tem certeza?',
         'delete_msg'        => 'Todos os dados do projeto serão deletados',
         'not_finish'        => 'Não é possível finalizar o projeto',
-        'user_removed'      => 'O usuário será removido do projeto'
+        'user_removed'      => 'O usuário será removido do projeto',
+        'no_active_projects' => 'Não existem projetos ativos'
     ]
 ];
