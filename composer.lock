@@ -1612,16 +1612,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.35.0",
+            "version": "2.36.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5"
+                "reference": "ee7378a36cc62952100e718bcc58be4c7210e55f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4b9bd835261ef23d36397a46a76b496a458305e5",
-                "reference": "4b9bd835261ef23d36397a46a76b496a458305e5",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/ee7378a36cc62952100e718bcc58be4c7210e55f",
+                "reference": "ee7378a36cc62952100e718bcc58be4c7210e55f",
                 "shasum": ""
             },
             "require": {
@@ -1633,9 +1633,10 @@
             "require-dev": {
                 "doctrine/orm": "^2.7",
                 "friendsofphp/php-cs-fixer": "^2.14 || ^3.0",
-                "kylekatarnls/multi-tester": "^1.1",
+                "kylekatarnls/multi-tester": "^2.0",
                 "phpmd/phpmd": "^2.8",
-                "phpstan/phpstan": "^0.11",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12.30",
                 "phpunit/phpunit": "^7.5 || ^8.0",
                 "squizlabs/php_codesniffer": "^3.4"
             },
@@ -1651,6 +1652,11 @@
                 "laravel": {
                     "providers": [
                         "Carbon\\Laravel\\ServiceProvider"
+                    ]
+                },
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
                     ]
                 }
             },
@@ -1691,7 +1697,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-24T18:27:52+00:00"
+            "time": "2020-07-04T12:29:56+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2981,19 +2987,21 @@
         },
         {
             "name": "sendgrid/php-http-client",
-            "version": "3.10.7",
+            "version": "3.10.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sendgrid/php-http-client.git",
-                "reference": "f01e6fe7e33b811715ba93da3f85573e175bb801"
+                "reference": "51e69a9acdb7a1a5ebb4420d3f54917d7341076f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/php-http-client/zipball/f01e6fe7e33b811715ba93da3f85573e175bb801",
-                "reference": "f01e6fe7e33b811715ba93da3f85573e175bb801",
+                "url": "https://api.github.com/repos/sendgrid/php-http-client/zipball/51e69a9acdb7a1a5ebb4420d3f54917d7341076f",
+                "reference": "51e69a9acdb7a1a5ebb4420d3f54917d7341076f",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
                 "php": ">=5.6"
             },
             "require-dev": {
@@ -3029,20 +3037,20 @@
                 "rest",
                 "sendgrid"
             ],
-            "time": "2020-06-10T20:13:05+00:00"
+            "time": "2020-06-24T19:34:13+00:00"
         },
         {
             "name": "sendgrid/sendgrid",
-            "version": "7.6.0",
+            "version": "7.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sendgrid/sendgrid-php.git",
-                "reference": "cbfb2f063b75bfac9197894de882d30aff6ca769"
+                "reference": "4f2f9f67791ba4c8e311fbe44785661af01062d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/cbfb2f063b75bfac9197894de882d30aff6ca769",
-                "reference": "cbfb2f063b75bfac9197894de882d30aff6ca769",
+                "url": "https://api.github.com/repos/sendgrid/sendgrid-php/zipball/4f2f9f67791ba4c8e311fbe44785661af01062d9",
+                "reference": "4f2f9f67791ba4c8e311fbe44785661af01062d9",
                 "shasum": ""
             },
             "require": {
@@ -3089,7 +3097,7 @@
                 "sendgrid",
                 "twilio sendgrid"
             ],
-            "time": "2020-06-10T19:53:58+00:00"
+            "time": "2020-07-08T18:49:48+00:00"
         },
         {
             "name": "sentry/sdk",
@@ -4518,16 +4526,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.17.1",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "7110338d81ce1cbc3e273136e4574663627037a7"
+                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7110338d81ce1cbc3e273136e4574663627037a7",
-                "reference": "7110338d81ce1cbc3e273136e4574663627037a7",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/a6977d63bf9a0ad4c65cd352709e230876f9904a",
+                "reference": "a6977d63bf9a0ad4c65cd352709e230876f9904a",
                 "shasum": ""
             },
             "require": {
@@ -4539,7 +4547,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.17-dev"
+                    "dev-master": "1.18-dev"
                 },
                 "thanks": {
                     "name": "symfony/polyfill",
@@ -4591,7 +4599,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-06-06T08:46:27+00:00"
+            "time": "2020-07-14T12:35:20+00:00"
         },
         {
             "name": "symfony/polyfill-php72",
@@ -5126,20 +5134,20 @@
         },
         {
             "name": "symfony/translation",
-            "version": "v4.4.8",
+            "version": "v4.4.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation.git",
-                "reference": "8272bbd2b7e220ef812eba2a2b30068a5c64b191"
+                "reference": "79d3ef9096a6a6047dbc69218b68c7b7f63193af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation/zipball/8272bbd2b7e220ef812eba2a2b30068a5c64b191",
-                "reference": "8272bbd2b7e220ef812eba2a2b30068a5c64b191",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/79d3ef9096a6a6047dbc69218b68c7b7f63193af",
+                "reference": "79d3ef9096a6a6047dbc69218b68c7b7f63193af",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1.3",
+                "php": ">=7.1.3",
                 "symfony/polyfill-mbstring": "~1.0",
                 "symfony/translation-contracts": "^1.1.6|^2"
             },
@@ -5212,20 +5220,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-04-12T16:45:36+00:00"
+            "time": "2020-05-30T20:06:45+00:00"
         },
         {
             "name": "symfony/translation-contracts",
-            "version": "v2.1.2",
+            "version": "v2.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/translation-contracts.git",
-                "reference": "e5ca07c8f817f865f618aa072c2fe8e0e637340e"
+                "reference": "616a9773c853097607cf9dd6577d5b143ffdcd63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/e5ca07c8f817f865f618aa072c2fe8e0e637340e",
-                "reference": "e5ca07c8f817f865f618aa072c2fe8e0e637340e",
+                "url": "https://api.github.com/repos/symfony/translation-contracts/zipball/616a9773c853097607cf9dd6577d5b143ffdcd63",
+                "reference": "616a9773c853097607cf9dd6577d5b143ffdcd63",
                 "shasum": ""
             },
             "require": {
@@ -5238,6 +5246,10 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "2.1-dev"
+                },
+                "thanks": {
+                    "name": "symfony/contracts",
+                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -5283,7 +5295,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-20T17:43:50+00:00"
+            "time": "2020-07-06T13:23:11+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -5865,20 +5877,20 @@
         },
         {
             "name": "hamcrest/hamcrest-php",
-            "version": "v2.0.0",
+            "version": "v2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hamcrest/hamcrest-php.git",
-                "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad"
+                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/776503d3a8e85d4f9a1148614f95b7a608b046ad",
-                "reference": "776503d3a8e85d4f9a1148614f95b7a608b046ad",
+                "url": "https://api.github.com/repos/hamcrest/hamcrest-php/zipball/8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
+                "reference": "8c3d0a3f6af734494ad8f6fbbee0ba92422859f3",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3|^7.0"
+                "php": "^5.3|^7.0|^8.0"
             },
             "replace": {
                 "cordoval/hamcrest-php": "*",
@@ -5886,14 +5898,13 @@
                 "kodova/hamcrest-php": "*"
             },
             "require-dev": {
-                "phpunit/php-file-iterator": "1.3.3",
-                "phpunit/phpunit": "~4.0",
-                "satooshi/php-coveralls": "^1.0"
+                "phpunit/php-file-iterator": "^1.4 || ^2.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7 || ^6.5 || ^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -5903,13 +5914,13 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD"
+                "BSD-3-Clause"
             ],
             "description": "This is the PHP port of Hamcrest Matchers",
             "keywords": [
                 "test"
             ],
-            "time": "2016-01-20T08:20:44+00:00"
+            "time": "2020-07-09T08:09:16+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -6003,25 +6014,25 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.3.1",
+            "version": "1.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be"
+                "reference": "9b6f117dd7d36dc3858d8d8ddf9b3d584fcae283"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be",
-                "reference": "f69bbde7d7a75d6b2862d9ca8fab1cd28014b4be",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/9b6f117dd7d36dc3858d8d8ddf9b3d584fcae283",
+                "reference": "9b6f117dd7d36dc3858d8d8ddf9b3d584fcae283",
                 "shasum": ""
             },
             "require": {
-                "hamcrest/hamcrest-php": "~2.0",
+                "hamcrest/hamcrest-php": "^2.0.1",
                 "lib-pcre": ">=7.0",
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7.10|~6.5|~7.0|~8.0"
+                "phpunit/phpunit": "~5.7.10|~6.5|~7.0|~8.0|~9.0"
             },
             "type": "library",
             "extra": {
@@ -6064,7 +6075,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2019-12-26T09:49:15+00:00"
+            "time": "2020-07-09T08:23:05+00:00"
         },
         {
             "name": "myclabs/deep-copy",
