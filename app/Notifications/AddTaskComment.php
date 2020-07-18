@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Project;
+use App\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class AddedMember extends Notification
+class AddTaskComment extends Notification
 {
     use Queueable;
 
-    private $project;
+    private $comment;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(Project $project)
+    public function __construct(Comment $comment)
     {
-        $this->project = $project;
+        $this->comment = $comment;
     }
 
     /**
@@ -72,7 +72,7 @@ class AddedMember extends Notification
     {
         return [
             'comment' => $this->comment->task,
-            'message' => __('notifications.added_member')
+            'message' => $this->comment->user->name . __('comments.messages.commented_task') . $this->comment->task->name . '.'
         ];
     }
 }

@@ -1,35 +1,35 @@
 <template>
-    <!-- Nav Item - Alerts -->
     <li class="nav-item dropdown no-arrow mx-1">
         <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-bell fa-fw"></i>
-            <!-- Counter - Alerts -->
             <span class="badge badge-danger badge-counter">{{notifications.length}}+</span>
         </a>
-        <!-- Dropdown - Alerts -->
         <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
             <h6 class="dropdown-header">
                 {{ title }}
             </h6>
-            <a class="dropdown-item d-flex align-items-center" href="#" @click.prevent="markAsRead(notification.id)" v-for="notification in notifications" :key="notification.id" :title="asRead">
-                
+            <li class="dropdown-item d-flex align-items-center" v-for="notification in notifications" :key="notification.id">                
                 <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
-                    </div>
+                    <a href="javascript:void(0)" :title="asRead" @click.prevent="markAsRead(notification.id)">
+                        <div class="icon-circle bg-primary">
+                            <i class="fab fa-readme text-white"></i>
+                        </div>
+                    </a>
                 </div>
                 <div>
                     <div class="small text-gray-500">{{ notification.created_at }}</div>
                     <span class="font-weight-bold" v-if="notification.data.project">{{ notification.data.message }} {{ notification.data.project.name }}.</span>
                     <span class="font-weight-bold" v-if="notification.data.task"><U>{{ notification.data.task.name }}</u> : {{ notification.data.message }} {{ notification.data.user.name }}</span>
+                    <span class="font-weight-bold" v-if="notification.data.comment">
+                        <a :href="'/tasks/show/' + notification.data.comment.id">
+                            {{ notification.data.message }}
+                        </a>
+                    </span>
                 </div>
-            </a>
-
+            </li>
             <a class="dropdown-item d-flex align-items-center" href="#" v-if="notifications.length == 0">
                 <span class="font-weight-bold" >{{ empty }}</span>
-            </a>
-
-            
+            </a>            
             <a class="dropdown-item text-center small text-gray-500" href="/notifications/all">{{ footer }}</a>
         </div>
     </li>
@@ -52,31 +52,4 @@
             }
         }
     }
-
-    /* export default {
-        props: ['title', 'footer'],
-        created() {
-            this.loadNotifications()
-        },
-        data() {
-            return {
-                notificationsItems: []
-            }
-        },
-        computed: {
-            notifications() {
-                return this.notificationsItems
-            }
-        },
-        methods: {
-            loadNotifications() {
-                axios.get('/notifications')
-                    .then(response => {
-                        console.log(response.data.notifications)
-                        this.notificationsItems = response.data.notifications
-                    })
-            }
-        }
-    } */
 </script>
-
