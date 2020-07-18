@@ -72,8 +72,7 @@ class TaskAssigned extends Notification
     {
         return [
             'task' => $this->task,
-            'user' => $this->task->project->owner,
-            'message' => __('notifications.task_assigned')
+            'message'   => $this->task->name . ": " . __('notifications.task_assigned') . $this->task->project->owner->name
         ];
     }
 }

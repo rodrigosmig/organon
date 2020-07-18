@@ -271,9 +271,9 @@
                                 <td>
                                   @if ($task->user)
                                     @if ($task->user->hasPhoto())
-                                      <img class="img-profile rounded-circle" src="/storage/{{ $task->user->photo }}" width="30px" height="30px" title={{ $task->user->name }}>                                        
+                                      <img class="img-profile rounded-circle" src="/storage/{{ $task->user->photo }}" width="30px" height="30px" title="{{ $task->user->name }}">                                        
                                     @else
-                                      <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title={{ $task->user->name }}>
+                                      <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="{{ $task->user->name }}">
                                     @endif    
                                   @else
                                     <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="No user">

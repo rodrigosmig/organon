@@ -95,7 +95,6 @@
               'project_id': project_id
             },
             success: function(response) {
-              console.log(response)
               swal({
                 title: user_removed,
                 text: response,

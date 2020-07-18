@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Task;
-use App\User;
 use App\Project;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Notifications\OpenTask;
 use App\Notifications\CompletedTask;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\AddTaskComment;
 use App\Http\Requests\TaskTimeRequest;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\StoreTaskFormRequest;
-use App\Http\Requests\AssignTaskMemberRequest;
+use App\Http\Requests\StoreUpdateCommentRequest;
 
 class TaskController extends Controller
 {
@@ -97,9 +98,12 @@ class TaskController extends Controller
      */
     public function show($id)
     {
+        $task = Task::find($id);
+
         $data = [
             'title'     => $this->title,
-            'task'      => Task::find($id),
+            'task'      => $task,
+            'comments'  => $task->getComments()
         ];
 
         return view('tasks.show', $data);
@@ -277,5 +281,21 @@ class TaskController extends Controller
 
         Alert::success(__('task.success'), __('task.messages.task_opened'));
         return redirect()->route('tasks.my-tasks');
+    }
+
+    public function commentTask(StoreUpdateCommentRequest $request, $id)
+    {
+        $task = Task::find($id);
+
+        $comment = $task->addComment($request->all());
+
+        if ($task->project->isOwner(auth()->user())) {
+            $task->user->notify(new AddTaskComment($comment));
+        } else {
+            $task->project->owner->notify(new AddTaskComment($comment));
+        }
+
+        Alert::success(__('comments.success'), __('comments.messages.add_comment'));
+        return redirect()->route('tasks.show', $task->id);
     }
 }

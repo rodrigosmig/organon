@@ -72,7 +72,7 @@ class RemovedMember extends Notification
     {
         return [
             'project' => $this->project,
-            'message' => __('notifications.removed_member')
+            'message' => $this->project->name . ": " . __('notifications.removed_member') . $this->project->owner->name
         ];
     }
 }

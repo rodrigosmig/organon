@@ -39,7 +39,7 @@
                     </tbody>
                 </table>
             @else
-                No Projects found
+                {{ __('project.no_projects') }}
             @endif
         </div>
         <div class="card-footer text-muted">

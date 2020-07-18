@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Client;
+use App\Comment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -62,6 +63,16 @@ class Task extends Model
     public function client()
     {
         return $this->belongsTo(Client::class);
+    }
+
+    /**
+     * Fetch the task comments
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 
     /**
@@ -333,5 +344,27 @@ class Task extends Model
             ->where('user_id', auth()->user()->id)
             ->orderBy('deadline', 'asc')
             ->get();
+    }
+
+    /**
+     * Fetch the task comments.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function getComments() {
+        return $this->comments;
+    }
+
+    /**
+     * Fetch the task comments.
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function addComment($data) {
+
+        return $this->comments()->create([
+            'comment' => $data['comment'],
+            'user_id' => auth()->user()->id,
+        ]);
     }
 }

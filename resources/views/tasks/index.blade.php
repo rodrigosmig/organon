@@ -99,7 +99,7 @@
                         </table>
                     @else
                         <h5 style="margin-top:20px">{{ __('task.no_task_found') }}.</h3>
-                    @endif                    
+                    @endif
                 </div>
                 <div class="tab-pane fade" id="finished" role="tabpanel" aria-labelledby="finished-tab">
                     @if ($finished_tasks->isNotEmpty())
