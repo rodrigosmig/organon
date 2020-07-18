@@ -18,10 +18,16 @@
                 </div>
                 <div>
                     <div class="small text-gray-500">{{ notification.created_at }}</div>
-                    <span class="font-weight-bold" v-if="notification.data.project">{{ notification.data.message }} {{ notification.data.project.name }}.</span>
-                    <span class="font-weight-bold" v-if="notification.data.task"><U>{{ notification.data.task.name }}</u> : {{ notification.data.message }} {{ notification.data.user.name }}</span>
+                    <span class="font-weight-bold" v-if="notification.data.project">{{ notification.data.message }}</span>
+
+                    <span class="font-weight-bold" v-if="notification.data.task">
+                        <a :href="'/tasks/show/' + notification.data.task.id">
+                            {{ notification.data.message }}
+                        </a>
+                    </span>
+
                     <span class="font-weight-bold" v-if="notification.data.comment">
-                        <a :href="'/tasks/show/' + notification.data.comment.id">
+                        <a :href="'/tasks/show/' + notification.data.comment.task_id">
                             {{ notification.data.message }}
                         </a>
                     </span>

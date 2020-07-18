@@ -71,8 +71,9 @@ class AddTaskComment extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'comment' => $this->comment->task,
-            'message' => $this->comment->user->name . __('comments.messages.commented_task') . $this->comment->task->name . '.'
+            'comment'       => $this->comment,
+            'project_name'  => $this->comment->task->project->name,
+            'message'       => $this->comment->user->name . __('comments.messages.commented_task') . $this->comment->task->name . '.'
         ];
     }
 }

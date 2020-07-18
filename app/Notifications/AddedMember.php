@@ -71,8 +71,8 @@ class AddedMember extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'comment' => $this->comment->task,
-            'message' => __('notifications.added_member')
+            'project' => $this->project,
+            'message' => $this->project->name . ": " . __('notifications.added_member') . $this->project->owner->name
         ];
     }
 }

@@ -2074,6 +2074,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['title', 'footer', 'asRead', 'empty'],
   created: function created() {
@@ -40999,30 +41005,28 @@ var render = function() {
                 _vm._v(" "),
                 notification.data.project
                   ? _c("span", { staticClass: "font-weight-bold" }, [
-                      _vm._v(
-                        _vm._s(notification.data.message) +
-                          " " +
-                          _vm._s(notification.data.project.name) +
-                          "."
-                      )
+                      _vm._v(_vm._s(notification.data.message))
                     ])
                   : _vm._e(),
                 _vm._v(" "),
                 notification.data.task
-                  ? _c(
-                      "span",
-                      { staticClass: "font-weight-bold" },
-                      [
-                        _c("U", [_vm._v(_vm._s(notification.data.task.name))]),
-                        _vm._v(
-                          " : " +
-                            _vm._s(notification.data.message) +
-                            " " +
-                            _vm._s(notification.data.user.name)
-                        )
-                      ],
-                      1
-                    )
+                  ? _c("span", { staticClass: "font-weight-bold" }, [
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href: "/tasks/show/" + notification.data.task.id
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(notification.data.message) +
+                              "\n                    "
+                          )
+                        ]
+                      )
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 notification.data.comment
@@ -41031,7 +41035,8 @@ var render = function() {
                         "a",
                         {
                           attrs: {
-                            href: "/tasks/show/" + notification.data.comment.id
+                            href:
+                              "/tasks/show/" + notification.data.comment.task_id
                           }
                         },
                         [

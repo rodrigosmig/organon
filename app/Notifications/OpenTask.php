@@ -71,9 +71,8 @@ class OpenTask extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'task' => $this->task,
-            'user' => $this->task->user,
-            'message' => __('notifications.open_task')
+            'task'      => $this->task,
+            'message'   => $this->task->name . ": " . __('notifications.open_task') . $this->task->user->name
         ];
     }
 }
