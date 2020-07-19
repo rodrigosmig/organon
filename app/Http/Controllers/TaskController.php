@@ -289,10 +289,12 @@ class TaskController extends Controller
 
         $comment = $task->addComment($request->all());
 
-        if ($task->project->isOwner(auth()->user())) {
-            $task->user->notify(new AddTaskComment($comment));
-        } else {
-            $task->project->owner->notify(new AddTaskComment($comment));
+        if ($task->project) {
+            if ($task->project->isOwner(auth()->user())) {
+                $task->user->notify(new AddTaskComment($comment));
+            } else {
+                $task->project->owner->notify(new AddTaskComment($comment));
+            }
         }
 
         Alert::success(__('comments.success'), __('comments.messages.add_comment'));
