@@ -775,23 +775,24 @@
         },
         {
             "name": "guzzlehttp/guzzle",
-            "version": "6.5.2",
+            "version": "6.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82"
+                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/43ece0e75098b7ecd8d13918293029e555a50f82",
-                "reference": "43ece0e75098b7ecd8d13918293029e555a50f82",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
+                "reference": "9d4290de1cfd701f38099ef7e183b64b4b7b0c5e",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/promises": "^1.0",
                 "guzzlehttp/psr7": "^1.6.1",
-                "php": ">=5.5"
+                "php": ">=5.5",
+                "symfony/polyfill-intl-idn": "^1.17.0"
             },
             "require-dev": {
                 "ext-curl": "*",
@@ -799,7 +800,6 @@
                 "psr/log": "^1.1"
             },
             "suggest": {
-                "ext-intl": "Required for Internationalized Domain Name (IDN) support",
                 "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
@@ -838,7 +838,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2019-12-23T11:57:10+00:00"
+            "time": "2020-06-16T21:01:06+00:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -2931,20 +2931,20 @@
         },
         {
             "name": "s-ichikawa/laravel-sendgrid-driver",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/s-ichikawa/laravel-sendgrid-driver.git",
-                "reference": "116a6e624323883ddcc56bfaf92ef19f9218f6fd"
+                "reference": "0fdb0afeefaa83eec450964341c12774c646cf15"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/116a6e624323883ddcc56bfaf92ef19f9218f6fd",
-                "reference": "116a6e624323883ddcc56bfaf92ef19f9218f6fd",
+                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/0fdb0afeefaa83eec450964341c12774c646cf15",
+                "reference": "0fdb0afeefaa83eec450964341c12774c646cf15",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~5.3|~6.2",
+                "guzzlehttp/guzzle": "~5.3|~6.2|~7.0",
                 "illuminate/mail": ">=5.5"
             },
             "require-dev": {
@@ -2983,7 +2983,7 @@
                 "laravel",
                 "sendgrid"
             ],
-            "time": "2019-09-04T15:31:39+00:00"
+            "time": "2020-08-06T04:39:30+00:00"
         },
         {
             "name": "sendgrid/php-http-client",
