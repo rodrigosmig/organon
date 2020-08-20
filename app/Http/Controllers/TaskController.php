@@ -35,7 +35,7 @@ class TaskController extends Controller
             'open_tasks'        => Task::getTasksByStatus(Task::OPEN),
             'finished_tasks'    => Task::getTasksByStatus(Task::FINISHED)
         ];
-        //dd($data);
+
         return view('tasks.index', $data);
     }
 
@@ -160,17 +160,11 @@ class TaskController extends Controller
         
         $validated = $request->validated();
 
-        $task->name  = $validated['name'];
-        $task->description  = $validated['description'];
-        $task->deadline     = $validated['deadline'];
-        $task->project_id   = $validated['project_id'];
-        $task->client_id    = $validated['client_id'];
-
-        $task->save();
+        $task->update($validated);
 
         Alert::success(__('task.success'), __('task.messages.task_updated'));
 
-        return redirect()->route('tasks.my-tasks');
+        return redirect()->route('tasks.show', $task->id);
     }
 
     public function updateProjectTask(StoreTaskFormRequest $request, $id)

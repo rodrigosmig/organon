@@ -5,9 +5,17 @@
 @endsection
 
 @section('button-header')
-<a href="{{ route('clients.edit', $client->id) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="{{ __('client.edit_client') }}">
-    <i class="fas fa-edit"></i>
-  </a>
+    <div class="dropdown">
+        <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-cog"></i>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}">
+                <i class="fas fa-edit"></i>
+                {{ __('task.edit') }}
+            </a>
+        </div>
+    </div>
 @endsection
 
 @section('content')
