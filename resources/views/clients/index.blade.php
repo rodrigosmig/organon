@@ -17,11 +17,9 @@
         <div class="card-body">
             <table class="table">
                 <thead>
-                    <th></th>
                     <th>{{ __('client.name') }}</th>
                     <th>{{ __('client.email') }}</th>
                     <th>{{ __('client.status') }}</th>
-                    <th>{{ __('client.actions') }}</th>
                 </thead>
 
                 <tbody>
@@ -29,26 +27,11 @@
                         <tr>
                             <td>
                                 <a href="{{ route('clients.show', $client->id) }}">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="{{ route('clients.show', $client->id) }}">
                                     {{ $client->name }}
                                 </a>
                             </td>
                             <td>{{ $client->email }}</td>
                             <td>{{ ucFirst($client->status) }}</td>
-                            <td>
-                                <div class="dropdown">
-                                    <a href="javascript:void(0)" class="menuAction" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-h"></i>
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="projectActions">
-                                        <a class="dropdown-item" href="{{ route('clients.edit', $client->id) }}"><i class="fas fa-edit"></i> {{ __('client.edit') }}</a>
-                                    </div>
-                                </div>
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>

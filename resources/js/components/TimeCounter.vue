@@ -26,7 +26,7 @@
             }
         },
         mounted() {
-            if(this.total_worked + this.total_time <= 0) {
+            if((this.total_worked + this.total_time) <= 0) {
                 this.text_time = "00:00:00"
             }
             else {
