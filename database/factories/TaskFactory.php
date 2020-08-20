@@ -9,7 +9,8 @@ use Faker\Generator as Faker;
 
 $factory->define(Task::class, function (Faker $faker) {
     return [
-        'description' => $faker->name,
+        'name' => $faker->name,
+        'description' => $faker->text,
         'deadline' => now(),
         'status' => Task::OPEN,
         'user_id' => factory(User::class),

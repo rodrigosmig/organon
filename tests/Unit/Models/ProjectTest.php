@@ -233,7 +233,7 @@ class ProjectTest extends TestCase
             'project_id' => $this->project->id
         ]);
 
-        $this->project->addMember($user, 10);
+        $this->project->addMember($user, 100);
 
         $now = now();
 
@@ -244,7 +244,7 @@ class ProjectTest extends TestCase
             'task_id' => $task->id,
         ]);
 
-        $this->assertEquals(20, $this->project->getTotalProjectCost());
+        $this->assertEquals(100, $this->project->getTotalProjectCost());
     }
 
     /**
@@ -256,7 +256,7 @@ class ProjectTest extends TestCase
 
         $user = factory(User::class)->create();
 
-        $this->project->addMember($user, 10);
+        $this->project->addMember($user, 500);
 
         $task = factory(Task::class)->create([
             'user_id' => $user->id,
@@ -274,7 +274,7 @@ class ProjectTest extends TestCase
 
         $user2 = factory(User::class)->create();
         $project2 = factory(Project::class)->create(['owner_id' => $this->user]);
-        $project2->addMember($user2, 20);
+        $project2->addMember($user2, 300);
 
         $task2 = factory(Task::class)->create([
             'user_id' => $user2->id,
@@ -288,7 +288,7 @@ class ProjectTest extends TestCase
             'task_id' => $task2->id,
         ]);
 
-        $this->assertEquals(40.0, Project::getTotalCostActiveProjects());
+        $this->assertEquals(800.0, Project::getTotalCostActiveProjects());
     }
 
     /**
@@ -396,5 +396,18 @@ class ProjectTest extends TestCase
         $this->project->status = Project::FINISHED;
 
         $this->assertFalse($this->project->isActive());
+    }
+
+    /**
+     * @test
+     */
+    public function hasOpenTask()
+    {
+        $task1 = factory(Task::class)->create([
+            'user_id' => $this->user->id,
+            'project_id' => $this->project->id,
+        ]);
+
+        $this->assertTrue($this->project->hasOpenTask());
     }
 }
