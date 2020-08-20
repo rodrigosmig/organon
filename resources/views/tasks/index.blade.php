@@ -47,7 +47,6 @@
                                 <th>{{ __('task.client') }}</th>
                                 <th>{{ __('task.deadline') }}</th>
                                 <th>{{ __('task.worked_time') }}</th>
-                                <th>{{ __('task.actions') }}</th>
                             </thead>
 
                             <tbody>
@@ -62,36 +61,7 @@
                                         <td>{{ $task->client ? $task->client->name : '-' }}</td>
                                         <td>{{ $task->deadline }}</td>
                                         <td>
-                                            <time-counter 
-                                                total-worked="{{ $task->getTotalWorkedByUser($task->user->id) }}"
-                                                project_id="{{ $task->project ? $task->project->id : '' }}"
-                                                user_id="{{ $task->user->id }}"
-                                                task_id="{{ $task->id }}"
-                                                msg_title="{{ __('task.messages.are_you_sure') }}"
-                                                msg_message="{{ __('task.messages.all_task_restarted') }}"
-                                                msg_confirm="{{ __('task.messages.yes_restart_it') }}"
-                                                msg_cancel="{{ __('task.cancel') }}"
-                                            ></time-counter>
-                                        </td>
-                                        <td>
-                                            <a class="menuAction" href="{{ route('tasks.finish-task', $task->id) }}">
-                                                <i class="fas fa-check finish" data-toggle="tooltip" data-placement="top" title="{{ __('task.finish') }}"></i>
-                                            </a>
-                                            @if ($task->project && $task->project->isOwner(auth()->user()))
-                                                <a class="menuAction" href="{{ route('tasks.edit', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.edit') }}">
-                                                    <i class="fas fa-edit edit"></i>
-                                                </a>
-                                                <a class="menuAction" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
-                                                    <i class="fas fa-trash delete"></i>
-                                                </a>
-                                            @elseif(! $task->project)
-                                                <a class="menuAction" href="{{ route('tasks.edit', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.edit') }}">
-                                                    <i class="fas fa-edit edit"></i>
-                                                </a>
-                                                <a class="menuAction" href="{{ route('tasks.delete', $task->id) }}" data-toggle="tooltip" data-placement="top" title="{{ __('task.delete') }}">
-                                                    <i class="fas fa-trash delete"></i>
-                                                </a>
-                                            @endif
+                                            {{ secondsToTime( $task->getTotalWorked()) }}
                                         </td>
                                     </tr>
                                 @endforeach

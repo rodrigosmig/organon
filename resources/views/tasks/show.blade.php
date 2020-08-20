@@ -4,16 +4,44 @@
 	<h1 class="h3 mb-0 text-gray-800">{{ $title }} <small>/ {{ $task->name }}</small></h1>
 @endsection
 
+@section('script-js')
+	<script src="{{ asset('js/tasks.js' )}}" type="text/javascript"></script>
+@endsection
+
 @section('button-header')
-    @if ($task->project && $task->project->isOwner(auth()->user()))
-        <a href="{{ route('tasks.edit', $task->id) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="{{ __('task.edit_task') }}">
-            <i class="fas fa-edit"></i>
-        </a>
-    @elseif(! $task->project)
-        <a href="{{ route('tasks.edit', $task->id) }}" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" type="button" aria-expanded="false" title="{{ __('task.edit_task') }}">
-            <i class="fas fa-edit"></i>
-        </a>
-    @endif    
+    @if (! $task->isFinished())
+        <div class="dropdown">
+            <button class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item menuAction" href="{{ route('tasks.finish-task', $task->id) }}">
+                    <i class="fas fa-check finish"></i>
+                    {{ __('task.finish') }}
+                </a>
+                @if ($task->project && $task->project->isOwner(auth()->user()))
+                    <a class="dropdown-item" href="{{ route('tasks.edit', $task->id) }}">
+                        <i class="fas fa-edit"></i>
+                        {{ __('task.edit') }}
+                    </a>
+                    <a class="dropdown-item menuAction" href="{{ route('tasks.delete', $task->id) }}">
+                        <i class="fas fa-trash delete"></i>
+                        {{ __('task.delete') }}
+                    </a>
+                @elseif(! $task->project)
+                    <a class="dropdown-item" href="{{ route('tasks.edit', $task->id) }}">
+                        <i class="fas fa-edit"></i>
+                        {{ __('task.edit') }}
+                    </a>
+                    <a class="dropdown-item menuAction" href="{{ route('tasks.delete', $task->id) }}">
+                        <i class="fas fa-trash delete"></i>
+                        {{ __('task.delete') }}
+                    </a>
+                @endif
+            </div>
+        </div>
+    @endif
+    
 @endsection
 
 @section('modal')
@@ -48,9 +76,7 @@
 
 @section('content')
     <div class="card shadow">
-        @csrf
         <div class="card-body">
-            {{-- @include('tasks.partials.form') --}}
             <div class="form-group row">
                 <label for="task-name" class="col-sm-2 col-form-label">{{ __('task.name') }}</label>
                 <div class="col-sm-10">
@@ -95,13 +121,33 @@
                     </label>
                 </div>
             </div>
+
+            <div class="form-group row">
+                <label for="task-client" class="col-sm-2 col-form-label">{{ __('task.status') }}</label>
+                <div class="col-sm-10">
+                    <label style="padding-top: 8px">
+                        {{ App\Task::STATUS[$task->status] }}
+                    </label>
+                </div>
+            </div>
             
             <div class="form-group row">
                 <label for="task-name" class="col-sm-2 col-form-label">{{ __('task.worked_time') }}</label>
                 <div class="col-sm-10">
-                    <label style="padding-top: 8px">
-                        {{secondsToTime( $task->getTotalWorked()) }}
-                    </label>
+                    @if ($task->isFinished())
+                        {{ secondsToTime($task->getTotalWorked()) }}
+                    @else
+                        <time-counter 
+                            total-worked="{{ $task->getTotalWorkedByUser($task->user->id) }}"
+                            project_id="{{ $task->project ? $task->project->id : '' }}"
+                            user_id="{{ $task->user->id }}"
+                            task_id="{{ $task->id }}"
+                            msg_title="{{ __('task.messages.are_you_sure') }}"
+                            msg_message="{{ __('task.messages.all_task_restarted') }}"
+                            msg_confirm="{{ __('task.messages.yes_restart_it') }}"
+                            msg_cancel="{{ __('task.cancel') }}"
+                        ></time-counter>
+                    @endif
                 </div>
             </div>
         </div>
