@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fa59fa891a11822755bc8dac75d3c647",
+    "content-hash": "0292a8e0b9c4a6816674cc8ee1def1bf",
     "packages": [
         {
             "name": "brick/math",
@@ -3296,26 +3296,29 @@
         },
         {
             "name": "s-ichikawa/laravel-sendgrid-driver",
-            "version": "2.1.1",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/s-ichikawa/laravel-sendgrid-driver.git",
-                "reference": "0fdb0afeefaa83eec450964341c12774c646cf15"
+                "reference": "d054933d4b4e089e6ee8cfe2107b98b39d80faec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/0fdb0afeefaa83eec450964341c12774c646cf15",
-                "reference": "0fdb0afeefaa83eec450964341c12774c646cf15",
+                "url": "https://api.github.com/repos/s-ichikawa/laravel-sendgrid-driver/zipball/d054933d4b4e089e6ee8cfe2107b98b39d80faec",
+                "reference": "d054933d4b4e089e6ee8cfe2107b98b39d80faec",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~5.3|~6.2|~7.0",
-                "illuminate/mail": ">=5.5"
+                "guzzlehttp/guzzle": "^6.3 || ^7.0",
+                "illuminate/mail": ">=7.0",
+                "illuminate/support": ">=7.0"
             },
             "require-dev": {
-                "illuminate/container": ">=5.5",
-                "illuminate/filesystem": ">=5.5",
-                "phpunit/phpunit": "~5.7"
+                "illuminate/container": ">=7.0",
+                "illuminate/filesystem": ">=7.0",
+                "laravel/helpers": "^1.2",
+                "phpunit/phpunit": "^8.5",
+                "vlucas/phpdotenv": "^4.1"
             },
             "suggest": {
                 "s-ichikawa/sendgrid-api-builder": "support to build json for sendgrid api"
@@ -3350,9 +3353,9 @@
             ],
             "support": {
                 "issues": "https://github.com/s-ichikawa/laravel-sendgrid-driver/issues",
-                "source": "https://github.com/s-ichikawa/laravel-sendgrid-driver/tree/2.x"
+                "source": "https://github.com/s-ichikawa/laravel-sendgrid-driver/tree/3.0.3"
             },
-            "time": "2020-08-06T04:39:30+00:00"
+            "time": "2021-01-06T01:39:59+00:00"
         },
         {
             "name": "sentry/sdk",
