@@ -14,13 +14,15 @@ class CreateProjectMembersTable extends Migration
     public function up()
     {
         Schema::create('project_members', function (Blueprint $table) {
-            $table->bigInteger('project_id')->unsigned();
-            $table->foreign('project_id')->references('id')->on('projects');
-            $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->double('hour_value')->default(0.0)->nullable();
+            $table->unsignedBigInteger('project_id');            
+            $table->unsignedBigInteger('user_id');            
+            $table->integer('amount')->default(0);
             $table->timestamps();
+            
             $table->primary(['user_id', 'project_id']);
+
+            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
