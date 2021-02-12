@@ -19,11 +19,14 @@ class CreateProjectsTable extends Migration
             $table->string('name');
             $table->date('deadline')->nullable();
             $table->string('status')->default(Project::ACTIVE);
-            $table->double('amount_charged')->default(0.0);
-            $table->bigInteger('owner_id')->unsigned();
-            $table->foreign('owner_id')->references('id')->on('users');
+            $table->integer('amount_charged')->default(0);
+            $table->unsignedBigInteger('owner_id');
+            $table->unsignedBigInteger('client_id');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('owner_id')->references('id')->on('users');
+            $table->foreign('client_id')->references('id')->on('clients');
         });
     }
 

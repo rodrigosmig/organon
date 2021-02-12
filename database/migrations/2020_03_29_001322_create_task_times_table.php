@@ -18,11 +18,13 @@ class CreateTaskTimesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('start')->default(Carbon::create('now')->timestamp);
             $table->integer('end')->nullable();
-            $table->bigInteger('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->bigInteger('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('tasks');
+            $table->unsignedBigInteger('user_id')->nullable();            
+            $table->unsignedBigInteger('task_id');
+            
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('task_id')->references('id')->on('tasks');
         });
     }
 

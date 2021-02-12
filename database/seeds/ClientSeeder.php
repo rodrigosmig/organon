@@ -18,8 +18,8 @@ class ClientSeeder extends Seeder
             'owner_id'  => 1,
         ]);
         Client::create([
-            'name'      => 'Barbara Allen',
-            'email'     => 'barbara@gmail.com',
+            'name'      => 'Jan Austin',
+            'email'     => 'jan@gmail.com',
             'owner_id'  => 1,
         ]);
         Client::create([
