@@ -15,7 +15,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "nesbot/carbon": "^2.31",
-        "realrashid/sweet-alert": "^3.1",
+        "realrashid/sweet-alert": "^4.0",
         "sentry/sentry-laravel": "1.8.0"
     },
     "require-dev": {
