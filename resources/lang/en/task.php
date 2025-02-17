@@ -25,7 +25,7 @@ return [
     'reopen_task'           => 'Reopen Task',
     'no_task_found'         => 'No tasks found',
     'my_tasks'              => 'My Tasks',
-    'success'               => 'Success',    
+    'success'               => 'Success',
     'not_found'             => 'Not Found',
     'invalid_request'       => 'Invalid Request',
     'invalid_task'          => 'Invalid Task',
@@ -38,6 +38,7 @@ return [
     'task_name'             => 'Task Name',
     'actions'               => 'Actions',
     'back'                  => 'Back',
+    'status'                => 'Status',
 
     'messages' => [
         'not_found'             => 'Task Not Found',

@@ -72,11 +72,12 @@ class ProjectController extends Controller
             'deadline'          => $validated['deadline'],
             'owner_id'          => $request->user()->id,
             'amount_charged'    => $request->input('amount_charged', 0),
+            'is_per_hour'       => $validated['is_per_hour'],
             'client_id'         => $validated['client']
         ]);
-        
+
         Alert::success(__('project.success'), __('project.messages.new'));
-        
+
         return redirect()->route('projects.show', $project->id);
     }
 
@@ -97,10 +98,11 @@ class ProjectController extends Controller
         }
 
         $data = [
-            'title'         => $this->title,
-            'project'       => $project,
-            'members'       => $members,
-            'total_worked'  => $project->getTotalWorkedOnProject()
+            'title'             => $this->title,
+            'project'           => $project,
+            'members'           => $members,
+            'total_worked'      => $project->getTotalWorkedOnProject(),
+            'amount_per_hour'   => $project->getTotalProjectByHour()
         ];
 
         return view('projects.show', $data);
@@ -120,7 +122,7 @@ class ProjectController extends Controller
             Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.index');
         }
-     
+
         $data = [
             'title'     => $this->title,
             'project'   => $project,
@@ -152,6 +154,7 @@ class ProjectController extends Controller
         $project->deadline          = $validated['deadline'];
         $project->amount_charged    = $request->input('amount_charged', 0.0);
         $project->client_id         = $validated['client'];
+        $project->is_per_hour       = $validated['is_per_hour'];
         $project->save();
 
         Alert::success(__('project.success'), __('project.messages.update'));
@@ -173,7 +176,7 @@ class ProjectController extends Controller
             Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.index');
         }
-        
+
         if ($project->hasTaskInProgress()) {
             Alert::error(__('project.messages.not_delete'), __('project.messages.task_in_progress'));
             return redirect()->route('projects.index');
@@ -183,7 +186,7 @@ class ProjectController extends Controller
         $project->delete();
 
         Alert::success(__("project.success"), (__('project.messages.delete')));
-        
+
         return redirect()->route('projects.index');
     }
 
@@ -192,7 +195,7 @@ class ProjectController extends Controller
         $project    = Project::find($request->input("project_id"));
         $user       = User::find($request->input('user_id'));
         $amount     = $request->input('amount', 0);
-        
+
         if ($user->checkUser($project->owner)) {
             Alert::error(__("project.invalid_user"), __("project.messages.owner"));
             return redirect()->route('projects.show', ['id' => $project->id]);
@@ -231,13 +234,13 @@ class ProjectController extends Controller
         $project->members()->detach([$user->id]);
 
         $user->notify(new RemovedMember($project));
-        
+
         return response(__('project.messages.remove_member'), 200);
     }
 
     public function finishProject($id) {
         $project = Project::find($id);
-        
+
         if ($project->status !== Project::ACTIVE) {
             Alert::error(__('project.invalid_request'), __('project.messages.not_active'));
             return redirect()->route('projects.show', $project->id);
@@ -257,7 +260,7 @@ class ProjectController extends Controller
 
     public function openProject($id) {
         $project = Project::find($id);
-        
+
         if ($project->status !== Project::FINISHED) {
             Alert::error(__('project.invalid_request'), __('project.messages.not_finished'));
             return redirect()->route('projects.index');
@@ -276,9 +279,9 @@ class ProjectController extends Controller
             Alert::warning(__('project.no_search_word'), __('project.search_word'));
             return redirect()->route('home');
         }
-        
+
         $filters = $request->except('_token');
-        
+
         $projects = Project::search($request->project_name);
 
         return view('projects.search', [
@@ -301,7 +304,7 @@ class ProjectController extends Controller
         $task->save();
 
         $user->notify(new TaskAssigned($task));
-        
+
         Alert::success(__('task.success'), __('task.messages.user_assigned'));
         return redirect()->route('projects.show', $task->project->id);
     }
@@ -329,7 +332,7 @@ class ProjectController extends Controller
 
         $task->user()->dissociate();
         $task->save();
-        
+
         $user->notify(new RemovedFromTask($task));
 
         Alert::success(__('task.success'), __('task.messages.user_removed'));
