@@ -17,6 +17,13 @@
     </div>
 </div>
 <div class="form-group row">
+    <label for="project-charged_per_hour" class="col-sm-2 col-form-label">{{ __("project.charged_per_hour") }}</label>
+    <div class="col-sm-10">
+        <input type="hidden" name="is_per_hour" value="0">
+        <input type="checkbox" class="form-control-input" id="project-charged_per_hour" name="is_per_hour" value="1" {{ isset($project->is_per_hour) && $project->is_per_hour ? 'checked' : '' }}>
+    </div>
+</div>
+<div class="form-group row">
     <label for="project-client" class="col-sm-2 col-form-label">{{ __('project.client') }}</label>
     <div class="col-sm-10">
         <select id="project-client" class="form-control" name="client" required>

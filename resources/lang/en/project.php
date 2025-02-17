@@ -24,7 +24,7 @@ return [
     'close'             => 'Close',
     'assign_user'       => 'Assign User',
     'select_user'       => 'Select a User',
-    'none'              => 'None',    
+    'none'              => 'None',
     'description'       => 'Description',
     'cost'              => 'Cost',
     'amount_charged'    => 'Amount Charged',
@@ -54,7 +54,10 @@ return [
     'search_project'    => 'Search for a project',
     'reopen'            => 'Reopen',
     'change_user'       => 'Change user',
-    
+    'per_hour'          => 'Valor por Hora',
+    'amount_hour'       => 'Valor das Horas',
+    'charged_per_hour'  => 'É cobrado por hora',
+
     'messages' => [
         'new'               => 'The project was successfully created',
         'update'            => 'The project was successfully updated',

@@ -26,6 +26,7 @@ class StoreProjectFormRequest extends FormRequest
         return [
             'name'              => 'required|min:5',
             'deadline'          => 'required|date|after:today',
+            'is_per_hour'       => 'required|boolean',
             'client'            => 'required',
         ];
     }
@@ -33,7 +34,7 @@ class StoreProjectFormRequest extends FormRequest
     public function all($keys = null)
     {
         $attributes = parent::all();
-        
+
         if (isset($attributes['amount_charged'])) {
             $amount_charged = (float) str_replace(',', '.', $attributes['amount_charged']);
             $attributes['amount_charged'] = $amount_charged;
