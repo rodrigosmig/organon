@@ -87,7 +87,7 @@
 			</div>
 		</div>
   </div>
-  
+
   <div class="modal fade" id="modal-assign_user" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="modal-assign_userLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -169,11 +169,11 @@
 			</div>
 		</div>
   </div>
-  
+
 @endsection
 
 @section('content')
-    
+
     <div class="row">
 
         <div class="col-xl-3 col-md-6 mb-4">
@@ -213,8 +213,13 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.cost') }}</div>
-                    <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</div>
+                      @if ($project->is_per_hour)
+                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.amount_hour') }}</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($amount_per_hour, 2, ',', '.') }}</div>
+                      @else
+                          <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.cost') }}</div>
+                          <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->getTotalProjectCost(), 2, ',', '.') }}</div>
+                      @endif
                   </div>
                   <div class="col-auto">
                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -229,7 +234,11 @@
               <div class="card-body">
                 <div class="row no-gutters align-items-center">
                   <div class="col mr-2">
-                    <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.amount_charged') }}</div>
+                      @if ($project->is_per_hour)
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.per_hour') }}</div>
+                      @else
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">{{ __('project.amount_charged') }}</div>
+                      @endif
                     <div class="h5 mb-0 font-weight-bold text-gray-800">${{ number_format($project->amount_charged, 2, ',', '.') }}</div>
                   </div>
                   <div class="col-auto">
@@ -271,10 +280,10 @@
                                 <td>
                                   @if ($task->user)
                                     @if ($task->user->hasPhoto())
-                                      <img class="img-profile rounded-circle" src="/storage/{{ $task->user->photo }}" width="30px" height="30px" title="{{ $task->user->name }}">                                        
+                                      <img class="img-profile rounded-circle" src="/storage/{{ $task->user->photo }}" width="30px" height="30px" title="{{ $task->user->name }}">
                                     @else
                                       <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="{{ $task->user->name }}">
-                                    @endif    
+                                    @endif
                                   @else
                                     <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="No user">
                                   @endif
@@ -310,7 +319,7 @@
                                   </div>
                                 </td>
                             </tr>
-                            
+
                         @endforeach
                     </tbody>
                 </table>
@@ -333,7 +342,7 @@
               </h4>
             </div>
             <div class="card-body">
-                
+
                 <table class="table table-hover">
                     <thead>
                         <th>{{ __('project.avatar') }}</th>
@@ -347,7 +356,7 @@
                             <tr>
                                 <td>
                                     @if ($user->hasPhoto())
-                                        <img class="img-profile rounded-circle" src="/storage/{{$user->photo}}" width="30px" height="30px" title="{{$user->name}}">                                        
+                                        <img class="img-profile rounded-circle" src="/storage/{{$user->photo}}" width="30px" height="30px" title="{{$user->name}}">
                                     @else
                                         <img class="img-profile rounded-circle" src="{{ asset('img/user.png') }}" width="30px" height="30px" title="{{$user->name}}">
                                     @endif
@@ -359,16 +368,16 @@
                                     {{ secondsToTime($user->total_worked) }}
                                 </td>
                                 @if (! $project->isOwner($user))
-                                  <td>${{ number_format($user->pivot->amount, 2, ',', '.') }}</td>    
+                                  <td>${{ number_format($user->pivot->amount, 2, ',', '.') }}</td>
                                 @else
                                 <td>0</td>
                                 @endif
-                                
+
                                 <td>
                                     @if ($project->isActive())
-                                        <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}" 
-                                            data-project="{{ $project->id }}" data-toggle="tooltip" 
-                                            data-placement="right" 
+                                        <a href="javascript:void(0)" class="remove-member" data-user="{{ $user->id }}"
+                                            data-project="{{ $project->id }}" data-toggle="tooltip"
+                                            data-placement="right"
                                             title="{{ __('project.remove_member') }}">
                                             <i class="fas fa-user-minus"></i>
                                         </a>
@@ -377,7 +386,7 @@
                                     @endif
                                 </td>
                             </tr>
-                            
+
                         @endforeach
                     </tbody>
                 </table>

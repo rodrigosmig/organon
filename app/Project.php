@@ -13,7 +13,7 @@ class Project extends Model
     const FINISHED  = 'finished';
 
     const STATUS = [
-        'active'    => "Active", 
+        'active'    => "Active",
         'finished'  => "Finished"
     ];
 
@@ -22,7 +22,7 @@ class Project extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'deadline', 'owner_id', 'amount_charged', 'client_id'];
+    protected $fillable = ['name', 'deadline', 'owner_id', 'is_per_hour', 'amount_charged', 'client_id'];
 
     public function getAmountChargedAttribute($value)
     {
@@ -110,7 +110,7 @@ class Project extends Model
             'status'    => $status
         ])->get();
     }
-    
+
     /**
      * Returns all project members
      *
@@ -156,7 +156,7 @@ class Project extends Model
 
         return $total_worked;
     }
-    
+
     /**
      * Returns the total worked on the project for a given user
      *
@@ -217,6 +217,24 @@ class Project extends Model
     }
 
     /**
+     * Returns the project cost
+     *
+     * @return float
+     */
+    public function getTotalProjectByHour(): float
+    {
+        $total_cost = 0;
+
+        if($this->is_per_hour) {
+            $totalWorkedByHour = secondsToHour($this->getTotalWorkedOnProject());
+            $amount_charged = $this->amount_charged;
+            $total_cost = $totalWorkedByHour * $amount_charged;
+        }
+
+        return $total_cost;
+    }
+
+    /**
      * returns the cost of active projects
      *
      * @return float
@@ -266,7 +284,7 @@ class Project extends Model
 
         foreach ($projects as $project) {
             $date = (new \DateTime($project->deadline))->getTimestamp();
-            
+
             if($date < $now->getTimestamp()) {
                 $delayed_projects->push($project);
             }
@@ -284,7 +302,7 @@ class Project extends Model
     {
         $number_finish_tasks    = $this->tasks()->where('status', Task::FINISHED)->get()->count();
         $total_of_projects      = $this->tasks()->count();
-        
+
         if($total_of_projects === 0) {
             return 0.0;
         }
